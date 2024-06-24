@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ERP6.Models.ConsignInventoryCheck>
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>寄賣客戶庫存盤點表</title>
+    <link rel="stylesheet" type="text/css" href="~/css/print.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>忠義/睿盛企業(股份)公司</h2>
+            <div style="text-decoration: underline;">寄賣客戶庫存盤點表</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="info-left" colspan="6">客戶：@(Model.FirstOrDefault()?.CusNo) @(Model.FirstOrDefault()?.CusName)</th>
+                    <th class="info-right" colspan="3">製表：@DateTime.Now.ToString("yyyy/MM/dd")</th>
+                </tr>
+
+                <tr class="columnName">
+                    <th>產品編號</th>
+                    <th>品名規格</th>
+                    <th>結帳月份</th>
+                    <th>上期庫存</th>
+                    <th>進貨</th>
+                    <th>退貨</th>
+                    <th>銷售</th>
+                    <th>本期庫存</th>
+                    <th>盤點量</th>
+                </tr>
+            </thead>
+
+            <tbody class="list">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductNo</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.BillingMonth</td>
+                        <td>@item.PreInventory</td>
+                        <td>@item.In</td>
+                        <td>@item.Return</td>
+                        <td>@item.Sale</td>
+                        <td>@item.CurrentInventory</td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <table>
+            <tr>
+                <td>主管:______________</td>
+                <td>會計:_______________</td>
+                <td>審核:_______________</td>
+                <td>盤點人:_______________</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

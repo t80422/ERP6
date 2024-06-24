@@ -1,0 +1,314 @@
+﻿@model ERP6.ViewModels.Out.C208ExportViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Export";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new {UserAc = UserAc })"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">STO進銷系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>進銷系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C204_採購單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C205_領料入庫資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C206_庫存異動單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C207_產品促銷單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C208_報價單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C209_出貨單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C210_寄賣客戶庫存檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C211_產品期初資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C212_盤點單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C213_加工產品資料檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <form method="post" id="form" name="form" action="@Url.Action("C208Export", "Out")">
+                        <!-- top-input -->
+                        <div class="top-input">
+                            <label for="">出貨日(起)</label>
+                            @Html.TextBoxFor(x => x.BeginOutDate, new { @type = "date" })
+                            @*<div class="option">
+                                    @Html.DropDownListFor(x => x.BeginOutDate, ViewBag.VendorList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox form-control", style = "width:100%;" })
+                                </div>*@
+                        </div>
+                        <div class="top-input">
+                            <label for="">出貨日(迄)</label>
+                            @Html.TextBoxFor(x => x.BeginOutDate, new { @type = "date" })
+                            @*<div class="option">
+                                    @Html.DropDownListFor(x => x.EndOutDate, ViewBag.VendorList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox form-control", style = "width:100%;" })
+                                </div>*@
+                        </div>
+                        @*<div class="top-input large input-date">
+                                <label for="">廠商範圍</label>
+                                <div>
+                                    @Html.DropDownListFor(x => x.StartVendorNo, ViewBag.VendorList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox form-control", style = "width:110%;" })
+                                </div>
+                                <span></span>
+                                <div>
+                                    @Html.DropDownListFor(x => x.EndVendorNo, ViewBag.VendorList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox form-control", style = "width:110%;" })
+                                </div>
+                            </div>*@
+                        <!-- top-checkbox -->
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "1")明細表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "2")匯總表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "3")毛利匯總表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "4")材積表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "5")產品匯總表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "6")產品歷史售價表
+                        </div>
+                        <div class="top-checkbox">
+                            @Html.RadioButtonFor(m => m.ShowType, "7")最後售價表
+                        </div>
+                    </form>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-export"><span>匯出檔案</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-leave"><span>離開</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                @*<div class="container-content">
+                        <div class="container-column">
+                            <div class="container-col-1">
+                                <div class="data-wrap">
+                                    <div class="data-title">
+                                        <div class="f-1 ta-left">廠商編號</div>
+                                        <div class="f-1 ta-left">廠商簡稱</div>
+                                        <div class="f-1 ta-left">統一編號</div>
+                                        <div class="f-1 ta-left">傳真</div>
+                                        <div class="f-1 ta-left">負責人</div>
+                                        <div class="f-1 ta-left">電話一</div>
+                                        <div class="f-1 ta-left">電話二</div>
+                                        <div class="f-1 ta-left">通訊地址一</div>
+                                        <div class="f-1 ta-left">倉庫地址</div>
+                                    </div>
+                                    <div class="data-list">
+                                        @foreach (var item in Model.vendorList)
+                                        {
+                                            <div class="data-item">
+                                                <div class="f-1 ta-left">@item.VendorNo</div>
+                                                <div class="f-1 ta-left">@item.Vename</div>
+                                                <div class="f-1 ta-left">@item.Uniform</div>
+                                                <div class="f-1 ta-left">@item.Fax</div>
+                                                <div class="f-1 ta-left">@item.Boss</div>
+                                                <div class="f-1 ta-left">@item.Tel1</div>
+                                                <div class="f-1 ta-left">@item.Tel2</div>
+                                                <div class="f-1 ta-left">@item.Invoaddr</div>
+                                                <div class="f-1 ta-left">@item.Factaddr</div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定送出?</p>
+                <div class="p-btn pad-0">
+                    <button class="btn-cancel small check">取消</button>
+                    <button id="btnCheck" type="button" class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+        //查詢
+        $(function () {
+            $('.tool-btn-search').on('click', function () {
+
+                let bOutDate = $("#BeginOutDate").val();
+                let eOutDate = $("#EndOutDate").val();
+
+                if (!bOutDate || !eOutDate) {
+                    alert("出貨日期必填");
+
+                    return;
+                }
+
+                //let firstData = $("#StartVendorNo").val();
+                //let lastData = $("#EndVendorNo").val();
+
+                let fromData = $("#form").serialize();
+
+                $.ajax({
+                        url: "@Url.Action("Preview", "Out")",
+                        data: fromData,
+                        type: 'POST',
+                        success: function (data) {
+                            if (data != null) {
+                                //alert("查詢成功");
+
+                                @*let outNo = data.outNo;
+
+                                window.location.href = "@Url.Action("Index", "Out")/?OutNo=" + outNo;*@
+
+                            }
+                            else {
+                                alert(data.errorMessage);
+                            }
+                        }
+                    });
+
+                @*window.location.href = "@Url.Action("C208Export", "Out", new { vm= fromData })/?StartVendorNo=" + firstData + "&EndVendorNo=" + lastData*@;
+            });
+        });
+
+        //匯出
+        $(function () {
+            $('.tool-btn-export').on('click', function () {
+                $("#form").submit();
+            });
+        });
+
+        //離開
+        $(function () {
+            $('.tool-btn-leave').on('click', function () {
+                window.location.href = "@Url.Action("Index","Out")";
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

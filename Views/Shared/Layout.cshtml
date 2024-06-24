@@ -1,0 +1,131 @@
+﻿@*@using Microsoft.AspNetCore.Http;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;*@
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+    string UserName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="~/image/favico.ico" rel="shortcut icon">
+    @*<link rel="stylesheet" href="~/css/style.css">*@
+    @*<script src="~/js/jquery-2.1.4.min.js"></script>*@
+    <script src="~/js/jquery.min.js"></script>
+    <link href="~/css/style.css" rel="stylesheet" />
+
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("msg") != null && @HttpContextAccessor.HttpContext.Session.GetString("msg") != "")
+    {
+        <script>
+
+
+        alert('@HttpContextAccessor.HttpContext.Session.GetString("msg")');
+
+        $(function () {
+            var fuyu = "";
+             $.ajax({
+                type: "POST",
+                url: "@Url.Action("msgClear", "Login")",
+                data: { id: fuyu },
+                success: function (data) {
+                    if (data != null) {
+
+                    }
+                },
+                error: function () {
+                    alert("發生錯誤!");
+                }
+            });
+        });
+        </script>
+
+    }
+
+</head>
+<body onbeforeunload="$('.loading-wrap').show();">
+    <!-- header -->
+    <article id="wrap">
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index","Home",new { UserAc = UserAc})"></a></figure>
+            <nav class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+                @*<div class="nav-item n-order is-active"><a href="@Url.Action("Index","Vendor")"></a></div>
+                <div class="nav-item n-shipment"><a href="###"></a></div>
+                <div class="nav-item n-quotation"><a href="###"></a></div>
+                <div class="nav-item n-promotion"><a href="###"></a></div>
+                <div class="nav-item n-inventory"><a href="###"></a></div>
+                <div class="nav-item n-collection"><a href="###"></a></div>*@
+            </nav>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                    <a href="">
+                        <i></i><span>新增系統</span>
+                    </a>
+                </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+            @*}*@
+            @*<div class="user-info">
+                <span>帳號名稱</span>
+                <h2>@UserAc @UserName</h2>
+            </div>
+            <button class="signout-btn" onClick="window.location.href='@Url.Action("Out","Login")'"></button>*@
+        </header>
+        <!-- main -->
+        @RenderBody()
+
+        <!-- Loading -->
+        <div class="loading-wrap">
+            <span class="loader"></span>
+        </div>
+
+    </article>
+
+</body>
+</html>
+
+
+
+
+
+
+

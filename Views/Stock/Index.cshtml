@@ -1,0 +1,1332 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model ERP6.ViewModels.Stock.StockIndexViewModel
+
+@{
+    Layout = "/Views/Shared/STOLayout.cshtml";
+    var PriceTypeList = (List<ERP6.Controllers.StockController.PriceTypeList>)ViewBag.PriceTypeList;
+    var PriceTypes = (Dictionary<string,string>)ViewBag.PriceTypes;
+}
+
+<!-- inner -->
+<div class="container-inner">
+    <!-- top -->
+    <div class="top-wrap">
+        <!-- top-title -->
+        <div class="top-title">
+            <h2>C203_產品基本資料檔</h2>
+        </div>
+        <!-- top-toollist -->
+        <div class="top-toollist">
+            <ul>
+                <li>
+                    <button class="tool-btn-first"><span>首筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-prev"><span>前筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-next"><span>次筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-last"><span>末筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-add"><span>新增</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-edit"><span>修改</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-del"><span>刪除</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-search"><span>查詢</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-export"><span>匯出檔案</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-material"><span>相關資料</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-change"><span>編號變更</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-money"><span>價格名稱變更</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-cancel"><span>取消</span></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="container-content">
+        <div class="container-column">
+            <div class="container-col-2">
+                <div class="data-wrap">
+                    <div class="data-title">
+                        <div class="f-1 ta-left">產品編號</div>
+                        <div class="f-3 ta-left pl-0">品名規格</div>
+                    </div>
+                    <div class="data-list">
+                        <!-- example start -->
+                        @foreach (var item in Model.stockList)
+                        {
+                            <div class="data-item">
+                                <div class="f-1 stock10 ta-left">@item.PartNo</div>
+                                <div class="f-3 ta-left pl-0">@item.Spec</div>
+                            </div>
+                        }
+                        <!-- example end -->
+                    </div>
+                </div>
+            </div>
+            <div class="container-col-2 fl-5">
+                @using (Html.BeginForm("Index", "Stock", FormMethod.Post, new { id = "myForm" }))
+                {
+                    @Html.HiddenFor(x => x.IsSearch)
+                    <div class="inside-wrap">
+                        <div class="inside-overflow">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="img-upload">
+                                                <div class="upload">
+                                                    <img id="previewImg" src="~/image/imgfile.png">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input mg-b20">
+                                                <label for="">產品編號*</label>
+                                                @Html.TextBoxFor(x => x.PartNo, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input mg-b20">
+                                                <label for="">商品條碼*</label>
+                                                @Html.TextBoxFor(x => x.Barcode, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2">
+                                                <label for="">異動庫存</label>
+                                                @Html.DropDownListFor(x => x.YnCount, ViewBag.YnCountList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                            <div class="form-input col-2">
+                                                <label>可否退貨</label>
+                                                @Html.DropDownListFor(x => x.IsReturn, ViewBag.ReturnList123 as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-2">
+                                            <div class="form-input mg-b20">
+                                                <label for="">品名規格*</label>
+                                                @Html.TextBoxFor(x => x.Spec, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0 mg-b20">
+                                                @*<label for="">產品分類*</label>*@
+                                                <label for=""><a href="@Url.Action("StockType", "Stock")">產品分類*</a></label>
+                                                <div class="checkbox-input">
+                                                    @Html.CheckBoxFor(x => x.IsShow, new { @type = "checkbox", @disabled = "true" })
+                                                    @*<input name="IsShow" id="IsShow" type="checkbox">*@
+                                                    @Html.DropDownListFor(x => x.Type, ViewBag.TypeList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                                </div>
+                                            </div>
+                                            <div class="form-input col-2 mg-b20">
+                                                <label for="">入數</label>
+                                                @Html.TextBoxFor(x => x.PackQty, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2">
+                                                <label for="">庫存數量</label>
+                                                <div class="flex">
+                                                    <div class="fl-2">
+                                                        @Html.TextBoxFor(x => x.StQty, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <div class="fl-1">
+                                                        @Html.DropDownListFor(x => x.Unit, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-input col-2">
+                                                <label for="">安全存數</label>
+                                                @Html.TextBoxFor(x => x.SafeQty, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        @*<div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">產品屬性</label>
+                                                    <select name="" id="">
+                                                        <option value="">加工</option>
+                                                    </select>
+                                                </div>
+                                            </div>*@
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">倉儲位置</label>
+                                                @Html.TextBoxFor(x => x.Location, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">單位換算</label>
+                                                @Html.DropDownListFor(x => x.TUnit1, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-2">
+                                            <div class="form-input format-switch bd-0">
+                                                <span>轉換></span>
+                                                <label for="">產品換算</label>
+                                                <div class="flex">
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.TranPara1, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <div>
+                                                        @Html.DropDownListFor(x => x.UnitPara1, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input format-size bd-0">
+                                                <label for="">長x寬x高</label>
+                                                <div class="flex">
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.L, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <span>X</span>
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.W, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <span>X</span>
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.H, new { @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">單位換算</label>
+                                                @Html.DropDownListFor(x => x.TUnit2, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-2">
+                                            <div class="form-input format-switch bd-0">
+                                                <span>轉換></span>
+                                                <label for="">產品換算</label>
+                                                <div class="flex">
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.TranPara2, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <div>
+                                                        @Html.DropDownListFor(x => x.UnitPara2, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">材積</label>
+                                                @Html.TextBoxFor(x => x.Cuft, new { @readonly = "readonly", @class = "w-90pc inb" })才
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">單位換算</label>
+                                                @Html.DropDownListFor(x => x.TUnit3, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-2">
+                                            <div class="form-input format-switch bd-0">
+                                                <span>轉換></span>
+                                                <label for="">產品換算</label>
+                                                <div class="flex">
+                                                    <div>
+                                                        @Html.TextBoxFor(x => x.TranPara3, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <div>
+                                                        @Html.DropDownListFor(x => x.UnitPara3, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled = "true" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label>散裝公斤數</label>
+                                                @Html.TextBoxFor(x => x.InitQty1, new { @readonly = "readonly", @class = "w-90pc inb" })Kg
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label>散裝成本</label>
+                                                @Html.TextBoxFor(x => x.InitCost1, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-3">
+                                                <label>紙箱</label>
+                                                @Html.TextBoxFor(x => x.InitCost3, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-3">
+                                                <label>工資</label>
+                                                @Html.TextBoxFor(x => x.InitCost4, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-3">
+                                                <label>運輸</label>
+                                                @Html.TextBoxFor(x => x.InitCost5, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label>分裝公克數</label>
+                                                @Html.TextBoxFor(x => x.InitQty2, new { @readonly = "readonly", @class = "w-93pc inb" })g
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label>分裝成本</label>
+                                                @Html.TextBoxFor(x => x.InitCost2, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label>合計　公司成本</label>
+                                                @Html.TextBoxFor(x => x.CompCost, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">稅別</label>
+                                                @Html.DropDownListFor(x => x.TaxType, ViewBag.TaxTypeList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled = "true" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("First") ? PriceTypes["First"] : "")</label>                                                
+                                                @*<label for="">批發價</label>*@
+                                                @Html.TextBoxFor(x => x.Price1, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM1"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">                                                
+                                                <label for="">建議售價一</label>
+                                                @Html.TextBoxFor(x => x.SPrice1, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM1"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Second") ? PriceTypes["Second"] : "")</label>
+                                                @*<label for="">門市價</label>*@
+                                                @Html.TextBoxFor(x => x.Price2, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM2"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">                                                
+                                                <label for="">建議售價二</label>
+                                                @Html.TextBoxFor(x => x.SPrice2, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM2"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Third") ? PriceTypes["Third"] : "")</label>
+                                                @*<label for="">公教價</label>*@
+                                                @Html.TextBoxFor(x => x.Price3, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM3"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價三</label>
+                                                @Html.TextBoxFor(x => x.SPrice3, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM3"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Forth") ? PriceTypes["Forth"] : "")</label>
+                                                @*<label for="">預設一</label>*@
+                                                @Html.TextBoxFor(x => x.DefaultPrice1, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM4"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價四</label>
+                                                @Html.TextBoxFor(x => x.SPrice4, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM4"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Fifth") ? PriceTypes["Fifth"] : "")</label>
+                                                @*<label for="">預設二</label>*@
+                                                @Html.TextBoxFor(x => x.DefaultPrice2, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM5"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價五</label>
+                                                @Html.TextBoxFor(x => x.SPrice5, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM5"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Sixth") ? PriceTypes["Sixth"] : "")</label>
+                                                @*<label for="">預設三</label>*@
+                                                @Html.TextBoxFor(x => x.DefaultPrice3, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM6"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價六</label>
+                                                @Html.TextBoxFor(x => x.SPrice6, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM6"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Seventh") ? PriceTypes["Seventh"] : "")</label>
+                                                @*<label for="">預設四</label>*@
+                                                @Html.TextBoxFor(x => x.DefaultPrice4, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM7"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價七</label>
+                                                @Html.TextBoxFor(x => x.SPrice7, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM7"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label>@(PriceTypes.ContainsKey("Eighth") ? PriceTypes["Eighth"] : "")</label>
+                                                @*<label for="">預設五</label>*@
+                                                @Html.TextBoxFor(x => x.DefaultPrice5, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong id="CGPM8"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">建議售價八</label>
+                                                @Html.TextBoxFor(x => x.SPrice8, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                <p>
+                                                    <strong id="GPM8"></strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">進價一</label>
+                                                @Html.TextBoxFor(x => x.Cost1, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong>0%</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">最後進貨</label>
+                                                @Html.TextBoxFor(x => x.LastIn, new { @type = "date", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1"></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">進價二</label>
+                                                @Html.TextBoxFor(x => x.Cost2, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong>0%</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">最後進價</label>
+                                                @Html.TextBoxFor(x => x.LastCost, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1"></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">進價三</label>
+                                                @Html.TextBoxFor(x => x.Cost3, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong>0%</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input unit-percent">
+                                                <label for="">最後折扣</label>
+                                                @Html.TextBoxFor(x => x.LastDiscount, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1"></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input col-2">
+                                                <label for="">業務成本</label>
+                                                @Html.TextBoxFor(x => x.SalesCost, new { @readonly = "readonly" })
+                                            </div>
+                                            <div class="form-input col-2 bd-0">
+                                                <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                <p>
+                                                    <strong>0%</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">最後銷貨</label>
+                                                @Html.TextBoxFor(x => x.LastOut, new { @type = "date", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">最後異動者</label>
+                                                @Html.TextBoxFor(x => x.LastModiuser, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">最後異動日</label>
+                                                @Html.TextBoxFor(x => x.LastModidate, new { @type = "date", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ChangePriceName" class="popup-wrap">
+    <div class="popup-main">
+        <div class="p-form">  
+            @if (PriceTypeList != null)
+            {
+                <form action="@Url.Action("ChangePriceName","Stock")" method="post">
+                    <div class="pricename-wrap">
+                        @foreach (var it in PriceTypeList)
+                        {
+                            <div class="flex">
+                                <div class="input">
+                                    <input type="text" name="PT_TEXT" value="@it.PT_TEXT">
+                                </div>
+                                <div class="input">
+                                    <input type="text" name="PT_VALUE" value="@it.PT_VALUE">
+                                </div>
+                                <input type="hidden" name="PT_ID" value="@it.PT_ID">
+                            </div>                        
+                        }
+                    
+                    </div>
+                    <div class="p-btn pad-0">
+                        <button type="button" id="CancelChange" class="btn-cancel small changeName">取消</button>
+                        <button type="submit" id="ConfirmChange" class="btn-submit small changeName">確定</button>
+                    </div>
+                </form>                
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // 找資料
+    async function FindData(partNo){
+        $('.loading-wrap').show();
+        $.ajax({
+            url: "@Url.Action("AjaxStock", "Ajaxs")",
+            data: {
+                'partNo': partNo,
+            },
+            async: false,
+            type: 'post',
+            success: function (data) {
+                console.log(data)
+                if (data != null) {
+                    $("#PartNo").val(data.partNo)
+                    $("#Spec").val(data.spec)
+                    $("#Barcode").val(data.barcode)
+                    $("#PartNo").val(data.partNo)
+                    $("#Type").val(data.type)
+                    $("#PackQty").val(data.packQty)
+                    $("#YnCount").val(data.ynCount)
+                    $("#StQty").val(data.stQty)
+                    $("#Unit").val(data.unit)
+                    $("#SafeQty").val(data.safeQty)
+                    $("#Location").val(data.location)
+                    $("#IsShow").prop("checked", data.isShow)
+                    $("#TUnit1").val(data.tUnit1)
+                    $("#TranPara1").val(data.tranPara1)
+                    $("#UnitPara1").val(data.unitPara1)
+                    $("#L").val(data.l)
+                    $("#W").val(data.w)
+                    $("#H").val(data.h)
+                    $("#TUnit2").val(data.tUnit2);
+                    $("#TranPara2").val(data.tranPara2)
+                    $("#UnitPara2").val(data.unitPara2)
+                    $("#Cuft").val(data.cuft)
+                    $("#TUnit3").val(data.tUnit3);
+                    $("#TranPara3").val(data.tranPara3)
+                    $("#UnitPara3").val(data.unitPara3)
+                    $("#TaxType").val(data.taxType)
+                    $("#Price1").val(data.price1);
+                    $("#SPrice1").val(data.sPrice1)
+                    $("#Price2").val(data.price2)
+                    $("#SPrice2").val(data.sPrice2)
+                    $("#Price3").val(data.price3)
+                    $("#SPrice3").val(data.sPrice3)
+                    $("#Price4").val(data.price4)
+                    $("#SPrice4").val(data.sPrice4)
+                    $("#Price5").val(data.price5)
+                    $("#SPrice5").val(data.sPrice5)
+                    $("#Price6").val(data.price6)
+                    $("#SPrice6").val(data.sPrice6)
+                    $("#Price7").val(data.price7)
+                    $("#SPrice7").val(data.sPrice7)
+                    $("#Price8").val(data.price8)
+                    $("#SPrice8").val(data.sPrice8)
+                    $("#Cost1").val(data.cost1)
+                    $("#LastIn").val(data.lastIn)
+                    $("#Cost2").val(data.cost2)
+                    $("#LastCost").val(data.lastCost)
+                    $("#Cost3").val(data.cost3)
+                    $("#LastDiscount").val(data.lastDiscount)
+                    $("#SalesCost").val(data.salesCost)
+                    $("#LastOut").val(data.lastOut)
+                    $("#LastModiuser").val(data.lastModiuser)
+                    $("#LastModidate").val(data.lastModidate)
+                    $("#DefaultPrice1").val(data.defaultPrice1)
+                    $("#DefaultPrice2").val(data.defaultPrice2)
+                    $("#DefaultPrice3").val(data.defaultPrice3)
+                    $("#DefaultPrice4").val(data.defaultPrice4)
+                    $("#DefaultPrice5").val(data.defaultPrice5)
+
+                    $('#InitQty1').val(data.initQty1)
+                    $('#InitQty2').val(data.initQty2)
+                    $('#InitCost1').val(data.initCost1)
+                    $('#InitCost2').val(data.initCost2)
+                    $('#InitCost3').val(data.initCost3)
+                    $('#InitCost4').val(data.initCost4)
+                    $('#InitCost5').val(data.initCost5)
+                    $('#CompCost').val(data.compCost)
+                    $('#previewImg').attr('src',data.imagePath)
+                    $('#IsReturn').val(data.isReturn != null ? (data.isReturn ? "1" : "2") : '')
+                    CGPM(data.compCost)
+
+                }
+            },
+            error: function (err) {
+                alert('發生錯誤')
+                console.log(err)
+            }
+        })
+
+        $('.loading-wrap').hide();
+    }
+    // 計算毛利率
+    async function CGPM(compCost) {
+        let CGPM1 = ($('#Price1').val() - compCost) / $('#Price1').val() * 100;
+        CGPM1 = CGPM1 > 0 ? Math.round((CGPM1 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM2 = ($('#Price2').val() - compCost) / $('#Price2').val() * 100;
+        CGPM2 = CGPM2 > 0 ? Math.round((CGPM2 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM3 = ($('#Price3').val() - compCost) / $('#Price3').val() * 100;
+        CGPM3 = CGPM3 > 0  ? Math.round((CGPM3 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM4 = ($('#DefaultPrice1').val() - compCost) / $('#DefaultPrice1').val() * 100;
+        CGPM4 = CGPM4 > 0  ? Math.round((CGPM4 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM5 = ($('#DefaultPrice2').val() - compCost) / $('#DefaultPrice2').val() * 100;
+        CGPM5 = CGPM5 > 0  ? Math.round((CGPM5 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM6 = ($('#DefaultPrice3').val() - compCost) / $('#DefaultPrice3').val() * 100;
+        CGPM6 = CGPM6 > 0  ? Math.round((CGPM6 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM7 = ($('#DefaultPrice4').val() - compCost) / $('#DefaultPrice4').val() * 100;
+        CGPM7 = CGPM7 > 0  ? Math.round((CGPM7 + Number.EPSILON) * 100) / 100 : 0;
+        let CGPM8 = ($('#DefaultPrice5').val() - compCost) / $('#DefaultPrice5').val() * 100;
+        CGPM8 = CGPM8 > 0 ? Math.round((CGPM8 + Number.EPSILON) * 100) / 100 : 0;
+        // 客戶毛利率
+        let GPM1 = ($('#SPrice1').val() - $('#Price1').val()) / $('#SPrice1').val() * 100;
+        GPM1 = GPM1 > 0 ? Math.round((GPM1 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM2 = ($('#SPrice2').val() - $('#Price2').val()) / $('#SPrice2').val() * 100;
+        GPM2 = GPM2 > 0 ? Math.round((GPM2 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM3 = ($('#SPrice3').val() - $('#Price3').val()) / $('#SPrice3').val() * 100;
+        GPM3 = GPM3 > 0 ? Math.round((GPM3 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM4 = ($('#SPrice4').val() - $('#DefaultPrice1').val()) / $('#SPrice4').val() * 100;
+        GPM4 = GPM4 > 0 ? Math.round((GPM4 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM5 = ($('#SPrice5').val() - $('#DefaultPrice2').val()) / $('#SPrice5').val() * 100;
+        GPM5 = GPM5 > 0 ? Math.round((GPM5 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM6 = ($('#SPrice6').val() - $('#DefaultPrice3').val()) / $('#SPrice6').val() * 100;
+        GPM6 = GPM6 > 0 ? Math.round((GPM6 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM7 = ($('#SPrice7').val() - $('#DefaultPrice4').val()) / $('#SPrice7').val() * 100;
+        GPM7 = GPM7 > 0 ? Math.round((GPM7 + Number.EPSILON) * 100) / 100 : 0;
+        let GPM8 = ($('#SPrice8').val() - $('#DefaultPrice5').val()) / $('#SPrice8').val() * 100;
+        GPM8 = GPM8 > 0 ? Math.round((GPM8 + Number.EPSILON) * 100) / 100 : 0;
+
+        $("#CGPM1").text((CGPM1 ?? 0) + "%");
+        $("#CGPM2").text((CGPM2 ?? 0) + "%");
+        $("#CGPM3").text((CGPM3 ?? 0) + "%");
+        $("#CGPM4").text((CGPM4 ?? 0) + "%");
+        $("#CGPM5").text((CGPM5 ?? 0) + "%");
+        $("#CGPM6").text((CGPM6 ?? 0) + "%");
+        $("#CGPM7").text((CGPM7 ?? 0) + "%");
+        $("#CGPM8").text((CGPM8 ?? 0) + "%");
+        $("#GPM1").text((GPM1 ?? 0) + "%");
+        $("#GPM2").text((GPM2 ?? 0) + "%");
+        $("#GPM3").text((GPM3 ?? 0) + "%");
+        $("#GPM4").text((GPM4 ?? 0) + "%");
+        $("#GPM5").text((GPM5 ?? 0) + "%");
+        $("#GPM6").text((GPM6 ?? 0) + "%");
+        $("#GPM7").text((GPM7 ?? 0) + "%");
+        $("#GPM8").text((GPM8 ?? 0) + "%");
+    }
+    
+    // 關閉唯讀清空資料
+    function ClearVal() {
+
+        $('#previewImg').attr('src', './image/imgfile.png')
+        $('#myForm input').val('')
+        $('#myForm select').val('')
+        $('#myForm input[type="checkbox"]').prop('checked',false)
+
+        $('#myForm input').removeAttr('readonly')
+        $('#myForm input[type="checkbox"]').removeAttr('disabled')
+        $('#myForm select').removeAttr('disabled')
+        //清除資料
+        //$("#PartNo").val('');
+        //$("#Spec").val('');
+        //$("#Barcode").val('');
+        //$("#PartNo").val('');
+        //$("#Type").val('');
+        //$("#PackQty").val('');
+        //$("#YnCount").val('');
+        //$("#StQty").val('');
+        //$("#Unit").val('');
+        //$("#SafeQty").val('');
+        //$("#Location").val('');
+        //$("#IsShow").prop("checked", false);
+
+        //$("#TUnit1").val('');
+        //$("#TranPara1").val('');
+        //$("#UnitPara1").val('')
+
+        //$("#L").val('');
+        //$("#W").val('');
+        //$("#H").val('')
+
+        //$("#TUnit2").val('');
+        //$("#TranPara2").val('');
+        //$("#UnitPara2").val('')
+
+        //$("#Cuft").val('')
+        //$("#TUnit3").val('');
+        //$("#TranPara3").val('');
+        //$("#UnitPara3").val('')
+
+        //$("#TaxType").val('')
+        //$("#Price1").val('');
+        //$("#SPrice1").val('');
+
+        //$("#Price2").val('')
+        //$("#SPrice2").val('')
+
+        //$("#Price3").val('')
+        //$("#SPrice3").val('')
+
+        //$("#Price4").val('')
+        //$("#SPrice4").val('')
+
+        //$("#Price5").val('')
+        //$("#SPrice5").val('')
+
+        //$("#Price6").val('')
+        //$("#SPrice6").val('')
+
+        //$("#Price7").val('')
+        //$("#SPrice7").val('')
+
+        //$("#Price8").val('')
+        //$("#SPrice8").val('')
+
+        //$("#Cost1").val('')
+        //$("#LastIn").val('')
+
+        //$("#Cost2").val('')
+        //$("#LastCost").val('')
+
+        //$("#Cost3").val('')
+        //$("#LastDiscount").val('')
+
+        //$("#SalesCost").val('')
+        //$("#LastOut").val('')
+
+        //$("#LastModiuser").val('')
+        //$("#LastModidate").val('')
+
+        //$("#DefaultPrice1").val('')
+        //$("#DefaultPrice2").val('')
+        //$("#DefaultPrice3").val('')
+        //$("#DefaultPrice4").val('')
+        //$("#DefaultPrice5").val('')
+
+        //$("#PartNo").removeAttr('readonly');
+        //$("#Spec").removeAttr('readonly');
+        //$("#Barcode").removeAttr('readonly');
+        //$("#PartNo").removeAttr('readonly');
+        //$("#Type").removeAttr('disabled');
+        //$("#PackQty").removeAttr('readonly');
+        //$("#YnCount").removeAttr('disabled');
+        //$("#StQty").removeAttr('readonly');
+        //$("#Unit").removeAttr('disabled');
+        //$("#SafeQty").removeAttr('readonly');
+        //$("#Location").removeAttr('readonly');
+        //$("#IsShow").removeAttr('disabled');
+
+        //$("#TUnit1").removeAttr('disabled');
+        //$("#TranPara1").removeAttr('readonly');
+        //$("#UnitPara1").removeAttr('disabled');
+
+        //$("#L").removeAttr('readonly');
+        //$("#W").removeAttr('readonly');
+        //$("#H").removeAttr('readonly');
+
+        //$("#TUnit2").removeAttr('disabled');
+        //$("#TranPara2").removeAttr('readonly');
+        //$("#UnitPara2").removeAttr('disabled');
+
+        //$("#Cuft").removeAttr('readonly');
+        //$("#TUnit3").removeAttr('disabled');
+        //$("#TranPara3").removeAttr('readonly');
+        //$("#UnitPara3").removeAttr('disabled');
+
+        //$("#TaxType").removeAttr('disabled');
+        //$("#Price1").removeAttr('readonly');
+        //$("#SPrice1").removeAttr('readonly');
+
+        //$("#Price2").removeAttr('readonly');
+        //$("#SPrice2").removeAttr('readonly');
+
+        //$("#Price3").removeAttr('readonly');
+        //$("#SPrice3").removeAttr('readonly');
+
+        //$("#Price4").removeAttr('readonly');
+        //$("#SPrice4").removeAttr('readonly');
+
+        //$("#Price5").removeAttr('readonly');
+        //$("#SPrice5").removeAttr('readonly');
+
+        //$("#Price6").removeAttr('readonly');
+        //$("#SPrice6").removeAttr('readonly');
+
+        //$("#Price7").removeAttr('readonly');
+        //$("#SPrice7").removeAttr('readonly');
+
+        //$("#Price8").removeAttr('readonly');
+        //$("#SPrice8").removeAttr('readonly');
+
+        //$("#Cost1").removeAttr('readonly');
+        //$("#LastIn").removeAttr('readonly');
+
+        //$("#Cost2").removeAttr('readonly');
+        //$("#LastCost").removeAttr('readonly');
+
+        //$("#Cost3").removeAttr('readonly');
+        //$("#LastDiscount").removeAttr('readonly');
+
+        //$("#SalesCost").removeAttr('readonly');
+        //$("#LastOut").removeAttr('readonly');
+
+        //$("#LastModiuser").removeAttr('readonly');
+        //$("#LastModidate").removeAttr('readonly');
+
+        //$("#DefaultPrice1").removeAttr('readonly')
+        //$("#DefaultPrice2").removeAttr('readonly')
+        //$("#DefaultPrice3").removeAttr('readonly')
+        //$("#DefaultPrice4").removeAttr('readonly')
+        //$("#DefaultPrice5").removeAttr('readonly')
+
+        
+    }
+    
+    // 開啟唯讀
+    function OpenReadonly() {
+        //$('#IsSearch').val(false)
+
+        $('.top-toollist ul li').show();
+        $('.tool-btn-confirm').parent('li').hide();
+        $('.tool-btn-cancel').parent('li').hide();
+
+        $('#myForm input').attr('readonly',true);
+        $('#myForm select').attr('disabled', true)
+
+        //$("#PartNo").attr('readonly',true);
+        //$("#Spec").attr('readonly',true);
+        //$("#Barcode").attr('readonly',true);
+        //$("#PartNo").attr('readonly',true);
+        //$("#Type").attr('disabled',true);
+        //$("#PackQty").attr('readonly',true);
+        //$("#YnCount").attr('disabled',true);
+        //$("#StQty").attr('readonly',true);
+        //$("#Unit").attr('disabled',true);
+        //$("#SafeQty").attr('readonly',true);
+        //$("#Location").attr('readonly',true);
+        //$("#IsShow").attr('disabled',true);
+
+        //$("#TUnit1").attr('disabled',true);
+        //$("#TranPara1").attr('readonly',true);
+        //$("#UnitPara1").attr('disabled',true);
+
+        //$("#L").attr('readonly',true);
+        //$("#W").attr('readonly',true);
+        //$("#H").attr('readonly',true);
+
+        //$("#TUnit2").attr('disabled',true);
+        //$("#TranPara2").attr('readonly',true);
+        //$("#UnitPara2").attr('disabled',true);
+
+        //$("#Cuft").attr('readonly',true);
+        //$("#TUnit3").attr('disabled',true);
+        //$("#TranPara3").attr('readonly',true);
+        //$("#UnitPara3").attr('disabled',true);
+
+        //$("#TaxType").attr('disabled',true);
+        //$("#Price1").attr('readonly',true);
+        //$("#SPrice1").attr('readonly',true);
+
+        //$("#Price2").attr('readonly',true);
+        //$("#SPrice2").attr('readonly',true);
+
+        //$("#Price3").attr('readonly',true);
+        //$("#SPrice3").attr('readonly',true);
+
+        //$("#Price4").attr('readonly',true);
+        //$("#SPrice4").attr('readonly',true);
+
+        //$("#Price5").attr('readonly',true);
+        //$("#SPrice5").attr('readonly',true);
+
+        //$("#Price6").attr('readonly',true);
+        //$("#SPrice6").attr('readonly',true);
+
+        //$("#Price7").attr('readonly',true);
+        //$("#SPrice7").attr('readonly',true);
+
+        //$("#Price8").attr('readonly',true);
+        //$("#SPrice8").attr('readonly',true);
+
+        //$("#Cost1").attr('readonly',true);
+        //$("#LastIn").attr('readonly',true);
+
+        //$("#Cost2").attr('readonly',true);
+        //$("#LastCost").attr('readonly',true);
+
+        //$("#Cost3").attr('readonly',true);
+        //$("#LastDiscount").attr('readonly',true);
+
+        //$("#SalesCost").attr('readonly',true);
+        //$("#LastOut").attr('readonly',true);
+
+        //$("#LastModiuser").attr('readonly',true);
+        //$("#LastModidate").attr('readonly',true);
+
+        //$("#DefaultPrice1").attr('readonly',true)
+        //$("#DefaultPrice2").attr('readonly',true)
+        //$("#DefaultPrice3").attr('readonly',true)
+        //$("#DefaultPrice4").attr('readonly',true)
+        //$("#DefaultPrice5").attr('readonly',true)
+    }
+    
+    // 上方功能
+    $(function () {
+
+        if ($('#PartNo').val()) { 
+
+            FindData($('#PartNo').val()); 
+            
+            let Item ;
+
+            $('.data-item').removeClass('active');
+
+            $('.data-item').each(function (i, v) {
+                if ($(v).children('.f-1.stock10').text() == $('#PartNo').val()) {
+                    $(this).addClass('active');
+
+                    return;
+                }
+            });
+
+            document.querySelector('.data-item.active').scrollIntoView(true);
+
+        }
+
+        CGPM();
+
+        // 首筆資料
+        $('.tool-btn-first').on('click', function () {
+            OpenReadonly()
+            FindData($('.data-item').first().find('.stock10').text())
+
+            $('.data-item').removeClass('active');
+            $('.data-item').first().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 點擊單筆資料
+        $('.data-item').on('click', function () {
+            OpenReadonly()
+            FindData($(this).find('.stock10').text())
+            $('.data-item').removeClass('active')
+            $(this).addClass('active')
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        });
+        // 點擊末筆資料
+        $('.tool-btn-last').on('click', function () {
+            OpenReadonly()
+            FindData($('.data-item').last().find('.stock10').text())
+            $('.data-item').removeClass('active');
+            $('.data-item').last().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 點擊下筆
+        $('.tool-btn-next').on('click', function () {
+            OpenReadonly()
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').next() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有下一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.stock10').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 點擊上筆
+        $('.tool-btn-prev').on('click', function () {
+            OpenReadonly()
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').prev() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有上一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.stock10').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 新增
+        $('.tool-btn-add').on('click', function () {
+            location.href='@Url.Action("Add", "Stock")'
+        })
+        // 編輯
+        $('.tool-btn-edit').on('click', function () {
+            var PartNo = $('#PartNo').val();
+            if (!PartNo) {
+                alert("找不到編輯資料!")
+            } else {
+                window.location.href = '@Url.Action("Edit","Stock")/?PartNo=' + PartNo;
+            }
+        })
+        // 刪除
+        $('.tool-btn-del').on('click', function () {
+            var PartNo = $('#PartNo').val();
+            if (!PartNo) {
+                alert("找不到編輯資料!")
+            } else {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                $('.btn-cancel.small.check').off('click');
+                $('.btn-submit.small.check').off('click');
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    window.location.href = '@Url.Action("Delete","Stock")' + "?PartNo=" + PartNo;
+                });
+            }
+
+        })
+        // 搜尋
+        $('.tool-btn-search').on('click', function () {
+            $('.top-toollist ul li').hide();
+            $('.tool-btn-confirm').parent('li').show();
+            $('.tool-btn-cancel').parent('li').show();
+            ClearVal();
+            $('#IsSearch').val(true);
+
+            $('.tool-btn-confirm').off('click')
+            $('.tool-btn-cancel').off('click')
+
+            // 確認
+            $('.tool-btn-confirm').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                $('.btn-cancel.small.check').off('click');
+                $('.btn-submit.small.check').off('click');
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $('#myForm').submit()
+                });
+            })
+            // 取消
+            $('.tool-btn-cancel').on('click', function () {
+                OpenReadonly()
+            })
+
+        })
+        // 匯出
+        $('.tool-btn-export').on('click', function () {
+
+        })
+        // 相關資料
+        $('.tool-btn-material').on('click', function () {
+
+        })
+        // 變更編號
+        $('.tool-btn-change').on('click', function () {
+            var PartNo = $('#PartNo').val();
+            if (!PartNo) {
+                alert("找不到編輯資料!")
+            } else {
+                $('.top-toollist ul li').hide();
+                $('.tool-btn-confirm').parent('li').show();
+                $('.tool-btn-cancel').parent('li').show();
+
+                //$('#PartNo').val('')
+                $('#PartNo').removeAttr('readonly')
+                $('#PartNo').focus()
+
+                $('.tool-btn-confirm').off('click')
+                $('.tool-btn-cancel').off('click')
+
+                // 確認
+                $('.tool-btn-confirm').on('click', function () {
+                    $(".popup-wrap.check").addClass("is-active");
+                    $(".popup-overlay").addClass("is-active");
+
+                    $('.btn-cancel.small.check').off('click');
+                    $('.btn-submit.small.check').off('click');
+
+                    //取消
+                    $('.btn-cancel.small.check').on('click', function () {
+                        $(".popup-wrap.check").removeClass("is-active");
+                        $(".popup-overlay").removeClass("is-active");
+                    });
+
+                    //確定
+                    $('.btn-submit.small.check').on('click', function () {
+                        $(".popup-wrap.check").removeClass("is-active");
+                        $(".popup-overlay").removeClass("is-active");
+                        $('#PartNo').focus()
+
+                        let NewPartNo = $('#PartNo').val();
+                        if (!NewPartNo) {
+                            alert("請輸入編號")
+                            return false
+                        } else {
+                            $('.loading-wrap').show()
+                            $.ajax({
+                                url: '@Url.Action("ChangePartNo", "Stock")',
+                                method: 'POST',
+                                async: false,
+                                data: { PartNo: PartNo, NewPartNo: NewPartNo },
+                                success: function (res) {
+                                    alert(res)
+                                    if (res == "success") {
+                                        $('#myForm').submit();
+                                    }
+                                },
+                                error: function (err) {
+                                    console.log(err)
+                                    alert("發生錯誤")
+                                }
+                            })
+                            $('.loading-wrap').hide()
+                        }
+                    });
+                })
+                // 取消
+                $('.tool-btn-cancel').on('click', function () {
+                    $('#PartNo').val(PartNo)
+                    OpenReadonly()
+                })
+
+            }
+        })
+        // 變更價格名稱
+        $('.tool-btn-money').on('click',function(){
+            $('#CancelChange').off('click');
+            $('.popup-overlay').addClass('is-active');
+            $('#ChangePriceName').addClass('is-active');
+
+            $('#CancelChange').on('click',function(){
+                $('.popup-overlay').removeClass('is-active');
+                $('#ChangePriceName').removeClass('is-active');
+            })
+        })
+    })
+
+</script>

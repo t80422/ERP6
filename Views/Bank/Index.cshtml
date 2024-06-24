@@ -1,0 +1,740 @@
+﻿@model ERP6.ViewModels.Bank.IndexViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    @*<script src="~/js/jquery-2.1.4.min.js"></script>*@
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2  is-active" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">MON財務系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>財務系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li>
+                                    <a href="">C401_進貨發票資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C402_銷貨發票資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "OGet")">C403_應收帳款資料檔</a>
+                                </li>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Bank")">C404_銀行帳戶資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C405_沖銷應收帳款檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C406_應付帳款資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C407_沖銷應付帳款檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C408_銀行存提資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C409_發票產品資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C410_文件編號設定檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C404_銀行帳戶資料檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-first"><span>首筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-prev"><span>前筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-next"><span>次筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-last"><span>末筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-add"><span>新增</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-edit"><span>修改</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-del"><span>刪除</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-export"><span>匯出檔案</span></button>
+                            </li>
+                            @*<li>
+                                        <button class="tool-btn-material"><span>相關資料</span></button>
+                                    </li>
+                                    <li>
+                                        <button class="tool-btn-change"><span>編號變更</span></button>
+                                    </li>
+                                </ul>*@
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">銀行帳戶</div>
+                                    <div class="f-1 ta-left">帳戶名稱</div>
+                                </div>
+                                <div class="data-list">
+                                    @foreach (var item in Model.bank10List)
+                                    {
+                                        <div class="data-item">
+                                            <div class="f-1 bank10 ta-left">@item.BankNo</div>
+                                            <div class="f-1 ta-left">@item.BankName</div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2">
+                            <form id="form" method="post">
+                                @Html.HiddenFor(x => x.IsSearch)
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">帳戶名稱</label>
+                                                            <div class="option">
+                                                                <input id="BankNo" readonly="readonly" name="BankNo" class="easyui-combobox" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">幣別</label>
+                                                            @Html.TextBoxFor(x => x.Ntus, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">初期日期</label>
+                                                            @Html.TextBoxFor(x => x.Initdate, new { @readonly = "readonly", type = "date" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">初期金額</label>
+                                                            @Html.TextBoxFor(x => x.Initamount, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tabs-wrap">
+                                            <div class="tabs-nav">
+                                                <ul>
+                                                    <li class="tabs-item min-size is-active">會計科目</li>
+                                                </ul>
+                                            </div>
+                                            <div class="tabs-main">
+                                                <div class="tabs-content">
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-s">
+                                                            <div class="form-input">
+                                                                <label for="">科目代號</label>
+                                                                <div class="option">
+                                                                    <input id="Accno" readonly="readonly" name="Accno" class="easyui-combobox" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button type="button" class="btn-clean search">清除條件</button>
+                                            <button type="submit" class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button type="button" class="btn-cancel small check">取消</button>
+                    <button type="button" class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //銀行帳戶資料
+        $('#BankNo').combobox({
+            url: "@Url.Action("AjaxBank10ForEasyUI", "Ajaxs")",
+            required: false,
+            valueField: 'id',
+            textField: 'text'
+        });
+
+        //會計科目
+        $('#Accno').combobox({
+            url: "@Url.Action("AjaxAccNoForEasyUI", "Ajaxs")",
+            required: false,
+            valueField: 'id',
+            textField: 'text'
+        });
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            let BankNo = $("#BankNo").val();
+
+            if (BankNo) {
+                //找出此筆資料
+                $('.data-item').each(function (i, v) {
+                    if ($(v).children('.f-1.bank10').text() == BankNo) {
+                        $(this).addClass('active');
+
+                        return;
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                if (el) {
+
+                    el.scrollIntoView(true);
+                }
+            }
+        });
+
+        //新增資料
+        $(function () {
+            $('.tool-btn-add').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Add", "Bank")";
+                });
+            });
+        });
+
+        //刪除資料
+        $('.tool-btn-del').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let bankNo = $("#BankNo").val()
+
+                    if (bankNo != '') {
+                        $.ajax({
+                            url: "@Url.Action("Delete", "Bank")",
+                            type: 'POST',
+                            data: { BankNo: bankNo },
+                            success: function (data) {
+                                if (data) {
+                                    alert("刪除成功!");
+
+                                    window.location.href = "@Url.Action("Index", "Bank")";
+                                }
+                                else {
+                                    alert("刪除失敗!");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        alert("找不到刪除資料!");
+                    }
+                });
+        });
+
+        //修改資料
+        $('.tool-btn-edit').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let bankNo = $("#BankNo").combobox('getValue');
+
+                    if (bankNo == '') {
+                        alert("找不到編輯資料!");
+                    }
+                    else {
+                        window.location.href = "@Url.Action("Edit", "Bank")/?BankNo=" + bankNo;
+                    }
+                });
+        });
+
+        //首筆資料
+        $(function () {
+            $('.tool-btn-first').on('click', function () {
+                //先清空錨點
+                let firstDataItem = $('.data-item.active');
+
+                if (firstDataItem.length != 0) {
+                    firstDataItem.removeClass('active');
+                }
+
+                $('.data-item').each(function (i, v) {
+                    if (i === 0) {
+                        let firstItem = $(v).children('.f-1.bank10').text();
+
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxBank10", "Ajaxs")",
+                            data: { 'BankNo': firstItem },
+                            success: function (data) {
+                                if (data != null) {
+
+                                    //塞資料
+                                    $("#BankNo").val(data.bankNo);
+                                    $("#BankName").val(data.bankName);
+                                    $("#Ntus").val(data.ntus);
+                                    $("#Initamount").val(data.initAmount);
+                                    $("#Initdate").val(data.initDate);
+                                    $("#Accno").val(data.accNo);
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //末筆資料
+        $(function () {
+            $('.tool-btn-last').on('click', function () {
+                //先清空錨點
+                let lastDataItem = $('.data-item.active');
+
+                if (lastDataItem.length != 0 ) {
+                    lastDataItem.removeClass('active');
+                }
+
+                //找出資料總比數
+                let dataItem = $('.data-item');
+                let length = dataItem.length;
+
+                //找出最後一筆資料
+                dataItem.each(function (i, v) {
+                    if (i === (length - 1)) {
+                        let bankNo = $(v).children('.f-1.bank10').text();
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxBank10", "Ajaxs")",
+                            data: { BankNo: bankNo },
+                            success: function (data) {
+                                if (data != null) {
+
+                                    //塞資料
+                                    $("#BankNo").val(data.bankNo);
+                                    $("#BankName").val(data.bankName);
+                                    $("#Ntus").val(data.ntus);
+                                    $("#Initamount").val(data.initAmount);
+                                    $("#Initdate").val(data.initDate);
+                                    $("#Accno").val(data.accNo);
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+
+                        let el = document.querySelector('.data-item.active');
+
+                        el.scrollIntoView(true);
+                    }
+                });
+            });
+        });
+
+        //下一筆資料
+        $(function () {
+            $(".tool-btn-next").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出下一個錨點
+                var nextClass = $('.data-item.active').next();
+                var nextClassValue = $('.data-item.active').next().children('.f-1.bank10').text();
+
+                if (nextClass.length == 0) {
+                    alert("已沒有下一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                nextClass.addClass('active');
+                nextClass.prev().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxBank10", "Ajaxs")",
+                    data: { 'BankNo': nextClassValue },
+                    success: function (data) {
+                        if (data != null) {
+
+                            //塞資料
+                            $("#BankNo").val(data.bankNo);
+                            $("#BankName").val(data.bankName);
+                            $("#Ntus").val(data.ntus);
+                            $("#Initamount").val(data.initAmount);
+                            $("#Initdate").val(data.initDate);
+                            $("#Accno").val(data.accNo);
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //上一筆資料
+        $(function () {
+            $(".tool-btn-prev").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出上一個錨點
+                var prevClass = $('.data-item.active').prev();
+                var prevClassValue = $('.data-item.active').prev().children('.f-1.bank10').text();
+
+                if (prevClass.length == 0) {
+                    alert("已沒有上一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                prevClass.addClass('active');
+                prevClass.next().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxBank10", "Ajaxs")",
+                    data: { 'BankNo': prevClassValue },
+                    success: function (data) {
+                        if (data != null) {
+
+                            //塞資料
+                            $("#BankNo").val(data.bankNo);
+                            $("#BankName").val(data.bankName);
+                            $("#Ntus").val(data.ntus);
+                            $("#Initamount").val(data.initAmount);
+                            $("#Initdate").val(data.initDate);
+                            $("#Accno").val(data.accNo);
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //找出資料
+        $(function () {
+            $('.data-item').each(function (i, v) {
+                $(this).on('click', function () {
+
+                    $('.data-item').each(function (i, v) {
+                       $(this).removeClass('active');
+                    });
+
+                    let bankNo = $(this).children('.f-1.bank10').text();
+
+                    $(this).addClass('active');
+
+                    $.ajax({
+                        type: 'Post',
+                        url: "@Url.Action("AjaxBank10", "Ajaxs")",
+                        data: { 'BankNo': bankNo },
+                        success: function (data) {
+                            if (data != null) {
+
+                                //塞資料
+                                $("#BankNo").combobox('setValue', data.bankNo);
+                                $("#Ntus").val(data.ntus);
+                                $("#Initamount").val(data.initAmount);
+                                $("#Initdate").val(data.initDate);
+
+                                if (data.accNo) {
+                                    $("#Accno").combobox('setValue', data.accNo);
+                                }
+                                else {
+                                    $("#Accno").combobox('setValue', '');
+                                }
+                            }
+                            else {
+                                alert("發生錯誤!");
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+        //匯出
+        $('.tool-btn-export').on('click', function () {
+
+            window.location.href = "@Url.Action("Export", "OGet")";
+        });
+
+        //收尋
+        $('.tool-btn-search').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                $('#IsSearch').val(true);
+
+                //清除資料
+                $("#BankNo").combobox('setValue', '');
+                $("#Accno").combobox('setValue', '');
+                $("#Ntus").val('NTD');
+                $("#Initamount").val('');
+                $("#Initdate").val('');
+                $("#AccName").val('');
+
+                //清除readonly屬性
+                $("#BankNo").combobox('readonly', false);
+                $("#Accno").combobox('readonly', false);
+                $("#Initamount").removeAttr('readonly');
+                $("#Initdate").removeAttr('readonly');
+                $("#AccName").removeAttr('readonly');
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                        @*window.location.href = "@Url.Action("Search", "Vendor")";*@
+                });
+        });
+
+        //清除搜尋資料
+        $('.btn-clean.search').on('click', function () {
+
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            //清除資料
+            $("#BankNo").combobox('setValue', '');
+            $("#Accno").combobox('setValue', '');
+            $("#Ntus").val('NTD');
+            $("#Initamount").val('');
+            $("#Initdate").val('');
+            $("#AccName").val('');
+        });
+
+        // tabs
+        $(function () {
+            $(".tabs-item:first").addClass("is-active");
+            $(".tabs-content:first").addClass("is-active");
+            $(".tabs-item").click(function () {
+                $(this).addClass("is-active");
+                $(this).siblings().removeClass("is-active");
+                $(".tabs-content").siblings().removeClass("is-active");
+                $(".tabs-content").eq($(this).index()).addClass("is-active");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

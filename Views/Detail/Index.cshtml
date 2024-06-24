@@ -1,0 +1,534 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/STOLayout.cshtml";
+}
+
+<div class="container-inner">
+    <div class="top-wrap">
+        @using (Html.BeginForm("Index", "Detail", FormMethod.Post, new { id = "myForm" }))
+        {
+            <div class="top-input">
+                <label>客戶編號</label>
+                <div class="option">
+                    <input type="text" name="name" value="" class="easyui-combobox font-16" />
+                </div>
+            </div>
+            <div class="top-input">
+                <label>廠商編號</label>
+                <div class="option">
+                    <input type="text" name="name" value="" class="easyui-combobox font-16" />
+                </div>
+            </div>
+            <div class="top-input">
+                <label>產品編號</label>
+                <div class="option">
+                    <input type="text" name="name" value="" class="easyui-combobox font-16" />
+                </div>
+            </div>
+            <div class="top-input large input-date">
+                <label>日期範圍</label>
+                <div class="option flex">
+                    <input type="date"  />
+                    <span>－</span>
+                    <input type="date" />
+                </div>
+            </div>
+        }
+        <div class="top-toollist">
+            <ul>
+                <li><button class="tool-btn-search"><span>搜尋</span></button></li>
+                <li><button class="tool-btn-confirm"><span>確認</span></button></li>
+                <li><button class="tool-btn-export"><span>列印</span></button></li>
+                <li><button class="tool-btn-leave"><span>離開</span></button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-content">
+        <div class="container-column">
+            <div class="container-col-1">
+                <div class="inside-wrap for-table pad-0">
+                    <div class="inside-overflow">
+                        <div class="tabs-wrap h-full pad-0">
+                            <div class="tabs-nav">
+                                <ul>
+                                    <li class="tabs-item is-active">
+                                        <span>進貨資料</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>銷貨資料</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>應收帳款</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>應付帳款</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>報價資料</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>收款記錄</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>付款記錄</span>
+                                    </li>
+                                    <li class="tabs-item">
+                                        <span>採購記錄</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tabs-main">
+                                <div class="tabs-content pad-0 is-active">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號1</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號2</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號3</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號4</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號5</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號6</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號7</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tabs-content pad-0">
+                                    <div class="table-wrap">
+                                        <div class="table-overflow">
+                                            <div class="table-width w-100vw">
+                                                <table>
+                                                    <tr class="sticky">
+                                                        <th class="p-4 ta-center">
+                                                            <span>序號8</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨日期</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商編號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>廠商簡稱</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>進貨單號</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>產品編號</span>
+                                                        </th>
+                                                        <th class="p-16 ta-left">
+                                                            <span>品名規格</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>數量</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>單位</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>單價</span>
+                                                        </th>
+                                                        <th class="p-4 ta-center">
+                                                            <span>%</span>
+                                                        </th>
+                                                        <th class="p-7 ta-center">
+                                                            <span>金額</span>
+                                                        </th>
+                                                        <th class="p-12 ta-left">
+                                                            <span>備註</span>
+                                                        </th>
+                                                        <th class="p-6 ta-center">
+                                                            <span>過庫存</span>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $('.tabs-nav .tabs-item').on('click', function () {
+            $('.tabs-nav .tabs-item').removeClass('is-active')
+            $('.tabs-main .tabs-content').removeClass('is-active')
+            $(this).addClass('is-active')
+            $('.tabs-main .tabs-content:eq(' + $(this).index() + ')').addClass('is-active')
+        })
+    })
+</script>

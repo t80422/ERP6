@@ -1,0 +1,264 @@
+// Clearfix
+.clearfix {
+    @include clearfix;
+}
+
+
+// No-scroll
+.no-scroll {
+    @include MQ(d1024) {
+        overflow: hidden;
+        height: 100%;
+    }
+}
+
+html,
+body,
+#wrap {
+    height: 100%;
+    @include MQ(landscape) {
+        min-height: 100%;
+    }
+}
+
+body {
+    background-color: var(--bg);
+}
+
+
+// Placeholder
+input,
+textarea,
+select {
+    border-radius: 0;
+    font-family: Arial, "Helvetica Neue", Helvetica, "微軟正黑體", sans-serif;
+    padding: 0;
+    @include placeholder;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-inner-spin-button,
+input[type="month"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+textarea {
+    resize: none;
+}
+
+select {
+    appearance: none;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+// margin & padding
+@for $num from 1 through 20 {
+    .mt-#{$num} {
+        margin-top: 10px * $num;
+    }
+    .mb-#{$num} {
+        margin-bottom: 10px * $num;
+    }
+    .mr-#{$num} {
+        margin-right: 10px * $num;
+    }
+    .ml-#{$num} {
+        margin-left: 10px * $num;
+    }
+    .pt-#{$num} {
+        padding-top: 10px * $num;
+    }
+    .pb-#{$num} {
+        padding-bottom: 10px * $num;
+    }
+    .pr-#{$num} {
+        padding-right: 10px * $num;
+    }
+    .pl-#{$num} {
+        padding-left: 10px * $num;
+    }
+}
+
+
+// main
+.container-wrap {
+    height: calc(100% - 8vw);
+    padding: 4.5vw 2vw;
+    @include MQ(landscape) {
+        height: auto;
+        min-height: calc(100% - 8vw);
+    }
+}
+
+
+// popup
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 98;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 40, 40, .9);
+    &.is-active {
+        display: block;
+        animation-name: fadeIn;
+        animation-duration: .5s;
+        animation-fill-mode: both;
+    }
+}
+
+.popup-close {
+    position: absolute;
+    top: -4.5vw;
+    right: -4.5vw;
+    display: block;
+    width: 2.5vw;
+    height: 2.5vw;
+    line-height: 2.5vw;
+    text-align: center;
+    font-size: 2.5vw;
+    color: #FFF;
+    background-color: transparent;
+    border: 0;
+    &::before {
+        content: '\f00d';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+    }
+}
+
+.popup-check-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99;
+    display: none;
+    width: 47vw;
+    background-color: #fff;
+    border-radius: 0.9vw;
+    padding: 6vw;
+    transform: translate(-50%, -50%);
+    p {
+        font-size: var(--f-size);
+        color: var(--font-color);
+        margin-bottom: 4vw;
+    }
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        button {
+            flex: 0 0 15.5vw;
+            height: 4.8vw;
+            text-align: center;
+            font-size: var(--f-size);
+            font-weight: bold;
+            letter-spacing: .1vw;
+            border-radius: .9vw;
+            border-width: 1px;
+            border-style: solid;
+            &.btn-cancel {
+                color: var(--font-color);
+                background-color: #fff;
+                border-color: #9797A3;
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+            &.btn-submit {
+                color: #FFF;
+                background-color: var(--c1);
+                border-color: var(--c1);
+                &:hover {
+                    background-color: #2345bb;
+                }
+            }
+        }
+    }
+    &.is-active {
+        display: block;
+        animation-name: fadeIn;
+        animation-duration: .5s;
+        animation-fill-mode: both;
+    }
+}
+
+.popup-info-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99;
+    display: none;
+    width: 60vw;
+    background-color: #fff;
+    border-radius: 0.9vw;
+    transform: translate(-50%, -50%);
+    &.is-active {
+        display: block;
+        animation-name: fadeIn;
+        animation-duration: .5s;
+        animation-fill-mode: both;
+    }
+    @include MQ(landscape) {
+        height: 80%;
+    }
+}
+
+.popup-info-content {
+    padding: 4vw 6vw;
+    figure {
+        position: relative;
+        height: 31vw;
+        background-color: #F1F1F1;
+        background-image: image-url('upfile_icon.png');
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: 10vw auto;
+        border-radius: 0.9vw;
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+        }
+    }
+    ul {
+        li {
+            position: relative;
+            text-align: right;
+            font-size: var(--f-size);
+            color: var(--font-color);
+            margin-top: 2.5vw;
+            padding-left: 9vw;
+            span {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .radio {
+                display: inline-block;
+                margin-left: 2vw;
+            }
+        }
+    }
+    @include MQ(landscape) {
+        height: 100%;
+        @include scrollbar;
+    }
+}

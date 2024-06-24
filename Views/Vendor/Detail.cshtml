@@ -1,0 +1,1063 @@
+﻿@model ERP6.ViewModels.Vendor.VendorDetailViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">STO進銷系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>進銷系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Pur")">C204_採購單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "In")">C205_領料入庫資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C206_庫存異動單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock20")">C207_產品促銷單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bou")">C208_報價單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out")">C209_出貨單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out30")">C210_寄賣客戶庫存檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C211_產品期初資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C212_盤點單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C213_加工產品資料檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <form method="post" id="form" name="form">
+                        <!-- top-input -->
+                        <div class="top-input">
+                            <label for="">客戶編號</label>
+                            <div class="option">
+                                @Html.DropDownListFor(x => x.CoNo, ViewBag.CustomerList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox" })
+                            </div>
+                            @*@Html.TextBoxFor(x => x.CustimerNo)*@
+                            @*<button class="btn-opt"></button>*@
+                        </div>
+                        <!-- top-input -->
+                        <div class="top-input">
+                            <label for="">廠商編號</label>
+                            <div class="option">
+                                @Html.DropDownListFor(x => x.VendorNo, ViewBag.VendorList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox" })
+                            </div>
+                            @*@Html.TextBoxFor(x => x.VendorNo)*@
+                            @*<button class="btn-opt"></button>*@
+                        </div>
+                        <!-- top-input -->
+                        <div class="top-input">
+                            <label for="">產品編號</label>
+                            <div class="option">
+                                @Html.DropDownListFor(x => x.StockNo, ViewBag.StockList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox" })
+                            </div>
+                            @*@Html.TextBoxFor(x => x.StockNo)*@
+                            @*<button class="btn-opt"></button>*@
+                        </div>
+                        <!-- top-input -->
+                        <div class="top-input large input-date">
+                            <label for="">日期範圍</label>
+                            <div>
+                                @Html.TextBoxFor(x => x.BeginDate, new { type = "date" })
+                            </div>
+                            <span></span>
+                            <div>
+                                @Html.TextBoxFor(x => x.EndDate, new { type = "date" })
+                            </div>
+                        </div>
+                        <!-- top-checkbox -->
+                        <div class="top-checkbox">
+                            <input type="checkbox" name="OnlyShow" id="OnlyShow">
+                            <label for="onlyShow">只顯示未過帳</label>
+                        </div>
+                    </form>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-leave"><span>離開</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="inside-wrap for-table pad-0">
+                                <div class="inside-overflow">
+                                    <div class="tabs-wrap h-full pad-0">
+                                        <div class="tabs-nav">
+                                            <ul>
+                                                <li class="tabs-item is-active">
+                                                    <span>進貨資料</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>銷貨資料</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>應收帳款</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>應付帳款</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>報價資料</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>收款記錄</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>付款記錄</span>
+                                                </li>
+                                                <li class="tabs-item">
+                                                    <span>採購記錄</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="tabs-main">
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>序號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>進貨日期</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>進貨單號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>產品編號</span>
+                                                                    </th>
+                                                                    <th class="p-16 ta-left">
+                                                                        <span>品名規格</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>數量</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>單位</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>單價</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>%</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>金額</span>
+                                                                    </th>
+                                                                    <th class="p-12 ta-left">
+                                                                        <span>備註</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>過庫存</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.in10DataList != null && Model.in10DataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.in10DataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.SerNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.InDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VendorNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VeName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.InNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.PartNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Spec</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.Qty</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Unit</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Price</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Discount</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Amount</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Memo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.StockPass</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>出貨日期</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>客戶編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>客戶簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>出貨單號</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>類別</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>序號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-left">
+                                                                        <span>產品編號</span>
+                                                                    </th>
+                                                                    <th class="p-12 ta-center">
+                                                                        <span>品名規格</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>數量</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>單位</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>單價</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>%</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>金額</span>
+                                                                    </th>
+                                                                    <th class="p-12 ta-left">
+                                                                        <span>備註</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>過庫存</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.outDataList != null && Model.outDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.outDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.OutDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.OutNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.OutType</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.SerNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.PartNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Spec</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.Qty</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Unit</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Price</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Discount</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Amount</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Memo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.StockPass</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>帳款月份</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>客戶編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>客戶簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>幣別</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>免稅金額</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>應稅金額</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-left">
+                                                                        <span>稅額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>已收金額</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>折讓金額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>本月未收</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>前期未收</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>總未收額</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.oGetDataList != null && Model.oGetDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.oGetDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayMonth</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Ntus</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Total0</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Total1</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Tax</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.YesGet</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.SubTot</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.NotGet</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.LNotGet</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.TNotGet</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>帳款月份</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>幣別</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>免稅金額</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>應稅金額</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-left">
+                                                                        <span>稅額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>已收金額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>折讓金額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>本月未收</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>前期未收</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>總未收額</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.iPayDataList != null && Model.iPayDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.iPayDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayMonth</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VendorNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VeName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Ntus</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Total0</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Total1</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Tax</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.YesGet</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.SubTot</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.NotGet</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.LNotGet</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.TNotGet</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>報價日期</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>客戶編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>客戶名稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>報價單號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>序號</span>
+                                                                    </th>
+                                                                    <th class="p-16 ta-left">
+                                                                        <span>產品編號</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>品名規格</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>數量</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>單位</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>單價</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>%</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>金額</span>
+                                                                    </th>
+                                                                    <th class="p-12 ta-left">
+                                                                        <span>備註</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.bouDataList != null && Model.bouDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.bouDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.QuDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Company</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.QuNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.SerNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.PartNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Spec</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.Qty</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Unit</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Price</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Discount</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Amount</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Memo</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>收款日期</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>客戶簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>收款單號</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>付款類別</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>帳款月份</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-left">
+                                                                        <span>支票號碼</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>到期日期</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>票據狀況</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>沖銷金額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>扣抵金額</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>已沖銷</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.gCheckDataList != null && Model.gCheckDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.gCheckDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.CoName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Get_Type</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayMonth</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.CheckNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Dline</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.CheckType</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PMoney</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.MMoney</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.YnPass</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>付款日期</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>付款單號</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>付款類別</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>帳款月份</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-left">
+                                                                        <span>支票號碼</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>到期日期</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>票據狀況</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>沖銷金額</span>
+                                                                    </th>
+                                                                    <th class="p-6 ta-center">
+                                                                        <span>扣抵金額</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>已沖銷</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.pCheckDataList != null && Model.pCheckDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.pCheckDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VeName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Get_Type</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PayMonth</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.CheckNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Dline</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.CheckType</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PMoney</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.MMoney</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.YnPass</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content pad-0">
+                                                <div class="table-wrap">
+                                                    <div class="table-overflow">
+                                                        <div class="table-width w-1700">
+                                                            <table>
+                                                                <tr class="sticky">
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>採購日期</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商編號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>廠商簡稱</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>採購單號</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>序號</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-left">
+                                                                        <span>產品編號</span>
+                                                                    </th>
+                                                                    <th class="p-16 ta-center">
+                                                                        <span>品名規格</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>數量</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>單位</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>單價</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>%</span>
+                                                                    </th>
+                                                                    <th class="p-4 ta-center">
+                                                                        <span>已進量</span>
+                                                                    </th>
+                                                                    <th class="p-7 ta-center">
+                                                                        <span>備註</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <!-- example start -->
+                                                                @if (Model.purDataList != null && Model.purDataList.Count() > 0)
+                                                                {
+                                                                    @foreach (var item in Model.purDataList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PurDate</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VendorNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.VeName</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.PurNo</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.SerNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.PartNo</span>
+                                                                            </td>
+                                                                            <td class="ta-left">
+                                                                                <span>@item.Spec</span>
+                                                                            </td>
+                                                                            <td class="ta-right">
+                                                                                <span>@item.Qty</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Unit</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Price</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Discount</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.InQty</span>
+                                                                            </td>
+                                                                            <td class="ta-center">
+                                                                                <span>@item.Memo</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                <!-- example end -->
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <div class="popup-wrap h-large">
+            <button class="popup-close"></button>
+            <div class="popup-main">
+                <div class="p-form">
+                    x
+                    <div class="p-btn">
+                        <button class="btn-submit small">查詢</button>
+                        <button class="btn-clean">清除條件</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //查詢
+        $('.tool-btn-search').on('click', function () {
+            $('#form').submit();
+        });
+
+        //離開
+        $('.tool-btn-leave').on('click', function () {
+
+            let vendorNo = $('#VendorNo').val();
+
+            window.location.href = "@Url.Action("Index", "Vendor")/?VendorNo=" + vendorNo;
+        });
+
+        $(function () {
+            $(".tabs-item:first").addClass("is-active");
+            $(".tabs-content:first").addClass("is-active");
+            $(".tabs-item").click(function () {
+                $(this).addClass("is-active");
+                $(this).siblings().removeClass("is-active");
+                $(".tabs-content").siblings().removeClass("is-active");
+                $(".tabs-content").eq($(this).index()).addClass("is-active");
+            });
+        });
+    </script>
+</body>
+</html>

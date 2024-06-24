@@ -1,0 +1,935 @@
+﻿@model ERP6.ViewModels.Stock20.IndexViewModel
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    @*<script src="~/js/jquery-2.1.4.min.js"></script>*@
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">STO進銷系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>進銷系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Pur")">C204_採購單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "In")">C205_領料入庫資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C206_庫存異動單建檔</a>
+                                </li>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Stock20")">C207_產品促銷單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bou")">C208_報價單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out")">C209_出貨單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out30")">C210_寄賣客戶庫存檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C211_產品期初資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C212_盤點單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C213_加工產品資料檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C207_產品促銷單建檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-first"><span>首筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-prev"><span>前筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-next"><span>次筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-last"><span>末筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-add"><span>新增</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-edit"><span>修改</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-del"><span>刪除</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-export"><span>匯出檔案</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-copy"><span>複製</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">調價單號</div>
+                                </div>
+                                <div class="data-list">
+                                    @if (Model.stock20List != null && Model.stock20List.Count > 0)
+                                    {
+                                        foreach (var item in Model.stock20List)
+                                        {
+                                            <div class="data-item">
+                                                <div class="f-1 stock20 ta-left">@item.SpNo</div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2">
+                            <form id="form" method="post">
+                                @Html.HiddenFor(x => x.IsSearch)
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">客戶編號</label>
+                                                            <div class="option">
+                                                                @Html.TextBoxFor(x => x.CoNo, new { @class = "easyui-combobox", @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">調價單號</label>
+                                                            @Html.TextBoxFor(x => x.SpNo, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-text">
+                                                            <label for="">有效日期</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.Bdate, new { @readonly = "readonly", type = "date" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.Edate, new { @readonly = "readonly", type = "date" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">備註</label>
+                                                            <div class="option">
+                                                                @*<input id="Memo" name="Memo" class="easyui-combobox" readonly="readonly" />*@
+                                                                @Html.TextBoxFor(x => x.Memo, new { @class = "easyui-combobox", @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-link">
+                                                    <button type="button" id="AddDetail" class="link-add">
+                                                        <i></i><span>清單資料</span>
+                                                    </button>
+                                                </div>
+                                                <div class="table2-wrap pad-t20 pad-b20 pad-r30 pad-l30">
+                                                    <div class="table2-title">
+                                                        <div class="tabs-item">明細資料</div>
+                                                    </div>
+                                                    <div class="table2-overflow">
+                                                        <div class="table2-main">
+                                                            <div class="tabs-content">
+                                                                <div class="table-width w-1300">
+                                                                    <table>
+                                                                        <tr class="sticky">
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>序號</span>
+                                                                            </th>
+                                                                            <th class="p-9 ta-center">
+                                                                                <span>產品編號</span>
+                                                                            </th>
+                                                                            <th class="p-18 ta-center">
+                                                                                <span>品名規格</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>數量</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>單位</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>稅別</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>原進價</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>原售價</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>新進價</span>
+                                                                            </th>
+                                                                            <th class="p-5 ta-center">
+                                                                                <span>新售價</span>
+                                                                            </th>
+                                                                            <th class="p-17 ta-left">
+                                                                                <span>備註</span>
+                                                                            </th>
+                                                                        </tr>
+                                                                        @if (Model.stock21List != null && Model.stock21List.Count > 0)
+                                                                        {
+                                                                            foreach (var stock21Item in Model.stock21List)
+                                                                            {
+                                                                                <tr>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Serno</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.PartNo</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Spec</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Qty</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Unit</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.TaxType</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Oldprice</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Oldsprice</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Newprice</span>
+                                                                                    </td>
+                                                                                    <td class="ta-center">
+                                                                                        <span>@stock21Item.Newsprice</span>
+                                                                                    </td>
+                                                                                    <td class="ta-left">
+                                                                                        <span>@stock21Item.Memo</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">輸入人員</label>
+                                                            @Html.TextBoxFor(x => x.Userid, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button type="button" class="btn-clean search">清除條件</button>
+                                            <button type="submit" class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button type="button" class="btn-cancel small check">取消</button>
+                    <button type="button" class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //廠商資料
+        $('#CoNo').combobox({
+            url: "@Url.Action("AjaxCustomerForEasyUI", "Ajaxs")",
+            required: false,
+            valueField: 'id',
+            textField: 'text'
+        });
+
+        //廠商資料
+        $('#Memo').combobox({
+            url: "@Url.Action("AjaxCustomerMemoForEasyUI", "Ajaxs")",
+            required: false,
+            valueField: 'id',
+            textField: 'text'
+        });
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            let spNo = $("#SpNo").val();
+
+            if (spNo) {
+                //找出此筆資料
+                $('.data-item').each(function (i, v) {
+                    if ($(v).children('.f-1.stock20').text() == spNo) {
+                        $(this).addClass('active');
+
+                        return;
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                if (el) {
+
+                    el.scrollIntoView(true);
+                }
+            }
+        });
+
+        //新增資料
+        $(function () {
+            $('.tool-btn-add').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Add", "Stock20")";
+                });
+            });
+        });
+
+        //刪除資料
+        $('.tool-btn-del').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                let spNo = $("#SpNo").val()
+
+                if (spNo != '') {
+                    $.ajax({
+                        url: "@Url.Action("Delete", "Stock20")",
+                        type: 'POST',
+                        data: { SpNo: spNo },
+                        success: function (data) {
+                            if (data) {
+                                alert("刪除成功!");
+
+                                window.location.href = "@Url.Action("Index", "Stock20")";
+                            }
+                            else {
+                                alert("刪除失敗!");
+                            }
+                        }
+                    });
+                }
+                else {
+                    alert("找不到刪除資料!");
+                }
+            });
+        });
+
+        //修改資料
+        $('.tool-btn-edit').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let spNo = $("#SpNo").val();
+
+                    if (!spNo) {
+                        alert("找不到編輯資料!");
+                    }
+                    else {
+                        window.location.href = "@Url.Action("Edit", "Stock20")/?SpNo=" + spNo;
+                    }
+                });
+        });
+
+        //首筆資料
+        $(function () {
+            $('.tool-btn-first').on('click', function () {
+                //先清空錨點
+                let firstDataItem = $('.data-item.active');
+
+                if (firstDataItem.length != 0) {
+                    firstDataItem.removeClass('active');
+                }
+
+                $('.data-item').each(function (i, v) {
+                    if (i === 0) {
+                        let firstItem = $(v).children('.f-1.stock20').text();
+
+                        $(v).addClass('active');
+
+                        let el = document.querySelector('.data-item.active');
+
+                        el.scrollIntoView(true);
+
+                        $.ajax({
+                            url: "@Url.Action("Search", "Stock20")",
+                            type: "POST",
+                            data: { SpNo: firstItem },
+                            success: function (data) {
+                                $("#CoNo").combobox('setValue', data.coNo);
+                                $("#Bdate").val(data.bdate);
+                                $("#Edate").val(data.edate);
+                                $("#SpNo").val(data.spNo);
+                                $("#Memo").combobox('setText', data.memo);
+
+                                if (data.stock21List != null && data.stock21List.length > 0) {
+                                    $('.sticky').nextAll('tr').empty();
+                                    $.each(data.stock21List, function (i, v) {
+                                        $('.sticky').after('<tr><td class="ta-center">' + v.serno + '</td>' +
+                                            '<td class= "ta-center" > ' + v.partNo + '</td >' +
+                                            '<td class= "ta-center" > ' + v.spec + '</td >' +
+                                            '<td class= "ta-center" > ' + v.qty + '</td >' +
+                                            '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                            '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                            '<td class= "ta-center" > ' + v.oldprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.oldsprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.newprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.newsprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.memo + '</td ></tr > ');
+                                    });
+                                }
+
+                            }
+                        });
+
+                        @*window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + firstItem;*@
+                    }
+                });
+            });
+        });
+
+        //末筆資料
+        $(function () {
+            $('.tool-btn-last').on('click', function () {
+                //先清空錨點
+                let lastDataItem = $('.data-item.active');
+
+                if (lastDataItem.length != 0 ) {
+                    lastDataItem.removeClass('active');
+                }
+
+                //找出資料總比數
+                let dataItem = $('.data-item');
+                let length = dataItem.length;
+
+                //找出最後一筆資料
+                dataItem.each(function (i, v) {
+                    if (i === (length - 1)) {
+                        let spNo = $(v).children('.f-1.stock20').text();
+                        $(v).addClass('active');
+
+                        let el = document.querySelector('.data-item.active');
+
+                        el.scrollIntoView(true);
+
+                        $.ajax({
+                            url: "@Url.Action("Search", "Stock20")",
+                            type: "POST",
+                            data: { SpNo: spNo },
+                            success: function (data) {
+                                $("#CoNo").combobox('setValue', data.coNo);
+                                $("#Bdate").val(data.bdate);
+                                $("#Edate").val(data.edate);
+                                $("#SpNo").val(data.spNo);
+                                $("#Memo").combobox('setText', data.memo);
+
+                                if (data.stock21List != null && data.stock21List.length > 0) {
+                                    $('.sticky').nextAll('tr').empty();
+                                    $.each(data.stock21List, function (i, v) {
+                                        $('.sticky').after('<tr><td class="ta-center">' + v.serno + '</td>' +
+                                            '<td class= "ta-center" > ' + v.partNo + '</td >' +
+                                            '<td class= "ta-center" > ' + v.spec + '</td >' +
+                                            '<td class= "ta-center" > ' + v.qty + '</td >' +
+                                            '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                            '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                            '<td class= "ta-center" > ' + v.oldprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.oldsprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.newprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.newsprice + '</td >' +
+                                            '<td class= "ta-center" > ' + v.memo + '</td ></tr > ');
+                                    });
+                                }
+
+                            }
+                        });
+
+                        @*window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + spNo;*@
+                    }
+                });
+            });
+        });
+
+        //下一筆資料
+        $(function () {
+            $(".tool-btn-next").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出下一個錨點
+                var nextClass = $('.data-item.active').next();
+                var nextClassValue = $('.data-item.active').next().children('.f-1.stock20').text();
+
+                if (nextClass.length == 0) {
+                    alert("已沒有下一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                nextClass.addClass('active');
+                nextClass.prev().removeClass('active');
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+
+                $.ajax({
+                    url: "@Url.Action("Search", "Stock20")",
+                    type: "POST",
+                    data: { SpNo: nextClassValue },
+                    success: function (data) {
+                        $("#CoNo").combobox('setValue', data.coNo);
+                        $("#Bdate").val(data.bdate);
+                        $("#Edate").val(data.edate);
+                        $("#SpNo").val(data.spNo);
+                        $("#Memo").combobox('setText', data.memo);
+
+                        if (data.stock21List != null && data.stock21List.length > 0) {
+                            $('.sticky').nextAll('tr').empty();
+                            $.each(data.stock21List, function (i, v) {
+                                $('.sticky').after('<tr><td class="ta-center">' + v.serno + '</td>' +
+                                    '<td class= "ta-center" > ' + v.partNo + '</td >' +
+                                    '<td class= "ta-center" > ' + v.spec + '</td >' +
+                                    '<td class= "ta-center" > ' + v.qty + '</td >' +
+                                    '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                    '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                    '<td class= "ta-center" > ' + v.oldprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.oldsprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.newprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.newsprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.memo + '</td ></tr > ');
+                            });
+                        }
+
+                    }
+                });
+
+                @*window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + nextClassValue;*@
+            });
+        });
+
+        //上一筆資料
+        $(function () {
+            $(".tool-btn-prev").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出上一個錨點
+                var prevClass = $('.data-item.active').prev();
+                var prevClassValue = $('.data-item.active').prev().children('.f-1.stock20').text();
+
+                if (prevClass.length == 0) {
+                    alert("已沒有上一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                prevClass.addClass('active');
+                prevClass.next().removeClass('active');
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+
+                $.ajax({
+                    url: "@Url.Action("Search", "Stock20")",
+                    type: "POST",
+                    data: { SpNo: prevClassValue },
+                    success: function (data) {
+                        $("#CoNo").combobox('setValue', data.coNo);
+                        $("#Bdate").val(data.bdate);
+                        $("#Edate").val(data.edate);
+                        $("#SpNo").val(data.spNo);
+                        $("#Memo").combobox('setText', data.memo);
+
+                        if (data.stock21List != null && data.stock21List.length > 0) {
+                            $('.sticky').nextAll('tr').empty();
+                            $.each(data.stock21List, function (i, v) {
+                                $('.sticky').after('<tr><td class="ta-center">' + v.serno + '</td>' +
+                                    '<td class= "ta-center" > ' + v.partNo + '</td >' +
+                                    '<td class= "ta-center" > ' + v.spec + '</td >' +
+                                    '<td class= "ta-center" > ' + v.qty + '</td >' +
+                                    '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                    '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                    '<td class= "ta-center" > ' + v.oldprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.oldsprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.newprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.newsprice + '</td >' +
+                                    '<td class= "ta-center" > ' + v.memo + '</td ></tr > ');
+                            });
+                        }
+
+                    }
+                });
+
+                @*window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + prevClassValue;*@
+            });
+        });
+
+        //找出資料
+        $(function () {
+            $('.data-item').each(function (i, v) {
+                $(this).on('click', function () {
+
+                    $('.data-item').each(function (i, v) {
+                       $(this).removeClass('active');
+                    });
+
+                    let spNo = $(this).children('.f-1.stock20').text();
+
+                    $(this).addClass('active');
+
+                    $.ajax({
+                        url: "@Url.Action("Search", "Stock20")",
+                        type: "POST",
+                        data: { SpNo: spNo },
+                        success: function (data) {
+                            $("#CoNo").combobox('setValue', data.coNo);
+                            $("#Bdate").val(data.bdate);
+                            $("#Edate").val(data.edate);
+                            $("#SpNo").val(data.spNo);
+                            $("#Memo").combobox('setText', data.memo);
+
+                            if (data.stock21List != null && data.stock21List.length > 0) {
+                                $('.sticky').nextAll('tr').empty();
+                                $.each(data.stock21List, function (i, v) {
+                                    $('.sticky').after('<tr><td class="ta-center">' + v.serno + '</td>' +
+                                        '<td class= "ta-center" > ' + v.partNo + '</td >' +
+                                        '<td class= "ta-center" > ' + v.spec + '</td >' +
+                                        '<td class= "ta-center" > ' + v.qty + '</td >' +
+                                        '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                        '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                        '<td class= "ta-center" > ' + v.oldprice + '</td >' +
+                                        '<td class= "ta-center" > ' + v.oldsprice + '</td >' +
+                                        '<td class= "ta-center" > ' + v.newprice + '</td >' +
+                                        '<td class= "ta-center" > ' + v.newsprice + '</td >' +
+                                        '<td class= "ta-center" > ' + v.memo + '</td ></tr > ');
+                                });
+                            }
+
+                        }
+                    });
+
+                    @*window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + spNo;*@
+                });
+            });
+        });
+
+        //收尋
+        $('.tool-btn-search').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                $('#IsSearch').val(true);
+
+                //清除資料
+                $("#CoNo").combobox('setValue', '');
+                $("#SpNo").val('');
+                $("#Bdate").val('');
+                $("#Edate").val('');
+                $("#Memo").combobox('setValue', '');
+
+                //清除readonly屬性
+                $("#CoNo").combobox('readonly', false);
+                $("#SpNo").removeAttr('readonly');
+                $("#Bdate").removeAttr('readonly');
+                $("#Edate").removeAttr('readonly');
+                $("#Memo").combobox('readonly', false);
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+                });
+        });
+
+        //清除搜尋資料
+        $('.btn-clean.search').on('click', function () {
+
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            //清除資料
+            $("#CoNo").combobox('setValue', '');
+            $("#SpNo").val('');
+            $("#Bdate").val('');
+            $("#Edate").val('');
+            $("#Memo").combobox('setValue', '');
+        });
+
+        //新增明細資料
+        $("#AddDetail").on('click', function () {
+            let spNo = $("#SpNo").val();
+
+            if (spNo == '') {
+                alert("請選擇檔案!")
+            }
+            else {
+
+                window.location.href = "@Url.Action("IndexDetail", "Stock20")/?SpNo=" + spNo;
+            }
+        });
+
+        //複製功能
+        $(".tool-btn-copy").on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                let spNo = $("#SpNo").val();
+
+                if (!spNo) {
+                    alert("找不到複製資料!");
+                }
+                else {
+                    $.ajax({
+                        url: "@Url.Action("Copy","Stock20")",
+                        type: 'POST',
+                        data: { SpNo: spNo },
+                        success: function (data) {
+                            let spNo = data;
+                            if (spNo) {
+                                window.location.href = "@Url.Action("Index", "Stock20")/?SpNo=" + spNo;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // TABs
+        $(function () {
+            $(".tabs-item:first").addClass("is-active");
+            $(".tabs-content:first").addClass("is-active");
+            $(".tabs-item").click(function () {
+                $(this).addClass("is-active");
+                $(this).siblings().removeClass("is-active");
+                $(".tabs-content").siblings().removeClass("is-active");
+                $(".tabs-content").eq($(this).index()).addClass("is-active");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

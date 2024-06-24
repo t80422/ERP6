@@ -1,0 +1,337 @@
+﻿@model ERP6.ViewModels.Customer.CustomerEditViewModel
+
+@{
+    Layout = "~/Views/Shared/STOLayout.cshtml";
+}
+
+<div class="container-inner">
+    <!-- top -->
+    <div class="top-wrap">
+        <!-- top-title -->
+        <div class="top-title">
+            <h2>C202_客戶基本資料檔</h2>
+        </div>
+        <!-- top-toollist -->
+        <div class="top-toollist">
+            <ul>
+                <li>
+                    <button class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-cancel"><span>取消</span></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- content -->
+    @Html.HiddenFor(x => x.Paybank)
+    <div class="container-content">
+        <div class="container-column">
+            <div class="container-col-2">
+                <form id="myForm" method="post">
+                    @Html.HiddenFor(x => x.Back)
+                    <div class="inside-wrap">
+                        <div class="inside-overflow">
+                            <div class="form-wrap">
+                                <div id="cloneEle" class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">客戶編號*</label>
+                                                @Html.TextBoxFor(x => x.CoNo)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">統一編號*</label>
+                                                @Html.TextBoxFor(x => x.Uniform)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">客戶類別*</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.CusType, ViewBag.CusTypeList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">母公司名稱*</label>
+                                                @Html.TextBoxFor(x => x.ParentId)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">公司名稱*</label>
+                                                @Html.TextBoxFor(x => x.Company)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">客戶簡稱</label>
+                                                @Html.TextBoxFor(x => x.Coname)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">發票抬頭</label>
+                                                @Html.TextBoxFor(x => x.Invocomp)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">結帳日期</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.Dlien, ViewBag.DlienList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">電話一*</label>
+                                                @Html.TextBoxFor(x => x.Tel1)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">負責人*</label>
+                                                @Html.TextBoxFor(x => x.Boss)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">傳真*</label>
+                                                @Html.TextBoxFor(x => x.Fax)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">負責業務</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.PeNo, ViewBag.BusinessList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">電話二*</label>
+                                                @Html.TextBoxFor(x => x.Tel2)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">聯絡人*</label>
+                                                @Html.TextBoxFor(x => x.Sales)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">行動電話</label>
+                                                @Html.TextBoxFor(x => x.Mobile)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">司機</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.DriveNo, ViewBag.DriverList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">通訊地址*</label>
+                                                @Html.TextBoxFor(x => x.Compaddr)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input col-2">
+                                                <label for="">稅別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.TaxType, ViewBag.TaxTypeList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-input unit-percent col-2">
+                                                <label for="">稅率</label>
+                                                @Html.TextBoxFor(x => x.Taxrate)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">倉庫地址*</label>
+                                                @Html.TextBoxFor(x => x.Sendaddr)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">區域類別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.AreaNo, ViewBag.Area as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">營業項目</label>
+                                                @Html.TextBoxFor(x => x.Product)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">單價列印</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.PrintPrice, ViewBag.PrintPriceList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">售價類別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.PriceType, ViewBag.PriceTypeList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                    @*@Html.DropDownListFor(x => x.PriceType, ViewBag.PriceTypeList as IEnumerable<SelectListItem>, new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input unit-percent">
+                                                <label for="">現金扣%</label>
+                                                @Html.TextBoxFor(x => x.Discount)
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">計價幣別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.Ntus, ViewBag.NtusList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tabs-wrap">
+                                <div class="tabs-nav">
+                                    <ul>
+                                        <li class="tabs-item min-size is-active">資料</li>
+                                    </ul>
+                                </div>
+                                <div class="tabs-main">
+                                    <div class="tabs-content">
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">付款帳號</label>
+                                                    @Html.TextBoxFor(x => x.Payaccount)
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-s">
+                                                <div class="form-input">
+                                                    <label for="">付款銀行</label>
+                                                    <div class="select">
+                                                        @Html.DropDownListFor(x => x.Paybank, ViewBag.PayBankList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">付款方式</label>
+                                                    @Html.TextBoxFor(x => x.Payment)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">電子郵件</label>
+                                                    @Html.TextBoxFor(x => x.Email)
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">票期天數</label>
+                                                    @Html.TextBoxFor(x => x.ChehkDay)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">網址</label>
+                                                    @Html.TextBoxFor(x => x.Www)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">備註</label>
+                                                    @Html.TextBoxFor(x => x.Memo)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // 確認
+        $('.tool-btn-confirm').on('click', function () {
+            //開啟確認視窗
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            $('.btn-cancel.small.check').off('click')
+            $('.btn-submit.small.check').off('click')
+            // 取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+            })
+            // 確認
+            $('.btn-submit.small.check').on('click', function () {
+                $('#myForm').submit()
+            })
+        })
+        // 取消
+        $('.tool-btn-cancel').on('click', function () {
+            window.location.href = '@Url.Action("Index","Customer",new { Back = Model.Back, CoNo = Model.CoNo })';
+        })
+    })
+</script>
+
+@* 提示訊息 *@
+@if (!String.IsNullOrEmpty(Model.ErrorMessage))
+{
+<script>
+        $(function () {
+            var ErrorMessage = "@Model.ErrorMessage";
+            alert(ErrorMessage)
+        })
+</script>}

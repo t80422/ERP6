@@ -1,0 +1,25 @@
+﻿@model ERP6.ViewModels.Out30VMs.Out30VM
+@{ Layout = "/Views/Shared/STOLayout.cshtml"; }
+
+<!-- inner -->
+<div class="container-inner">
+    <!-- top -->
+    <div class="top-wrap">
+        <!-- top-title -->
+        <div class="top-title">
+            <h2>C210_寄賣客戶庫存檔 - 新增</h2>
+        </div>
+        <!-- top-toollist -->
+        <div class="top-toollist">
+            <ul>
+                <li>
+                    <button type="submit" form="form" class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li>
+                    <button type="button" class="tool-btn-cancel" onclick="location.href='@Url.Action("Index")'"><span>取消</span></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    @await Html.PartialAsync("Form", Model)
+</div>

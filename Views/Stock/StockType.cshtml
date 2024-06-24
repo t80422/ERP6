@@ -1,0 +1,451 @@
+﻿@model IEnumerable<ERP6.Models.STOCK_TYPE>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{ Layout = "/Views/Shared/STOLayout.cshtml"; }
+
+
+<div class="container-inner">
+    <!-- top -->
+    <div class="top-wrap">
+        <!--<form method="post" id="form" name="form">-->
+        <!-- top-input -->
+        <!--<div class="top-input">
+                <label for="">區域名稱</label>
+                <div class="option">
+                   @* @Html.DropDownListFor(x => x.AreaNo, ViewBag.AreaList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox" })*@
+                </div>
+            </div>
+        </form>-->
+        <!-- top-toollist -->
+        <div class="top-toollist">
+            <ul>
+                <li class="moai-input-icon">
+                    <form method="post" id="form" name="form">
+                        <div class="option">
+                            <input type="text" name="type" id="type" value="@ViewBag.type" />
+                        </div>
+                    </form>
+                    <button class="tool-btn-search"><span>查詢</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-change"><span>變更順序</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-add"><span>新增</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-edit"><span>修改</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-del"><span>刪除</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-leave"><span>離開</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-cancel"><span>取消</span></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="container-content">
+        <div class="container-column">
+            <div class="container-col-1">
+                <div class="data-wrap">
+                    <div class="data-title">
+                        <div class="f-2 ta-center">序號</div>
+                        <div class="f-2 ta-left">產品分類名稱</div>
+                        <div class="f-2">排序</div>
+                        <div class="f-2">狀態</div>
+                        @*<div class="f-2 ta-left">操作</div>*@
+                    </div>
+                    <div class="data-list draggable-list">
+                        @foreach (var it in Model)
+                        {
+                            <div class="data-item">
+                                <div class="f-2 ta-center">@it.TYPE_ID</div>
+                                <div class="f-2 ta-left">@Html.TextBoxFor(x => it.TYPE_NAME, new { id = it.TYPE_ID, @class = "area-inp_moai", @readonly = "readonly" })</div>
+                                <div class="f-2">@it.TYPE_ORDER</div>
+                                <div class="f-2">
+                                    @if (it.TYPE_ISOPEN)
+                                    {
+                                        @Html.Raw("<span class=\"status\">啟用</span>");
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("<span class=\"status\">停用</span>");
+                                    }
+                                </div>
+                                @*<div class="f-2 ta-left">
+                                        <button class="btn-style btn-edit" type="button" data-fuyu-code="@item.AREA_ID"></button>
+                                        <button class="btn-style btn-del" type="button" data-fuyu-code="@item.AREA_ID"></button>
+                                    </div>*@
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="addNewItem" class="popup-wrap">
+    <div class="popup-main">
+        <div class="p-form">
+            <h2>請輸入新的類別名稱</h2>
+            <form action="##">
+                <div class="input">
+                    <input type="text" id="AddTypeName">
+                </div>
+                <div class="p-btn pad-0">
+                    <button type="button" id="cancelItem" class="btn-cancel small">取消</button>
+                    <button type="button" id="AddType" class="btn-submit small">確定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="~/js/script.js"></script>
+
+<script>
+
+    var Sortdata = [];
+
+    $(function () {
+        var ori_inp = "";
+        // 點擊選取
+        $('.data-item').on('click', function () {
+            $('.data-item').removeClass('is-active')
+            $(this).addClass('is-active')
+        })
+        // 查詢
+        $('.tool-btn-search').on('click', function () {
+            $('#form').submit();
+        })
+        // 離開
+        $('.tool-btn-leave').on('click', function () {
+            window.location.href = "@Url.Action("Index", "Stock")";
+        });
+        // 新增
+        $('.tool-btn-add').on('click', function () {
+            $('#cancelItem').off('click');
+            $('#AddType').off('click');
+            $('.popup-overlay').addClass('is-active');
+            $('#addNewItem').addClass('is-active');
+
+            // 取消
+            $('#cancelItem').on('click', function () {
+                $('.popup-overlay').removeClass('is-active');
+                $('#addNewItem').removeClass('is-active');
+            })
+
+            // 確認
+            $('#AddType').on('click', function () {
+                $.ajax({
+                    url: "@Url.Action("AddType", "Stock")",
+                    type: "POST",
+                    async:false,
+                    data: { AddTypeName : $("#AddTypeName").val() },
+                    success: function (data) {
+
+                        if (data == 1) {
+
+                            alert("新增成功")
+                            window.location.href = "@Url.Action("StockType", "Stock")";
+                        } else {
+                            alert("新增失敗");
+                        }
+                    }
+                });
+                $('.popup-overlay').removeClass('is-active');
+                $('#addNewItem').removeClass('is-active');
+            })
+        })
+        // 修改
+        $('.tool-btn-edit').on('click', function () {
+            var Item = $('.data-item.is-active').first();
+            if (Item.length <= 0) {
+                alert("請選擇項目");
+                return false
+            }
+
+            $('.top-toollist ul li').hide();
+            $('.tool-btn-confirm').parents('li').show();
+            $('.tool-btn-cancel').parents('li').show();
+            $('.tool-btn-cancel').off('click');
+            $('.tool-btn-confirm').off('click');
+
+            Item.find('input[name="it.TYPE_NAME"]').attr('readonly', false)
+            Item.find('input[name="it.TYPE_NAME"]').focus();
+
+            let status = Item.find('span.status');
+            var status_open = false;
+            if (status.text() == "啟用") {
+                status.addClass('true')
+                status_open = true;
+            } else {
+                status.addClass('false')
+                status_open = false;
+            }
+
+            var ori_status = status_open;
+            ori_inp = Item.find('input[name="it.TYPE_NAME"]').val()
+
+            // 更改狀態
+            status.off('click')
+            status.on('click', function () {
+                if (status_open) {
+                    status.text("停用")
+                    status.removeClass('true')
+                    status.addClass('false')
+                    status_open = false;
+                } else {
+                    status.text("啟用")
+                    status.removeClass('false')
+                    status.addClass('true')
+                    status_open = true;
+
+                }
+            })
+
+            // 取消
+            $('.tool-btn-cancel').on('click', function () {
+                $('.top-toollist ul li').show();
+                $('.tool-btn-confirm').parents('li').hide();
+                $('.tool-btn-cancel').parents('li').hide();
+                Item.find('input[name="it.TYPE_NAME"]').attr('readonly', true)
+                Item.find('input[name="it.TYPE_NAME"]').val(ori_inp)
+                if (ori_status) { status.text("啟用") } else {status.text("停用")}
+                status.removeClass('true')
+                status.removeClass('false')
+            })
+            // 確認
+            $('.tool-btn-confirm').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                $(".popup-wrap.check").first().find('.btn-cancel.small.check').off('click');
+                $(".popup-wrap.check").first().find('.btn-submit.small.check').off('click');
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    var TypeNo = Item.find('input[name="it.TYPE_NAME"]').attr('id')
+                    var TypeName = Item.find('input[name="it.TYPE_NAME"]').val()
+                    if (!TypeName) {
+                        alert("類別名稱不得為空")
+                        $(".popup-wrap.check").removeClass("is-active");
+                        $(".popup-overlay").removeClass("is-active");
+                        Item.find('input[name="it.TYPE_NAME"]').focus();
+                        return false;
+                    }
+                    $.ajax({
+                        url: "@Url.Action("EditType", "Stock")",
+                        type: 'POST',
+                        async:false,
+                        data: { TypeNo: TypeNo, TypeName: TypeName, TypeStatus: status_open },
+                        success: function (data) {
+                            if (data == 1) {
+
+                                alert("更新成功");
+                            }
+                            else {
+
+                                alert("更新失敗");
+                            }
+                        }
+                    });
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    $('.top-toollist ul li').show();
+                    $('.tool-btn-confirm').parents('li').hide();
+                    $('.tool-btn-cancel').parents('li').hide();
+                    ori_inp = ""
+                });
+
+
+            })
+        })
+        // 刪除
+        $('.tool-btn-del').on('click', function () {
+            var Item = $('.data-item.is-active').first();
+            if (Item.length <= 0) {
+                alert("請選擇項目");
+                return false
+            }
+
+            $('.btn-cancel.small.check').off('click');
+            $('.btn-submit.small.check').off('click');
+
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            })
+
+            $('.btn-submit.small.check').on('click', function () {
+                var Item = $('.data-item.is-active').first();
+                var TypeNo = Item.find('input[name="it.TYPE_NAME"]').attr('id')
+
+                $.ajax({
+                    url: "@Url.Action("DelType", "Stock")",
+                    type: 'POST',
+                    data: { TypeNo: TypeNo },
+                    success: function (data) {
+                        if (data) {
+                            alert("刪除成功!");
+
+                            window.location.href = "@Url.Action("StockType", "Stock")";
+                        }
+                        else {
+                            alert("刪除失敗!");
+                        }
+                    }
+                });
+            })
+        })
+        // 變更順序
+        $('.tool-btn-change').on('click', function () {
+            $('.top-toollist ul li').hide();
+            $('.tool-btn-confirm').parents('li').show();
+            $('.tool-btn-cancel').parents('li').show();
+            $('.tool-btn-cancel').off('click');
+            $('.tool-btn-confirm').off('click');
+
+            $('.data-item').removeClass('is-active')
+
+            sorttable();
+
+            $('.tool-btn-cancel').on('click', function () {
+                window.location.href = "@Url.Action("StockType", "Stock")";
+            })
+
+            $('.tool-btn-confirm').on('click', function () {
+
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //$('.btn-cancel.smaill.check').off('click');
+                //$('.btn-submit.smaill.check').off('click');
+                $(".popup-wrap.check").first().find('.btn-cancel.small.check').off('click');
+                $(".popup-wrap.check").first().find('.btn-submit.small.check').off('click');
+
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $.ajax({
+                        url: "@Url.Action("OrderType", "Stock")",
+                        type: 'POST',
+                        data: { TypeNos: Sortdata },
+                        success: function (data) {
+                            if (data) {
+                                alert("更新成功!");
+
+                                window.location.href = "@Url.Action("StockType", "Stock")";
+                            }
+                            else {
+                                alert("更新失敗!");
+                            }
+                        }
+                    });
+                });
+
+            })
+        })
+    })
+
+    function sorttable() {
+        $('.draggable-list .data-item').attr('draggable', true);
+
+        var dragged;
+
+        // 當開始拖動一個元素或一個選擇文本的時候 dragstart 事件就會觸發（設定拖動資料和拖動用的影像，且當從 OS 拖動檔案進入瀏覽器時不會觸發）
+        document.addEventListener('dragstart', function (event) {
+            dragged = event.target;
+            event.target.style.backgroundColor = 'rgba(240, 240, 240, 0.5)';
+            event.target.style.color = 'rgba(255, 255, 255, 0.5)';
+        }, false);
+
+        // 不論結果如何，拖動作業結束當下，被拖動元素都會收到一個 dragend 事件（當從 OS 拖動檔案進入瀏覽器時不會觸發）
+        document.addEventListener('dragend', function (event) {
+            // 重置樣式
+            event.target.style.backgroundColor = 'inherit';
+            event.target.style.color = 'inherit';
+        }, false);
+        // 當一個元素或者文本被拖動到有效放置目標 dragover 事件就會一直觸發（每隔幾百毫秒）
+        // 絕大多數的元素預設事件都不准丟放資料，所以想要丟放資料到元素上，就必須取消預設事件行為
+        // 取消預設事件行為能夠藉由呼叫 event.preventDefault 方法
+        document.addEventListener('dragover', function (event) {
+            // 阻止預設事件行為
+            event.preventDefault();
+        }, false);
+        // 當拖動的元素或者文本進入一個有效的放置目標 dragenter 事件就會觸發
+        document.addEventListener('dragenter', function (event) {
+            // 當拖動的元素進入可放置的目標（自訂符合條件），變更背景顏色
+            // 自訂條件：class 名稱 && 不是本身的元素
+            if (event.target.parentNode.className == 'data-item' &&
+                dragged !== event.target.parentNode) {
+                dragged.style.background = '#e1e8ff';
+
+                // 判斷向下或向上拖動，來決定在元素前或後插入元素
+                if (dragged.rowIndex < event.target.parentNode.rowIndex) {
+                    event.target.parentNode.parentNode.insertBefore(dragged, event.target.parentNode.nextSibling);
+                }
+                else {
+                    event.target.parentNode.parentNode.insertBefore(dragged, event.target.parentNode);
+                }
+            }
+        }, false);
+
+        // 當拖動的元素或者文本離開有效的放置目標 dragleave 事件就會觸發
+        document.addEventListener('dragleave', function (event) {
+            // 當拖動元素離開可放置目標節點，重置背景
+            // 自訂條件：class 名稱 && 不是本身的元素
+            if (event.target.parentNode.className == 'data-item' &&
+                dragged !== event.target.parentNode) {
+                // 當拖動元素離開可放置目標節點，重置背景
+                event.target.parentNode.style.background = '';
+            }
+        }, false);
+
+        // 當丟放拖動元素到拖拉目標區時 drop 事件就會觸發；此時事件處理器可能會需要取出拖拉資料並處理之
+        // 這個事件只有在被允許下才會觸發，如果在使用者取消拖拉操作時，如按 ESC 鍵或滑鼠不是在拖拉目標元素上，此事件不會觸發
+        document.addEventListener('drop', function (event) {
+            /*
+            * AJAX Update DB
+            */
+
+            //var id = document.querySelectorAll('.draggable-list .data-item');
+            Sortdata = [];  // 儲存所有 ID
+
+            $('.draggable-list .data-item').each(function () {
+                Sortdata.push($(this).find('input[name="it.TYPE_NAME"]').attr('id'))
+            })
+            console.log(Sortdata);
+
+        }, false);
+    }
+
+</script>

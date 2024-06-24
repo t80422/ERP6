@@ -1,0 +1,714 @@
+﻿@model ERP6.ViewModels.Customer.CustomerIndexViewModel
+@{
+    Layout = "~/Views/Shared/STOLayout.cshtml";
+}
+
+<div class="container-inner">
+    <!-- TOP -->
+    <div class="top-wrap">
+        <div class="top-title">
+            <h2>C202_客戶基本資料檔</h2>
+        </div>
+        <div class="top-toollist">
+            <ul>
+                <li>
+                    <button class="tool-btn-first"><span>首筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-prev"><span>前筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-next"><span>次筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-last"><span>末筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-add"><span>新增</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-edit"><span>修改</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-del"><span>刪除</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-search"><span>查詢</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-export"><span>匯出檔案</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-material"><span>相關資料</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-change"><span>編號變更</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-cancel"><span>取消</span></button>
+                </li>
+                @if (Model.Back)
+                {
+                    <li>
+                        <button class="tool-btn-leave"><span>離開</span></button>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="container-content">
+        <div class="container-column">
+            <!-- LIST -->
+            <div class="container-col-1">
+                <div class="data-wrap moai">
+                    <div class="data-title">
+                        <div class="f-1 ta-left">客戶編號</div>
+                        <div class="f-2 ta-left">客戶簡稱</div>
+                    </div>
+                    <div class="data-list">
+                        <!-- example start -->
+                        @foreach (var item in Model.customerList)
+                        {
+                            <div class="data-item">
+                                <div class="f-1 cono ta-left">@item.CoNo</div>
+                                <div class="f-2 ta-left">@item.CoName</div>
+                            </div>
+                        }
+                        <!-- example end -->
+                    </div>
+                </div>
+            </div>
+            <!-- CONTAINER -->
+            <div class="container-col-2 fl-5">
+                @using (Html.BeginForm("Index", "Customer", FormMethod.Post , new { @id="myForm"}))
+                {
+                    @Html.HiddenFor(x => x.IsSearch)
+                    @Html.HiddenFor(x=>x.Back)
+                    <div class="inside-wrap">
+                        <div class="inside-overflow">
+                            <div class="form-wrap">
+                                <div id="cloneEle" class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">客戶編號*</label>
+                                                @Html.TextBoxFor(x => x.CoNo, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">統一編號*</label>
+                                                @Html.TextBoxFor(x => x.Uniform, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">客戶類別*</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.CusType, ViewBag.CusTypeList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">母公司名稱*</label>
+                                                @Html.TextBoxFor(x => x.ParentId, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">公司名稱*</label>
+                                                @Html.TextBoxFor(x => x.Company, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">客戶簡稱</label>
+                                                @Html.TextBoxFor(x => x.Coname, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">發票抬頭</label>
+                                                @Html.TextBoxFor(x => x.Invocomp, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">結帳日期</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.Dlien, ViewBag.DlienList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">電話一*</label>
+                                                @Html.TextBoxFor(x => x.Tel1, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">負責人*</label>
+                                                @Html.TextBoxFor(x => x.Boss, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">傳真*</label>
+                                                @Html.TextBoxFor(x => x.Fax, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">負責業務</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.PeNo, ViewBag.BusinessList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">電話二*</label>
+                                                @Html.TextBoxFor(x => x.Tel2, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">聯絡人*</label>
+                                                @Html.TextBoxFor(x => x.Sales, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">行動電話</label>
+                                                @Html.TextBoxFor(x => x.Mobile, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">司機</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.DriveNo, ViewBag.DriverList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">通訊地址*</label>
+                                                @Html.TextBoxFor(x => x.Compaddr, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input col-2">
+                                                <label for="">稅別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.TaxType, ViewBag.TaxTypeList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                            <div class="form-input unit-percent col-2">
+                                                <label for="">稅率</label>
+                                                @Html.TextBoxFor(x => x.Taxrate, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">倉庫地址*</label>
+                                                @Html.TextBoxFor(x => x.Sendaddr, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for=""><a href="@Url.Action("Area", "Customer")">區域類別</a></label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.AreaNo, ViewBag.Area as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">營業項目</label>
+                                                @Html.TextBoxFor(x => x.Product, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">單價列印</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.PrintPrice, ViewBag.PrintPriceList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">售價類別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x=>x.PriceType , ViewBag.PriceTypeList as SelectList , "請選擇" , htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input unit-percent">
+                                                <label for="">現金扣%</label>
+                                                @Html.TextBoxFor(x => x.Discount, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">計價幣別</label>
+                                                <div class="select">
+                                                    @Html.DropDownListFor(x => x.Ntus, ViewBag.NtusList as IEnumerable<SelectListItem>, new { @class = "form-control", @disabled="disabled" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-link">
+                                <button type="button" class="link-add">
+                                    <i></i><span>新增一筆</span>
+                                </button>
+                            </div>
+                            <div class="tabs-wrap">
+                                <div class="tabs-nav">
+                                    <ul>
+                                        <li class="tabs-item min-size is-active">資料</li>
+                                    </ul>
+                                </div>
+                                <div class="tabs-main">
+                                    <div class="tabs-content is-active">
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">付款帳號</label>
+                                                    @Html.TextBoxFor(x => x.Payaccount, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-s">
+                                                <div class="form-input">
+                                                    <label for="">付款銀行</label>
+                                                    <div class="select">
+                                                        @Html.DropDownListFor(x => x.Paybank, ViewBag.PaybankList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control", @disabled="disabled" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">付款方式</label>
+                                                    @Html.TextBoxFor(x => x.Payment, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">電子郵件</label>
+                                                    @Html.TextBoxFor(x => x.Email, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">票期天數</label>
+                                                    @Html.TextBoxFor(x => x.ChehkDay, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">網址</label>
+                                                    @Html.TextBoxFor(x => x.Www, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-flex f-1">
+                                                <div class="form-input">
+                                                    <label for="">備註</label>
+                                                    @Html.TextBoxFor(x => x.Memo, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //初始資料
+    $(function () {
+        //先清除所有資料的綁定狀態
+        $('.data-item').each(function (i, v) {
+            $(this).removeClass('active');
+        });
+
+        let coNo = $("#CoNo").val();
+
+        if (coNo) {
+            //找出此筆資料
+            $('.data-item').each(function (i, v) {
+                if ($(v).children('.f-1.cono').text() == coNo) {
+                    $(this).addClass('active');
+
+                    return;
+                }
+            });
+
+            let el = document.querySelector('.data-item.active');
+
+            if (el) {
+
+                el.scrollIntoView(true);
+            }
+        }
+    });
+    // 功能
+    $(function () {
+        if($('#CoNo').val()) FindData($('#CoNo').val())
+        // 點擊單筆資料
+        $('.data-item').click(function () {
+            openReadonly();
+            clearInput();
+            $('#IsSearch').val(false)
+            $('.top-toollist ul li').show();
+            $('.tool-btn-confirm').parent('li').hide();
+            $('.tool-btn-cancel').parent('li').hide();
+
+            FindData($(this).find('.cono').text());
+
+            $('.data-item').removeClass('active');
+            $(this).addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 首筆
+        $('.tool-btn-first').click(function () {
+            openReadonly();
+            FindData($('.data-item').first().find('.f-1.cono').text());
+
+            $('.data-item').removeClass('active');
+            $('.data-item').first().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 末筆
+        $('.tool-btn-last').click(function () {
+            openReadonly();
+            FindData($('.data-item').last().find('.f-1.cono').text());
+
+            $('.data-item').removeClass('active');
+            $('.data-item').last().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 下一筆
+        $('.tool-btn-next').click(function () {
+            openReadonly();
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').next() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有下一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.f-1.cono').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+        // 上一筆
+        $('.tool-btn-prev').click(function () {
+            openReadonly();
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').prev() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有上一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.f-1.cono').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+
+            document.querySelector('.data-item.active').scrollIntoView(true);
+
+        })
+        // 新增
+        $('.tool-btn-add').on('click', function () {
+            window.location.href = '@Url.Action("Add","Customer" , new { Back = Model.Back})';
+        })
+        // 編輯
+        $('.tool-btn-edit').on('click', function () {
+            var CoNo = $('#CoNo').val()
+            if (!CoNo) {
+                alert("找不到編輯資料!");
+                return false;
+            }
+            window.location.href = "@Url.Action("Edit", "Customer",new { Back = Model.Back })&CustomerId=" + CoNo;
+        })
+        // 刪除
+        $('.tool-btn-del').on('click', function () {
+            var CoNo = $('#CoNo').val()
+            if (!CoNo) {
+                alert("找不到刪除資料!");
+                return false;
+            }
+
+            clearCheckClick();
+
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+            $('.btn-cancel.small.check').off('click');
+            $('.btn-submit.small.check').off('click');
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                window.location.href = "@Url.Action("Delete", "Customer")" + "?CustomerId=" + CoNo;
+            });
+        })
+        // 新增子公司
+        $('.link-add').on('click', function () {
+            var CoNo = $('#CoNo').val()
+            if (!CoNo) {
+                alert("請選擇母公司!");
+                return false;
+            }
+
+            alert('wait')
+        })
+        // 相關資料
+        $('.tool-btn-material').on('click', function () {
+            var CoNo = $('#CoNo').val()
+            if (!CoNo) {
+                alert("請選擇客戶!");
+                return false;
+            }
+            window.location.href = "@Url.Action("Detail","Vendor")/?CoNo=" + CoNo;
+        })
+        // 搜尋
+        $('.tool-btn-search').on('click', function () {            
+            $('.top-toollist ul li').hide();
+
+            $('.tool-btn-confirm').parent('li').show();
+            $('.tool-btn-cancel').parent('li').show();
+
+            clearInput();
+            clearReadonly();
+
+            $('.tool-btn-cancel').off('click')
+            $('.tool-btn-confirm').off('click')
+            $('#IsSearch').val(true);
+            // 搜尋確認
+            $('.tool-btn-confirm').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                clearCheckClick();
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $('#myForm').submit()
+                });
+            })
+
+            // 搜尋取消
+            $('.tool-btn-cancel').on('click', function () {
+                openReadonly();
+                clearInput();
+                $('#IsSearch').val(false)
+                $('.top-toollist ul li').show();
+                $('.tool-btn-confirm').parent('li').hide();
+                $('.tool-btn-cancel').parent('li').hide();            
+            })
+        })     
+        // 關閉分頁
+        $('.tool-btn-leave').on('click', function () {
+            window.close()
+        })
+        // 編號變更
+        $('.tool-btn-change').on('click',function(){
+            var CoNo = $('#CoNo').val()
+            if (!CoNo) {
+                alert("找不到編輯資料!");
+                return false;
+            }
+
+            $('.top-toollist ul li').hide();
+            $('.tool-btn-confirm').parent('li').show();
+            $('.tool-btn-cancel').parent('li').show();
+            $('.tool-btn-confirm').off('click');
+            $('.tool-btn-cancel').off('click');
+
+            clearInput();
+            openReadonly();
+
+            $('#CoNo').attr('readonly',false).focus();
+            
+            $('.tool-btn-confirm').on('click',function(){
+
+                $('.btn-cancel.small.check').off('click');
+                $('.btn-submit.small.check').off('click');
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                $('.btn-submit.small.check').on('click',function(){
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                    let NewCoNo = $('#CoNo').val();
+
+                    if(!NewCoNo){
+                        alert("請輸入編號");
+                        return false;
+                    }else{
+                        $('.loading-wrap').show();
+                        $.ajax({
+                            url:'@Url.Action("ChangeCoNo","Customer")',
+                            method:'POST',
+                            data:{CoNo:CoNo,NewCoNo:NewCoNo},
+                            async:false,
+                            success:function(res){
+                                alert(res)
+                                if(res == "success"){
+                                    $('#myForm').submit();
+                                }
+                            },
+                            error:function(err){
+                                console.log(err)
+                                alert("發生錯誤")
+                            }
+                        })
+                        $('.loading-wrap').hide();
+                    }
+                })
+                
+            })
+
+            $('.tool-btn-cancel').on('click', function () {
+                openReadonly();                
+                $('.top-toollist ul li').show();
+                $('.tool-btn-confirm').parent('li').hide();
+                $('.tool-btn-cancel').parent('li').hide();
+                FindData(CoNo)
+            })
+
+        })
+        // 找尋資料
+        async function FindData(CoNo) {
+            $('.loading-wrap').show();            
+            await $.ajax({
+                method: 'Post',
+                async:false,
+                url: "@Url.Action("AjaxCustomer", "Ajaxs")",
+                data: { 'coNo': CoNo },
+                success: function (data) {
+                    if (data != null) {
+                        //塞資料
+                        $("#CoNo").val(data.coNo);
+                        $("#Uniform").val(data.uniform);
+                        $("#CusType").val(data.cusType);
+                        $("#Company").val(data.company);
+                        $("#Coname").val(data.coname);
+                        $("#Invocomp").val(data.invocomp);
+                        $("#Dlien").val(data.dlien);
+
+                        $("#Tel1").val(data.tel1);
+                        $("#Boss").val(data.boss);
+                        $("#Fax").val(data.fax);
+                        $("#PeNo").val(data.peNo);
+                        $("#Tel2").val(data.tel2);
+                        $("#Sales").val(data.sales);
+                        $("#Mobile").val(data.mobile);
+                        $("#DriveNo").val(data.driveNo);
+
+                        $("#Compaddr").val(data.compaddr);
+                        $("#TaxType").val(data.taxType);
+                        $("#Taxrate").val(data.taxrate);
+                        $("#Sendaddr").val(data.sendaddr);
+                        $("#AreaNo").val(data.areaNo);
+                        $("#Product").val(data.product);
+                        $("#PrintPrice").val(data.printPrice);
+                        $("#PriceType").val(data.priceType);
+                        $("#Discount").val(data.discount);
+                        $("#Ntus").val(data.ntus);
+
+                        $("#Payaccount").val(data.payaccount);
+                        $("#Paybank").val(data.paybank);
+                        $("#Email").val(data.email);
+                        $("#Www").val(data.www);
+                        $("#Memo").val(data.memo);
+                        $("#OldCoNo").val(data.coNo);
+
+                        $("#ChehkDay").val(data.chehkDay);
+                        $("#Payment").val(data.payment);
+                    }                    
+                }
+            });
+            $('.loading-wrap').hide();
+            
+        }
+        // 開啟唯讀
+        function openReadonly() {
+            $('#myForm input').attr('readonly', true);
+            $('#myForm select').attr('disabled', true);
+            
+        }
+        // 清空欄位
+        function clearInput() {
+            $('#myForm input').val('');
+            $('#myForm select').val('');            
+        }
+        // 關閉唯讀
+        function clearReadonly() {
+            $('#myForm input').attr('readonly',false)
+            $('#myForm select').attr('disabled',false)
+        }
+
+        // 清空彈跳視窗事件
+        function clearCheckClick() {
+            $('.btn-cancel.smaill.check').off('click');
+            $('.btn-submit.smaill.check').off('click');
+
+        }
+    })
+
+</script>

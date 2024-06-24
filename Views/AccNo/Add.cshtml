@@ -1,0 +1,291 @@
+﻿@model ERP6.ViewModels.AccNo.AddViewModel
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3  is-active" title="會計系統">
+                        <a href="@Url.Action("Index", "AccNo")"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">ACC會計系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>會計系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "AccNo")">C001_會計科目代號檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C204_採購單資料建檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C001_會計科目代號檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-leave"><span>離開</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">會計科目</div>
+                                    <div class="f-1 ta-left">科目名稱</div>
+                                </div>
+                                <div class="data-list">
+                                    <!-- example start -->
+                                    @foreach (var item in Model.accNoList)
+                                    {
+                                        <div class="data-item">
+                                            <div class="f-1 accno ta-left">@item.Accno</div>
+                                            <div class="f-1 ta-left">@item.Accname</div>
+                                        </div>
+                                    }
+                                    <!-- example end -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2">
+                            <form id="form" method="post">
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">會計科目</label>
+                                                            @Html.TextBoxFor(x => x.Accno)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">科目名稱</label>
+                                                            @Html.TextBoxFor(x => x.Accname)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">會計大類</label>
+                                                            @Html.TextBoxFor(x => x.Acctype)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">會計中類</label>
+                                                            @Html.TextBoxFor(x => x.Midtype)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button type="button" class="btn-clean search">清除條件</button>
+                                            <button type="button" id="btnSubmit" class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button class="btn-cancel small check">取消</button>
+                    <button type="button" id="btnCheck" class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            $("#Accno").val('');
+        });
+
+        //新增資料
+        $(function () {
+            $('#btnSubmit').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Index", "AccNo")";
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let fromData = $("#form").serialize();
+
+                    $.ajax({
+                        url: "@Url.Action("Add", "AccNo")",
+                        data: fromData,
+                        type: 'POST',
+                        success: function (data) {
+                            if (data.isTrue) {
+                                alert("新增成功");
+
+                                let accNo = data.accno;
+
+                                window.location.href = "@Url.Action("Index", "AccNo")/?AccNo=" + accNo;
+                            }
+                            else {
+                                alert(data.errorMessage);
+                            }
+                        }
+                    });
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active")
+                });
+            });
+        });
+
+        //清除搜尋資料
+        $('.btn-clean.search').on('click', function () {
+
+            //清除資料
+            $("#Accno").val('');
+            $("#Accname").val('');
+            $("#Acctype").val('');
+            $("#Midtype").val('');
+        });
+
+        //離開
+        $(function () {
+            $(".tool-btn-leave").on('click', function () {
+                window.location.href = "@Url.Action("Index","AccNo")";
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

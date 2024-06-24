@@ -1,0 +1,1099 @@
+﻿@model ERP6.ViewModels.Home.HomeIndexViewModel
+
+@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/Layout.cshtml"; }
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@Html.HiddenFor(x => x.NewPwd)
+@Html.HiddenFor(x => x.UserAC)
+<!-- main -->
+<main class="container-wrap page-index">
+    <div class="index-wrap">
+        <div class="index-center">
+            <div class="index-filter-wrap">
+                <div class="index-filter-top">
+                    <h2>選擇系統</h2>
+                    <ul>
+                        <li id="tACC" class="top-item"><a href="@Url.Action("Index", "AccNo")">ACC會計系統</a></li>
+                        <li id="tNOS" class="top-item"><a href="">NOS代號系統</a></li>
+                        <li id="tSTO" class="top-item"><a href="@Url.Action("Index", "Vendor")">STO進銷系統</a></li>
+                        <li id="tPEO" class="top-item"><a href="">PEO人事系統</a></li>
+                        <li id="tMON" class="top-item"><a href="">MON財務系統</a></li>
+                        <li id="tANY" class="top-item"><a href="">ANY分析系統</a></li>
+                        <li id="tSEO" class="top-item"><a href="">SEO安全系統</a></li>
+                    </ul>
+                    <button id="filterAdd" class="btn-add"></button>
+                </div>
+                <div class="index-filter-bottom">
+                    <div class="filter-selector">
+                        <h2 class="filter-title">項目清單</h2>
+                        <div class="filter-select">
+                            <ul id="gACC" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c001" value="c001">
+                                    <label for="c001">C001_會計科目代號檔</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c002" value="c002">
+                                    <label for="c002">C002_科目摘要設定檔</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c003" value="c003">
+                                    <label for="c003">C003_子科目資料建檔</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c004" value="c004">
+                                    <label for="c004">C004_傳票資料建立檔</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp001" value="cp001">
+                                    <label for="cp001">CP001_損益表列印作業</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp002" value="cp002">
+                                    <label for="cp002">CP002_資產負債印列印</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp003" value="cp003">
+                                    <label for="cp003">CP003_日記帳列印作業</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp004" value="cp004">
+                                    <label for="cp004">CP004_試算表列印作業</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp005" value="cp005">
+                                    <label for="cp005">CP005_分類帳列印作業</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp006" value="cp006">
+                                    <label for="cp006">CP006_比較損益表列印</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp008" value="cp008">
+                                    <label for="cp008">CP008_會計科目代號表</label>
+                                </li>
+                            </ul>
+                            <ul id="gNOS" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c101" value="c101">
+                                    <label for="c101">C101_片語資料建立檔(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c102" value="c102">
+                                    <label for="c102">C102_幣別匯率資料檔(1)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c103" value="c103">
+                                    <label for="c103">C103_參數資料建立檔(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c105" value="c105">
+                                    <label for="c105">C105_表尾資料設定檔(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp101" value="cp101">
+                                    <label for="cp101">CP101_目前庫存成本表(C)</label>
+                                </li>
+                            </ul>
+                            <ul id="gSTO" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c201" value="c201">
+                                    <label for="c201">C201_廠商基本資料檔(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c202" value="c202">
+                                    <label for="c202">C202_客戶基本資料檔(Z)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c203" value="c203">
+                                    <label for="c203">C203_產品基本資料檔(3)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c204" value="c204">
+                                    <label for="c204">C204_採購單資料建檔(4)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c205" value="c205">
+                                    <label for="c205">C205_進貨單資料建檔(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c206" value="c206">
+                                    <label for="c206">C206_庫存異動單建檔(6)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c207" value="c207">
+                                    <label for="c207">C207_產品促銷單建檔(7)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c208" value="c208">
+                                    <label for="c208">C208_報價單資料建檔(8)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c209" value="c209">
+                                    <label for="c209">C209_出貨單資料建檔(9)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c210" value="c210">
+                                    <label for="c210">C210_寄賣客戶庫存檔(1)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c211" value="c211">
+                                    <label for="c211">C211_產品期初資料檔(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp212" value="cp212">
+                                    <label for="cp212">C212_盤點單資料建檔(2)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp201" value="cp201">
+                                    <label for="cp201">CP201_廠商通訊錄(2)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp202" value="cp202">
+                                    <label for="cp202">CP202_客戶通訊錄(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp203" value="cp203">
+                                    <label for="cp203">CP203_產品庫存明細表(3)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp204" value="cp204">
+                                    <label for="cp204">CP204_低於安全庫存表(4)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp205" value="cp205">
+                                    <label for="cp205">CP205_採購未進明細表(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp206" value="cp206">
+                                    <label for="cp206">CP206_進貨資料統計表(6)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp207" value="cp207">
+                                    <label for="cp207">CP207_庫存異動統計表(7)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp208" value="cp208">
+                                    <label for="cp208">CP208_區間出貨統計表(8)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp209" value="cp209">
+                                    <label for="cp209">CP209_業務出貨毛利表(9)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp210" value="cp210">
+                                    <label for="cp210">CP210_產品條碼標籤表(1)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp211" value="cp211">
+                                    <label for="cp211">CP211_產品庫存調整表(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp212" value="cp212">
+                                    <label for="cp212">CP212_寄賣庫存盤點表(P)</label>
+                                </li>
+                            </ul>
+                            <ul id="gPEO" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c301" value="c301">
+                                    <label for="c301">C301_員工資本資料檔(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c302" value="c302">
+                                    <label for="c302">C302_員工薪資設定檔(2</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c303" value="c303">
+                                    <label for="c303">C303_員工薪資計算檔(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c304" value="c304">
+                                    <label for="c304">C304_員工獎懲紀錄檔(4)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c305" value="c305">
+                                    <label for="c305">C305_員工調薪紀錄檔(3)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp301" value="cp301">
+                                    <label for="cp301">CP301_員工簡易通訊錄(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp302" value="cp302">
+                                    <label for="cp302">CP302_員工薪資彙總表(P)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp303" value="cp303">
+                                    <label for="cp303">CP303_員工薪資轉帳單(3)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp304" value="cp304">
+                                    <label for="cp304">CP304_員工薪資單列印(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp305" value="cp305">
+                                    <label for="cp305">CP305_員工獎懲紀錄表(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp306" value="cp306">
+                                    <label for="cp306">CP306_員工調薪紀錄表(6)</label>
+                                </li>
+                            </ul>
+                            <ul id="gMON" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c401" value="c401">
+                                    <label for="c401">C401_進貨發票資料檔(4)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c402" value="c402">
+                                    <label for="c402">C402_銷貨發票資料檔(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c403" value="c403">
+                                    <label for="c403">C403_應收帳款資料檔(3)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c404" value="c404">
+                                    <label for="c404">C404_銀行帳戶資料檔(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c405" value="c405">
+                                    <label for="c405">C405_沖銷應收帳款檔(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c406" value="c406">
+                                    <label for="c406">C406_應付帳款資料檔(6)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c407" value="c407">
+                                    <label for="c407">C407_沖銷應付帳款檔(7)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c408" value="c408">
+                                    <label for="c408">C408_銀行存裡資料檔(8)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c409" value="c409">
+                                    <label for="c409">C409_發票產品資料檔(9)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c410" value="c410">
+                                    <label for="c410">C410_文件編號設定檔(1)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp401" value="cp401">
+                                    <label for="cp401">CP401_進貨發票統計表(C)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp402" value="cp402">
+                                    <label for="cp402">CP402_銷貨發票統計表(P)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp403" value="cp403">
+                                    <label for="cp403">CP403_客戶對帳單列印(4)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp404" value="cp404">
+                                    <label for="cp404">CP404_客戶帳款彙總表(0)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp405" value="cp405">
+                                    <label for="cp405">CP405_廠商帳款彙總表(5)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp406" value="cp406">
+                                    <label for="cp406">CP406_收款資料明細表(6)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp407" value="cp407">
+                                    <label for="cp407">CP407_付款資料明細表(7)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp408" value="cp408">
+                                    <label for="cp408">CP408_帳戶餘額試算表(8)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp409" value="cp409">
+                                    <label for="cp409">CP409_客戶收款明細表(9)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp410" value="cp410">
+                                    <label for="cp410">CP410_發票庫存明細表(1)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp411" value="cp411">
+                                    <label for="cp411">CP411_託收票據明細表(Z)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp412" value="cp412">
+                                    <label for="cp412">CP412_廠商對帳單列印(2)</label>
+                                </li>
+                                <li class="filter-option">
+                                    <input type="checkbox" id="cp413" value="cp413">
+                                    <label for="cp413">CP413_發票進銷存報表(3)</label>
+                                </li>
+                            </ul>
+                            <ul id="gANY" class="filter-group">
+                                <li class="filter-option">
+                                    <input type="checkbox" id="c501" value="c501">
+                                    <label for="c501">C501_相關資料檔(C)</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="filter-labels">
+                        <ul>
+                            <li class="filter-label" data-id="c001">
+                                <span>C001_會計科目代號檔</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "AccNo")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c002">
+                                <span>C002_科目摘要設定檔</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c003">
+                                <span>C003_子科目資料建檔</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c004">
+                                <span>C004_傳票資料建立檔</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp001">
+                                <span>CP001_損益表列印作業</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp002">
+                                <span>CP002_資產負債印列印</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp003">
+                                <span>CP003_日記帳列印作業</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp004">
+                                <span>CP004_試算表列印作業</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp005">
+                                <span>CP005_分類帳列印作業</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp006">
+                                <span>CP006_比較損益表列印</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp008">
+                                <span>CP008_會計科目代號表</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c101">
+                                <span>C101_片語資料建立檔(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c102">
+                                <span>C102_幣別匯率資料檔(1)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c103">
+                                <span>C103_參數資料建立檔(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c105">
+                                <span>C105_表尾資料設定檔(5)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp101">
+                                <span>CP101_目前庫存成本表(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c201">
+                                <span>C201_廠商基本資料檔(0)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Vendor")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c202">
+                                <span>C202_客戶基本資料檔(Z)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Customer")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c203">
+                                <span>C203_產品基本資料檔(3)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Stock")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c204">
+                                <span>C204_採購單資料建檔(4)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Pur")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c205">
+                                <span>C205_進貨單資料建檔(5)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "In")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c206">
+                                <span>C206_庫存異動單建檔(6)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c207">
+                                <span>C207_產品促銷單建檔(7)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Stock20")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c208">
+                                <span>C208_報價單資料建檔(8)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Bou")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c209">
+                                <span>C209_出貨單資料建檔(9)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Out")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c210">
+                                <span>C210_寄賣客戶庫存檔(1)</span>
+                                <button class="filter-del" onclick='window.location.href = "@Url.Action("Index", "Out30")"'></button>
+                            </li>
+                            <li class="filter-label" data-id="c211">
+                                <span>C211_產品期初資料檔(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c212">
+                                <span>C212_盤點單資料建檔(2)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp201">
+                                <span>CP201_廠商通訊錄(2)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp202">
+                                <span>CP202_客戶通訊錄(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp203">
+                                <span>CP203_產品庫存明細表(3)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp204">
+                                <span>CP204_低於安全庫存表(4)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp205">
+                                <span>CP205_採購未進明細表(5)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp206">
+                                <span>CP206_進貨資料統計表(6)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp207">
+                                <span>CP207_庫存異動統計表(7)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp208">
+                                <span>CP208_區間出貨統計表(8)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp209">
+                                <span>CP209_業務出貨毛利表(9)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp210">
+                                <span>CP210_產品條碼標籤表(1)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp211">
+                                <span>CP211_產品庫存調整表(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp212">
+                                <span>CP212_寄賣庫存盤點表(P)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c301">
+                                <span>C301_員工資本資料檔(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c302">
+                                <span>C302_員工薪資設定檔(2</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c303">
+                                <span>C303_員工薪資計算檔(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c304">
+                                <span>C304_員工獎懲紀錄檔(4)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c305">
+                                <span>C305_員工調薪紀錄檔(3)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp301">
+                                <span>CP301_員工簡易通訊錄(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp302">
+                                <span>CP302_員工薪資彙總表(P)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp303">
+                                <span>CP303_員工薪資轉帳單(3)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp304">
+                                <span>CP304_員工薪資單列印(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp305">
+                                <span>CP305_員工獎懲紀錄表(5)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp306">
+                                <span>CP306_員工調薪紀錄表(6)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c401">
+                                <span>C401_進貨發票資料檔(4)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c402">
+                                <span>C402_銷貨發票資料檔(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c403">
+                                <span>C403_應收帳款資料檔(3)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c404">
+                                <span>C404_銀行帳戶資料檔(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c405">
+                                <span>C405_沖銷應收帳款檔(5)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c406">
+                                <span>C406_應付帳款資料檔(6)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c407">
+                                <span>C407_沖銷應付帳款檔(7)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c408">
+                                <span>C408_銀行存裡資料檔(8)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c409">
+                                <span>C409_發票產品資料檔(9)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c410">
+                                <span>C410_文件編號設定檔(1)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp401">
+                                <span>CP401_進貨發票統計表(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp402">
+                                <span>CP402_銷貨發票統計表(P)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp403">
+                                <span>CP403_客戶對帳單列印(4)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp404">
+                                <span>CP404_客戶帳款彙總表(0)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp405">
+                                <span>CP405_廠商帳款彙總表(5)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp406">
+                                <span>CP406_收款資料明細表(6)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp407">
+                                <span>CP407_付款資料明細表(7)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp408">
+                                <span>CP408_帳戶餘額試算表(8)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp409">
+                                <span>CP409_客戶收款明細表(9)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp410">
+                                <span>CP410_發票庫存明細表(1)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp411">
+                                <span>CP411_託收票據明細表(Z)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp412">
+                                <span>CP412_廠商對帳單列印(2)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="cp413">
+                                <span>CP413_發票進銷存報表(3)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li class="filter-label" data-id="c501">
+                                <span>C501_相關資料檔(C)</span>
+                                <button class="filter-del"></button>
+                            </li>
+                            <li>
+                                <button class="filter-clean">
+                                    <span>全部清除</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="index-column-wrap">
+                <div id="cACC" class="index-column-box">
+                    <div class="title">
+                        <h2>ACC會計系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #00D1CA;">
+                        <ul>
+                            <li class="filter-item" data-id="c001">
+                                <a href="@Url.Action("Index", "AccNo")">C001_會計科目代號檔</a>
+                            </li>
+                            <li class="filter-item" data-id="c002">
+                                <a href="">C002_科目摘要設定檔</a>
+                            </li>
+                            <li class="filter-item" data-id="c003">
+                                <a href="">C003_子科目資料建檔</a>
+                            </li>
+                            <li class="filter-item" data-id="c004">
+                                <a href="">C004_傳票資料建立檔</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="filter-item" data-id="cp001">
+                                <a href="">CP001_損益表列印作業</a>
+                            </li>
+                            <li class="filter-item" data-id="cp002">
+                                <a href="">CP002_資產負債印列印</a>
+                            </li>
+                            <li class="filter-item" data-id="cp003">
+                                <a href="">CP003_日記帳列印作業</a>
+                            </li>
+                            <li class="filter-item" data-id="cp004">
+                                <a href="">CP004_試算表列印作業</a>
+                            </li>
+                            <li class="filter-item" data-id="cp005">
+                                <a href="">CP005_分類帳列印作業</a>
+                            </li>
+                            <li class="filter-item" data-id="cp006">
+                                <a href="">CP006_比較損益表列印</a>
+                            </li>
+                            <li class="filter-item" data-id="cp008">
+                                <a href="">CP008_會計科目代號表</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="cNOS" class="index-column-box">
+                    <div class="title">
+                        <h2>NOS代號系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #F68300;">
+                        <ul>
+                            <li class="filter-item" data-id="c101">
+                                <a href="">C101_片語資料建立檔(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="c102">
+                                <a href="">C102_幣別匯率資料檔(1)</a>
+                            </li>
+                            <li class="filter-item" data-id="c103">
+                                <a href="">C103_參數資料建立檔(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="c105">
+                                <a href="">C105_表尾資料設定檔(5)</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="filter-item" data-id="cp101">
+                                <a href="">CP101_目前庫存成本表(C)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="cSTO" class="index-column-box">
+                    <div class="title">
+                        <h2>STO進銷系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #78C623;">
+                        <ul>
+                            <li class="filter-item" data-id="c201">
+                                <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="c202">
+                                <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔(Z)</a>
+                            </li>
+                            <li class="filter-item" data-id="c203">
+                                <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔(3)</a>
+                            </li>
+                            <li class="filter-item" data-id="c204">
+                                <a href="@Url.Action("Index", "Pur")">C204_採購單資料建檔(4)</a>
+                            </li>
+                            <li class="filter-item" data-id="c205">
+                                <a href="@Url.Action("Index", "In")">C205_進貨單資料建檔(5)</a>
+                            </li>
+                            <li class="filter-item" data-id="c206">
+                                <a href="">C206_庫存異動單建檔(6)</a>
+                            </li>
+                            <li class="filter-item" data-id="c207">
+                                <a href="@Url.Action("Index", "Stock20")">C207_產品促銷單建檔(7)</a>
+                            </li>
+                            <li class="filter-item" data-id="c208">
+                                <a href="@Url.Action("Index", "Bou")">C208_報價單資料建檔(8)</a>
+                            </li>
+                            <li class="filter-item" data-id="c209">
+                                <a href="@Url.Action("Index", "Out")">C209_出貨單資料建檔(9)</a>
+                            </li>
+                            <li class="filter-item" data-id="c210">
+                                <a href="@Url.Action("Index", "Out30")">C210_寄賣客戶庫存檔(1)</a>
+                            </li>
+                            <li class="filter-item" data-id="c211">
+                                <a href="">C211_產品期初資料檔(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="c212">
+                                <a href="">C212_盤點單資料建檔(2)</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="filter-item" data-id="cp201">
+                                <a href="">CP201_廠商通訊錄(2)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp202">
+                                <a href="">CP202_客戶通訊錄(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp203">
+                                <a href="">CP203_產品庫存明細表(3)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp204">
+                                <a href="">CP204_低於安全庫存表(4)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp205">
+                                <a href="">CP205_採購未進明細表(5)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp206">
+                                <a href="">CP206_進貨資料統計表(6)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp207">
+                                <a href="">CP207_庫存異動統計表(7)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp208">
+                                <a href="">CP208_區間出貨統計表(8)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp209">
+                                <a href="">CP209_業務出貨毛利表(9)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp210">
+                                <a href="">CP210_產品條碼標籤表(1)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp211">
+                                <a href="">CP211_產品庫存調整表(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp212">
+                                <a href="">CP212_寄賣庫存盤點表(P)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="cPEO" class="index-column-box">
+                    <div class="title">
+                        <h2>PEO人事系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #FCC307;">
+                        <ul>
+                            <li class="filter-item" data-id="c301">
+                                <a href="">C301_員工資本資料檔(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="c302">
+                                <a href="">C302_員工薪資設定檔(2</a>
+                            </li>
+                            <li class="filter-item" data-id="c303">
+                                <a href="">C303_員工薪資計算檔(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="c304">
+                                <a href="">C304_員工獎懲紀錄檔(4)</a>
+                            </li>
+                            <li class="filter-item" data-id="c305">
+                                <a href="">C305_員工調薪紀錄檔(3)</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="filter-item" data-id="cp301">
+                                <a href="">CP301_員工簡易通訊錄(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp302">
+                                <a href="">CP302_員工薪資彙總表(P)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp303">
+                                <a href="">CP303_員工薪資轉帳單(3)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp304">
+                                <a href="">CP304_員工薪資單列印(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp305">
+                                <a href="">CP305_員工獎懲紀錄表(5)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp306">
+                                <a href="">CP306_員工調薪紀錄表(6)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="cMON" class="index-column-box">
+                    <div class="title">
+                        <h2>MON財務系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #FF5BB8;">
+                        <ul>
+                            <li class="filter-item" data-id="c401">
+                                <a href="">C401_進貨發票資料檔(4)</a>
+                            </li>
+                            <li class="filter-item" data-id="c402">
+                                <a href="">C402_銷貨發票資料檔(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="c403">
+                                <a href="@Url.Action("Index", "OGet")">C403_應收帳款資料檔(3)</a>
+                            </li>
+                            <li class="filter-item" data-id="c404">
+                                <a href="@Url.Action("Index", "Bank")">C404_銀行帳戶資料檔(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="c405">
+                                <a href="">C405_沖銷應收帳款檔(5)</a>
+                            </li>
+                            <li class="filter-item" data-id="c406">
+                                <a href="">C406_應付帳款資料檔(6)</a>
+                            </li>
+                            <li class="filter-item" data-id="c407">
+                                <a href="">C407_沖銷應付帳款檔(7)</a>
+                            </li>
+                            <li class="filter-item" data-id="c408">
+                                <a href="">C408_銀行存裡資料檔(8)</a>
+                            </li>
+                            <li class="filter-item" data-id="c409">
+                                <a href="">C409_發票產品資料檔(9)</a>
+                            </li>
+                            <li class="filter-item" data-id="c410">
+                                <a href="">C410_文件編號設定檔(1)</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="filter-item" data-id="cp401">
+                                <a href="">CP401_進貨發票統計表(C)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp402">
+                                <a href="">CP402_銷貨發票統計表(P)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp403">
+                                <a href="">CP403_客戶對帳單列印(4)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp404">
+                                <a href="">CP404_客戶帳款彙總表(0)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp405">
+                                <a href="">CP405_廠商帳款彙總表(5)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp406">
+                                <a href="">CP406_收款資料明細表(6)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp407">
+                                <a href="">CP407_付款資料明細表(7)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp408">
+                                <a href="">CP408_帳戶餘額試算表(8)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp409">
+                                <a href="">CP409_客戶收款明細表(9)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp410">
+                                <a href="">CP410_發票庫存明細表(1)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp411">
+                                <a href="">CP411_託收票據明細表(Z)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp412">
+                                <a href="">CP412_廠商對帳單列印(2)</a>
+                            </li>
+                            <li class="filter-item" data-id="cp413">
+                                <a href="">CP413_發票進銷存報表(3)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="cANY" class="index-column-box">
+                    <div class="title">
+                        <h2>ANY分析系統</h2>
+                        <button class="btn-more"></button>
+                    </div>
+                    <div class="list" style="background-color: #9332AF;">
+                        <ul>
+                            <li class="filter-item" data-id="c501">
+                                <a href="">C501_相關資料檔(C)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- popup -->
+<div id="demo1" class="popup-wrap">
+    <div class="popup-main">
+        <div class="p-sys-wrap">
+            <div class="p-sys-list">
+                <ul>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sACC" value="ACC">
+                        <label for="sACC">ACC會計系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sNOS" value="NOS">
+                        <label for="sNOS">NOS代號系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sSTO" value="STO">
+                        <label for="sSTO">STO進銷系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sPEO" value="PEO">
+                        <label for="sPEO">PEO人事系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sMON" value="MON">
+                        <label for="sMON">MON財務系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sANY" value="ANY">
+                        <label for="sANY">ANY分析系統</label>
+                    </li>
+                    <li class="p-sys-item">
+                        <input type="checkbox" id="sSEO" value="SEO">
+                        <label for="sSEO">SEO安全系統</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-btn center pad-0">
+                <button id="filterConfirm" class="btn-submit small">確定</button>
+                <button id="filterClean" class="btn-clean">清除條件</button>
+            </div>
+        </div>
+    </div>
+    <button class="popup-close"></button>
+</div>
+<!-- 確認視窗 -->
+<div class="popup-wrap check">
+    <div class="p-form">
+        <p>密碼確認視窗</p>
+        <div class="p-btn pad-0">
+            <div class="inside-wrap">
+                <div class="inside-overflow">
+                    <div class="form-wrap">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="form-flex f-1">
+                                    <div class="form-input">
+                                        <label style="text-align:left" for="">新密碼*</label>
+                                        @Html.TextBoxFor(x => x.Pwd)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-flex f-1">
+                                    <div class="form-input">
+                                        <label style="text-align:left" for="">確認密碼*</label>
+                                        @Html.TextBoxFor(x => x.CheckPwd)
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-submit small check">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- overlay -->
+<div class="popup-overlay"></div>
+
+
+<script>
+    $(function () {
+        if ($("#NewPwd").val() == '') {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+
+                let pwd = $("#Pwd").val();
+                let checkPwd = $("#CheckPwd").val();
+                let userId = $("#UserAC").val();
+
+                //密碼基本檢查
+                if (pwd == '') {
+                    alert("請設定密碼!");
+
+                    return;
+                }
+
+                // 8 字英數組成
+                // 至少包含 1 個大寫英文 與 小寫英文
+                // 包含 1 個數字
+                let regex = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8}$/)
+
+                if (pwd.match(regex) == null) {
+                    alert("密碼設定錯誤!請設定為8位數組成，至少包含 1 個大寫英文 與 小寫英文，並至少包含 1 個數字");
+
+                    return;
+                }
+
+                if (pwd != checkPwd) {
+                    alert("請確認密碼是否一致!")
+
+                    return;
+                }
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                $.ajax({
+                    url: "@Url.Action("AjaxChangePassword", "Ajaxs")",
+                    type: "POST",
+                    data: { userId: userId, pwd: pwd },
+                    success: function (data) {
+                        if (data) {
+                            alert("更新成功!請使用新密碼重新登入");
+
+                            window.location.href = "@Url.Action("Index", "Login")";
+                        }
+                        else {
+                            alert("系統錯誤!");
+                        }
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+

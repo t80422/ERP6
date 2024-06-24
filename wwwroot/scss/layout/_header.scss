@@ -1,0 +1,252 @@
+// header
+.header-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    display: block;
+    width: 100%;
+    height: 64px;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
+    padding-left: 320px;
+}
+
+// logo
+.logo-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 320px;
+    height: 100%;
+    border-right: 1px solid #AFAFAF;
+
+    a {
+        display: block;
+        height: 100%;
+        background-image: image-url("logo.png");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+}
+
+// nav
+.nav-wrap {}
+
+.nav-list {
+    @include clearfix;
+}
+
+.nav-item {
+    width: 64px;
+    float: left;
+    transition: background .3s;
+
+    a {
+        display: block;
+        height: 64px;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+
+    &.nav-1 {
+        a {
+            background-image: image-url("nav_icon_1.png");
+        }
+    }
+
+    &.nav-2 {
+        a {
+            background-image: image-url("nav_icon_2.png");
+        }
+    }
+
+    &.nav-3 {
+        a {
+            background-image: image-url("nav_icon_3.png");
+        }
+    }
+
+    &.nav-4 {
+        a {
+            background-image: image-url("nav_icon_4.png");
+        }
+    }
+
+    &.nav-5 {
+        a {
+            background-image: image-url("nav_icon_5.png");
+        }
+    }
+
+    &.nav-6 {
+        a {
+            background-image: image-url("nav_icon_6.png");
+        }
+    }
+
+    &.nav-7 {
+        a {
+            background-image: image-url("nav_icon_7.png");
+        }
+    }
+
+    &.nav-8 {
+        a {
+            background-image: image-url("nav_icon_8.png");
+        }
+    }
+
+    &:hover,
+    &.is-active {
+        background-color: #EBF0F3;
+    }
+}
+
+.header-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+
+    @include clearfix;
+}
+
+// search
+.header-search {
+    position: relative;
+    width: 380px;
+    height: 100%;
+    padding: 16px 0;
+    float: left;
+
+    input {
+        display: block;
+        width: 100%;
+        height: 32px;
+        background-color: #fff;
+        border: 1px solid var(--c1);
+        border-radius: 3px;
+        padding-right: 48px;
+        padding-left: 16px;
+    }
+
+    button {
+        position: absolute;
+        top: 16px;
+        right: 0;
+        z-index: 5;
+        display: block;
+        width: 32px;
+        height: 32px;
+        background-color: transparent;
+        background-image: image-url("btn_search.png");
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        border: 0;
+    }
+}
+
+.header-btn-add {
+    height: 100%;
+    padding: 16px 0;
+    float: left;
+
+    button,
+    a {
+        position: relative;
+        display: block;
+        width: 128px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        color: var(--c1);
+        border: 1px solid var(--c1);
+        border-radius: 3px;
+        transition: color .3s, background .3s;
+
+        i {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            width: 12px;
+            height: 12px;
+            margin-right: 12px;
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                display: block;
+                background-color: var(--c1);
+                transform: translate(-50%, -50%);
+                transition: background .3s;
+            }
+
+            &::before {
+                width: 100%;
+                height: 2px;
+            }
+
+            &::after {
+                width: 2px;
+                height: 100%;
+            }
+        }
+
+        &:hover {
+            color: #FFF;
+            background-color: var(--c1);
+
+            i {
+                &::before,
+                &::after {
+                    background-color: #FFF;
+                }
+            }
+        }
+    }
+}
+
+// user
+.user-info {
+    width: 150px;
+    height: 100%;
+    padding-top: 16px;
+    padding-left: 30px;
+    float: left;
+
+    span {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+    }
+
+    h2 {
+        display: block;
+        font-size: 12px;
+        font-weight: normal;
+        color: #AFAFAF;
+    }
+}
+
+// btn
+.signout-btn {
+    width: 64px;
+    height: 64px;
+    background-color: transparent;
+    background-image: image-url("signout_btn.png");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: 0;
+    border-left: 1px solid #AFAFAF;
+    transition: background .3s;
+    float: left;
+
+    &:hover {
+        background-color: #EBF0F3;
+    }
+}

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<ERP6.Models.Stock10>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+
+
+
+<main class="container-wrap">
+    <div class="layout-wrap">
+        @using (Html.BeginForm("Order", "Sales", FormMethod.Post, new { @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data", onsubmit = "return checkScript();" }))
+        {
+            <div class="layout-main">
+                <div class="layout-head">訂單作業</div>
+                <div class="layout-content">
+                    <div class="filter-input">
+                        <!-- 未填狀態下添加 .status-error -->
+                        <label for="">區域*</label>
+                        <div class="select selectA">
+                            <select name="Area" id="Area">
+                                <option value="">請選擇區域</option>
+                                @foreach (var item in ViewBag.Area)
+                                {
+                                    <option value="@item.AREA_NAME">@item.AREA_NAME</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="filter-input">
+                        <label for="">客戶名稱*</label>
+                        <div class="select">
+                            <select class="selectB" name="CustomerId" id="CustomerId">
+                                <option value="">請先選擇區域</option>
+                            </select>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="addr" id="addr" value="" placeholder="" readonly>
+                        </div>
+                    </div>
+                    <div class="layout-bottom">
+                        <button type="button" class="btn-clean">清除條件</button>
+                        <button class="btn-submit">確定</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</main>
+
+
+
+
+<script>
+
+    $(function () {
+        event_bind(); // 進入頁面綁下拉搜尋事件;
+    });
+
+    function event_bind() {
+        $(".selectA").change(function (e) {// 下拉搜尋
+
+            $('.selectB').empty();
+            var sV = $('#Area').val();
+            $('.selectB').append(`<option value=""> 請選擇客戶 </option>`);
+
+               $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AjaxClientName", "Ajaxs")",
+                   data: { id: sV },
+                   success: function (data) {
+                       if (data != null) {
+                           $.each(data, function (i, fu) {
+                                  var str = '<option value="' + fu.coNo + '">' + fu.company + '</div>';
+                                  $(".selectB").append(str)
+                              })
+                       }
+
+
+                    },
+                    error: function () {
+                        alert("發生錯誤!");
+                    }
+                });
+
+        });
+
+        $(".selectB").change(function (e) {// 下拉搜尋
+            var sV = $('#CustomerId').val();
+
+            $('#addr').empty();
+                 $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AjaxClientAddr", "Ajaxs")",
+                    data: { id: sV },
+                    success: function (data) {
+                        if (data != null) {
+                            //$('#addr').val(data)
+                            //1214
+                            $.each(data, function (i, fu) {
+                                $('#addr').val(fu.sendaddr)
+                            })
+                        }
+
+                    },
+                    error: function () {
+                        alert("發生錯誤!");
+                    }
+                });
+        });
+    }
+
+    $(function () {
+        $(".btn-clean").on("click", function (e) {
+
+            $('#Area')[0].selectedIndex = 0;
+            $('.selectB').empty();
+            $('.selectB').append(`<option value=""> 請先選擇區域 </option>`);
+            $('#addr').val("");
+        });
+    });
+
+    function checkScript() {
+
+        if ($('#Area').val() == "") {
+            //alert("請選擇區域");
+            $(".filter-input").addClass("status-error");
+            return false;
+        }
+        if ($('#CustomerId').val() == "" || $('#CustomerId').val() == "請先選擇區域") {
+            //alert("請選擇客戶");
+            $(".filter-input").addClass("status-error");
+            return false;
+        }
+    }
+
+</script>
+
+
+
+

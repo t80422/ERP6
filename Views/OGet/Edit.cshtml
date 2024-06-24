@@ -1,0 +1,486 @@
+﻿@model ERP6.ViewModels.OGet.EditViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Edit";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    @*<script src="~/js/jquery-2.1.4.min.js"></script>*@
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2  is-active" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">MON財務系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>財務系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li>
+                                    <a href="">C401_進貨發票資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C402_銷貨發票資料檔</a>
+                                </li>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "OGet")">C403_應收帳款資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C404_銀行帳戶資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C405_沖銷應收帳款檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C406_應付帳款資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C407_沖銷應付帳款檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C408_銀行存提資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C409_發票產品資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C410_文件編號設定檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C403_應收帳款資料檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-leave"><span>離開</span></button>
+                            </li>
+                            @*<li>
+                                    <button class="tool-btn-first"><span>首筆</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-prev"><span>前筆</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-next"><span>次筆</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-last"><span>末筆</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-add"><span>新增</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-edit"><span>修改</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-del"><span>刪除</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-search"><span>查詢</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-export"><span>匯出檔案</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-material"><span>相關資料</span></button>
+                                </li>
+                                <li>
+                                    <button class="tool-btn-change"><span>編號變更</span></button>
+                                </li>*@
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">帳款月份</div>
+                                    <div class="f-1 ta-left">客戶編號</div>
+                                    <div class="f-1 ta-left">客戶簡稱</div>
+                                    <div class="f-1 ta-left">本月應收</div>
+                                    <div class="f-1 ta-left">本月未收</div>
+                                </div>
+                                <div class="data-list">
+                                    @foreach (var item in Model.oGetList)
+                                    {
+                                        <div class="data-item">
+                                            <div class="f-1 oget1 ta-left">@item.Paymonth</div>
+                                            <div class="f-1 oget2 ta-left">@item.CoNo</div>
+                                            <div class="f-1 ta-left">@item.CoName</div>
+                                            <div class="f-1 ta-left">@item.Total2</div>
+                                            <div class="f-1 ta-left">@item.NotGet</div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2">
+                            <form id="form" method="post">
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">帳款月份</label>
+                                                            @Html.TextBoxFor(x => x.Paymonth, new { @type = "date" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-text">
+                                                            <label for="">客戶編號</label>
+                                                            <div id="HidText" class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.CoNo, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.CoName, new { @readonly = "readonly" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">幣別</label>
+                                                            @Html.TextBoxFor(x => x.Ntus)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">免稅金額</label>
+                                                            @Html.TextBoxFor(x => x.Total0)
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">本期銷售</label>
+                                                            @Html.TextBoxFor(x => x.Total)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">應稅金額</label>
+                                                            @Html.TextBoxFor(x => x.Total1)
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">本期退貨</label>
+                                                            @Html.TextBoxFor(x => x.RetTotal)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">稅額</label>
+                                                            @Html.TextBoxFor(x => x.Tax)
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-percent">
+                                                            <label for="">退貨率</label>
+                                                            @Html.TextBoxFor(x => x.RetPercent)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">本月應收</label>
+                                                            @Html.TextBoxFor(x => x.Total2)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">本月已收</label>
+                                                            @Html.TextBoxFor(x => x.YesGet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">現金折扣%</label>
+                                                            @Html.TextBoxFor(x => x.CashDiscount)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">折讓金額</label>
+                                                            @Html.TextBoxFor(x => x.SubTot)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">上月未收</label>
+                                                            @Html.TextBoxFor(x => x.NotGet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">上期未收</label>
+                                                            @Html.TextBoxFor(x => x.LnotGet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">總未收</label>
+                                                            @Html.TextBoxFor(x => x.TnotGet)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">備註</label>
+                                                            @Html.TextBoxFor(x => x.Memo)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">傳票編號</label>
+                                                            @Html.TextBoxFor(x => x.Accid)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button type="button" class="btn-clean search">清除條件</button>
+                                            <button id="btnSubmit" type="button" class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button class="btn-cancel small check">取消</button>
+                    <button type="button" id="btnCheck" class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+        });
+
+        //編輯資料
+        $(function () {
+            $('#btnSubmit').on('click', function () {
+                //開啟確認視窗
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //按下取消按鈕
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Index", "OGet")";
+                });
+
+                //按下確認按鈕
+                $('#btnCheck').on('click', function () {
+
+                    let fromData = $("#form").serialize();
+
+                    $.ajax({
+                        url: "@Url.Action("Edit", "OGet")",
+                        data: fromData,
+                        type: 'POST',
+                        success: function (data) {
+                            if (data.isTrue) {
+                                alert("編輯成功");
+
+                                let paymonth = data.paymonth;
+                                let coNo = data.coNo;
+
+                                window.location.href = "@Url.Action("Index", "OGet")/?Paymonth=" + paymonth + "&CoNo=" + coNo;
+
+                            }
+                            else {
+                                alert(data.errorMessage);
+                            }
+                        }
+                    });
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active")
+
+                });
+            });
+        });
+
+        //清空資料
+        $(function () {
+            $(".btn-clean.search").on('click', function () {
+                //清除資料
+                $("#Paymonth").val('');
+                $("#CoNo").val('');
+                $("#CoName").val('');
+                $("#CoNoDDL").val('');
+
+                $("#Ntus").val('');
+                $("#Total0").val('');
+                $("#Total").val('');
+                $("#Total1").val('');
+                $("#RetTotal").val('');
+
+                $("#Tax").val('');
+                $("#RetPercent").val('');
+                $("#Total2").val('');
+
+                $("#YesGet").val('');
+                $("#CashDiscount").val('');
+                $("#SubTot").val('');
+
+                $("#NotGet").val('');
+                $("#LnotGet").val('');
+
+                $("#TnotGet").val('');
+                $("#Memo").val('');
+                $("#Accid").val('');
+            });
+        });
+
+        //離開
+        $(function () {
+            $(".tool-btn-leave").on('click', function () {
+                window.location.href = "@Url.Action("Index","OGet")";
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,125 @@
+﻿@model IEnumerable<ERP6.Models.ConsignReconciliation>
+@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>寄賣客戶庫存對帳表</title>
+    <link rel="stylesheet" type="text/css" href="~/css/print.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>忠義/睿盛企業(股份)公司</h2>
+            <div style="text-decoration: underline;">寄賣客戶庫存對帳表</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align:left" colspan="2">客戶：@(Model.FirstOrDefault()?.CusNo) @(Model.FirstOrDefault()?.CusName)</th>
+                    <th style="text-align:center" colspan="2">結帳月份:@(Model.FirstOrDefault()?.BillingMonth)</th>
+                    <th style="text-align:right" colspan="5">製表：@DateTime.Now.ToString("yyyy/MM/dd")</th>
+                </tr>
+
+                <tr class="columnName">
+                    <th>產品編號</th>
+                    <th>品名規格</th>
+                    <th>上期</th>
+                    <th>進貨</th>
+                    <th>進退</th>
+                    <th>本期庫存</th>
+                    <th>銷售</th>
+                    <th>單價</th>
+                    <th>金額</th>
+                </tr>
+            </thead>
+
+            <tbody id="data-body">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProductNo</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.PreInventory</td>
+                        <td>@item.In</td>
+                        <td>@item.Return</td>
+                        <td>@item.CurrentInventory</td>
+                        <td>@item.Sale</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <table>
+            <tr>
+                <td>免稅總額:@(Model.FirstOrDefault()?.TaxFreeAmount)</td>
+                <td>應稅總額:@(Model.FirstOrDefault()?.TaxAmount)</td>
+                <td>稅額:@(Model.FirstOrDefault()?.Tax)</td>
+                <td>含稅合計:@(Model.FirstOrDefault()?.Total)</td>
+            </tr>
+
+            <tr>
+                <td>現金折扣:@(Model.FirstOrDefault()?.CashDiscount)</td>
+                <td>折讓金額:@(Model.FirstOrDefault()?.Discount)</td>
+                <td></td>
+                <td>未收金額:@(Model.FirstOrDefault()?.AmountNotCollected)</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tbody = document.getElementById('data-body');
+        var rows = tbody.getElementsByTagName('tr');
+        var subTotalRows = 29; // 每頁的行數
+        var amountIndex = 8; // "金額"列的索引
+        var runningSubTotal = 0; // 累積小計的變數
+
+        // 暫存小計行的變數
+        var subTotalRowsToInsert = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            // 計算每列的“金額”
+            console.log(rows[i].cells[amountIndex].innerText);
+            runningSubTotal += parseFloat(rows[i].cells[amountIndex].innerText) || 0;
+
+            // 每隔 subTotalRows 行標記要插入的小計行
+            if ((i + 1) % subTotalRows === 0) {
+                console.log("Inserting subtotal at row " + (i + 1));
+                var subTotalRow = document.createElement('tr');
+                subTotalRow.className = 'subtotal';
+                var subTotalHtml = '<td colspan="8">小計</td>';
+                subTotalHtml += '<td>' + runningSubTotal.toFixed(2) + '</td>';
+
+                subTotalRow.innerHTML = subTotalHtml;
+                subTotalRowsToInsert.push({ index: i + 1, row: subTotalRow });
+
+                runningSubTotal = 0; // 重置小計
+            }
+        }
+
+        // 最後一頁的小計
+        if (rows.length % subTotalRows !== 0) {
+            console.log("Inserting final subtotal");
+            var finalSubTotalRow = document.createElement('tr');
+            finalSubTotalRow.className = 'subtotal';
+            var finalSubTotalHtml = '<td colspan="8">小計</td>';
+            finalSubTotalHtml += '<td>' + runningSubTotal.toFixed(2) + '</td>';
+
+            finalSubTotalRow.innerHTML = finalSubTotalHtml;
+            subTotalRowsToInsert.push({ index: rows.length, row: finalSubTotalRow });
+        }
+
+        // 反向插入標記的小計行，避免索引問題
+        for (var j = subTotalRowsToInsert.length - 1; j >= 0; j--) {
+            tbody.insertBefore(subTotalRowsToInsert[j].row, rows[subTotalRowsToInsert[j].index]);
+        }
+    });
+</script>

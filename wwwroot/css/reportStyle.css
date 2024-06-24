@@ -1,0 +1,282 @@
+﻿@font-face {
+    font-family: '標楷體';
+    src: url('../fonts/kaiu.ttf') format("truetype");
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Microsoft JhengHei','Times New Roman';
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.form-wrap {
+    width: 22.6cm;
+    height: 14cm;
+}
+
+.form-area {
+    height: 100%;
+    font-size: 0.3cm;
+    color: #000;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: contain;
+    padding: 0 1.4cm;
+}
+
+.top-wrap {
+    display: flex;
+    height: 1.2cm;
+    padding-top: 0.4cm;
+}
+
+    .top-wrap h2 {
+        flex: 0 1 46%;
+        height: 100%;
+        text-align: center;
+        line-height: 1;
+        font-size: 0.6cm;
+        font-weight: bold;
+        letter-spacing: .1cm;
+        margin: 0;
+        float: left;
+    }
+
+    .top-wrap > div {
+        flex: 1;
+        height: 100%;
+        float: left;
+    }
+
+        .top-wrap > div p {
+            display: block;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+        }
+
+.info-wrap {
+    display: flex;
+    height: 1.2cm;
+    padding-left: .8cm;
+}
+
+    .info-wrap ul {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+        .info-wrap ul:nth-child(1) {
+            flex: 0 1 36%;
+        }
+
+        .info-wrap ul:nth-child(2) {
+            flex: 0 1 18%;
+        }
+
+        .info-wrap ul:nth-child(3) {
+            flex: 0 1 18%;
+        }
+
+        .info-wrap ul:nth-child(4) {
+            flex: 0 1 14%;
+        }
+
+        .info-wrap ul:nth-child(5) {
+            flex: 0 1 14%;
+        }
+
+    .info-wrap li {
+        height: 0.4cm;
+        line-height: 0.4cm;
+        list-style-type: none;
+    }
+
+        .info-wrap li span {
+            padding-left: 0.6cm;
+        }
+
+.form-table {
+    display: flex;
+    min-height: 10cm;
+    height: 10cm;
+    padding-top: 0.1cm;
+    padding-left: 0.8cm;
+}
+
+    .form-table .table {
+        flex: 1;
+    }
+
+        .form-table .table table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .form-table .table td,
+        .form-table .table th {
+            text-align: center;
+            vertical-align: middle;
+            font-size: 0.3cm;
+        }
+
+        .form-table .table td {
+            line-height: 0.38cm;
+            height: 0.38cm;
+        }
+
+        .form-table .table th {
+            height: 0.58cm;
+            line-height: 0.55cm;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        .form-table .table tr th:first-child {
+            border-left: 1px solid #000;
+        }
+
+        .form-table .table td:last-child, .form-table .table th:last-child {
+            border-right: 1px solid #000;
+        }
+
+    .form-table tr:last-child td {
+        border-bottom: 1px solid #000;
+    }
+
+    .form-table .table td:nth-child(1) {
+        width: 10%;
+        text-align: left;
+        padding-left: 0.2cm;
+        border-left: 1px solid #000;
+    }
+
+    .form-table .table td:nth-child(2) {
+        width: 30%;
+        text-align: left;
+        padding-left: 0.2cm;
+    }
+
+    .form-table .table td:nth-child(3) {
+        width: 6%;
+    }
+
+    .form-table .table td:nth-child(4) {
+        width: 6%;
+    }
+
+    .form-table .table td:nth-child(5) {
+        width: 9%;
+        text-align: right;
+        padding-right: 0.2cm;
+    }
+
+    .form-table .table td:nth-child(6) {
+        width: 5%;
+        text-align: right;
+        padding-right: 0.2cm;
+    }
+
+    .form-table .table td:nth-child(7) {
+        width: 10%;
+        text-align: right;
+        padding-right: 0.2cm;
+    }
+
+    .form-table .table td:nth-child(8) {
+        width: 9%;
+        text-align: right;
+        padding-right: 0.2cm;
+    }
+
+    .form-table .table td:nth-child(9) {
+        width: 4%;
+    }
+
+    .form-table .table td:nth-child(10) {
+        width: 11%;
+        vertical-align: top;
+    }
+
+    .form-table .table td.notes {
+        line-height: 0.6cm;
+        border-bottom: 0;
+    }
+
+    .form-table .table tr:last-child td.notes {
+        border-bottom: 1px solid #000;
+    }
+
+    .form-table .text {
+        text-align: center;
+    }
+
+        .form-table .text p {
+            display: inline-block;
+            vertical-align: top;
+            width: 0.3cm;
+            line-height: 1;
+            font-size: 0.3cm;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-table .text h2 {
+            display: inline-block;
+            vertical-align: top;
+            width: 0.4cm;
+            line-height: 1;
+            font-size: 0.4cm;
+            margin: 0;
+            padding: .6cm 0 0;
+        }
+
+.bottom-wrap .flex {
+    display: flex;
+    margin: 0;
+    padding: 0 0 0 .7cm;
+}
+
+.bottom-wrap .item:nth-child(1) {
+    flex: 0 1 17%;
+}
+
+.bottom-wrap .item:nth-child(2) {
+    flex: 0 1 20%;
+}
+
+.bottom-wrap .item:nth-child(3) {
+    flex: 0 1 34%;
+}
+
+.bottom-wrap .item:nth-child(4) {
+    flex: 1;
+}
+
+.bottom-wrap .item > div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+    .bottom-wrap .item > div:nth-child(2) {
+        margin-left: 0.1cm;
+    }
+
+@page {
+    size: 22.6cm 14cm;
+    margin: 0;
+    padding: 0;
+}
+
+@media print {
+    @page {
+        size: 22.6cm 14cm;
+    }
+}

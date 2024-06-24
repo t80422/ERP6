@@ -1,0 +1,137 @@
+// header
+.header-wrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    height: 8vw;
+    background-color: #fff;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
+    padding-right: 20vw;
+    padding-left: calc(34vw + 1vw);
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 35vw;
+        z-index: 0;
+        display: block;
+        width: 1px;
+        height: 100%;
+        background-color: #AFAFAF;
+    }
+}
+
+// logo
+.logo-wrap {
+    position: absolute;
+    top: 50%;
+    left: 2.5vw;
+    display: block;
+    width: 30vw;
+    height: 6vw;
+    background-image: image-url('logo_h.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    transform: translateY(-50%);
+    a {
+        display: block;
+        height: 100%;
+    }
+}
+
+// nav
+.nav-wrap {
+    display: flex;
+    height: 100%;
+}
+
+.nav-item {
+    flex: 1;
+    height: 100%;
+    a {
+        display: block;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-size: 4.2vw auto;
+    }
+    &:hover,
+    &.is-active {
+        background-color: #EBF0F3;
+    }
+    &.n-order {
+        a {
+            background-image: image-url('icon_order_g.png');
+        }
+    }
+    &.n-shipment {
+        a {
+            background-image: image-url('icon_shipment_g.png');
+        }
+    }
+    &.n-quotation {
+        a {
+            background-image: image-url('icon_quotation_g.png');
+        }
+    }
+    &.n-promotion {
+        a {
+            background-image: image-url('icon_promotion_g.png');
+        }
+    }
+    &.n-inventory {
+        a {
+            background-image: image-url('icon_inventory_g.png');
+        }
+    }
+    &.n-collection {
+        a {
+            background-image: image-url('icon_collection_g.png');
+        }
+    }
+}
+
+// btn
+.signout-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8vw;
+    height: 100%;
+    background-image: image-url('signout_btn.png');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 3.6vw auto;
+    border: 0;
+    border-left: 1px solid #AFAFAF;
+}
+
+// user
+.user-info {
+    position: absolute;
+    top: 0;
+    right: 8vw;
+    display: block;
+    width: 11vw;
+    height: 100%;
+    padding: 2vw 1vw 0 0;
+    span {
+        display: block;
+        font-size: 1.7vw;
+        font-weight: bold;
+        color: var(--font-color);
+        letter-spacing: .01vw;
+        margin-bottom: 0.5vw;
+    }
+    h2 {
+        display: block;
+        line-height: 1.2;
+        font-size: 1.5vw;
+        font-weight: normal;
+        color: #AFAFAF;
+        margin: 0;
+        @include text-truncate;
+    }
+}

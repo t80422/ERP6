@@ -1,0 +1,87 @@
+﻿@model ERP6.Models.Users
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>Users</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Userid" class="control-label"></label>
+                <input asp-for="Userid" class="form-control" />
+                <span asp-validation-for="Userid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agent" class="control-label"></label>
+                <input asp-for="Agent" class="form-control" />
+                <span asp-validation-for="Agent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pwd" class="control-label"></label>
+                <input asp-for="Pwd" class="form-control" />
+                <span asp-validation-for="Pwd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Createdate" class="control-label"></label>
+                <input asp-for="Createdate" class="form-control" />
+                <span asp-validation-for="Createdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Creater" class="control-label"></label>
+                <input asp-for="Creater" class="form-control" />
+                <span asp-validation-for="Creater" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modifydate" class="control-label"></label>
+                <input asp-for="Modifydate" class="form-control" />
+                <span asp-validation-for="Modifydate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modifier" class="control-label"></label>
+                <input asp-for="Modifier" class="form-control" />
+                <span asp-validation-for="Modifier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sysflag" class="control-label"></label>
+                <input asp-for="Sysflag" class="form-control" />
+                <span asp-validation-for="Sysflag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

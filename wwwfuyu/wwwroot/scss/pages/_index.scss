@@ -1,0 +1,103 @@
+.menu-wrap {
+    position: relative;
+    width: 93vw;
+    margin: 0 auto;
+    ul {
+        @include clearfix;
+    }
+    li {
+        width: 27vw;
+        background-color: #FFF;
+        border-radius: 1vw;
+        box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16); 
+        margin: 0 2vw 6vw;
+        float: left;
+        a {
+            position: relative;
+            display: block;
+            padding: 2vw 3vw;
+        }
+        span {
+            display: block;
+            height: 19.5vw;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: 9vw auto;
+            border-radius: 1vw;
+            box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+            margin-bottom: 1.2vw;
+        }
+        h2 {
+            line-height: 1;
+            font-size: var(--f-size);
+            font-weight: bold;
+            color: #282828;
+            margin: 0;
+        }
+        &.is-order {
+            span {
+                background-color: #31B76B;
+                background-image: image-url('icon_order.png');
+            }
+        }
+        &.is-shipment {
+            span {
+                background-color: #A24F10;
+                background-image: image-url('icon_shipment.png');
+            }
+        }
+        &.is-quotation {
+            span {
+                background-color: #5F5BE1;
+                background-image: image-url('icon_quotation.png');
+            }
+        }
+        &.is-promotion {
+            span {
+                background-color: #D92935;
+                background-image: image-url('icon_promotion.png');
+            }
+        }
+        &.is-inventory {
+            span {
+                background-color: #1775DF;
+                background-image: image-url('icon_inventory.png');
+            }
+        }
+        &.is-collection {
+            span {
+                background-color: #FFDD00;
+                background-image: image-url('icon_collection.png');
+            }
+        }
+    }
+}
+
+.menu-more {
+    position: absolute;
+    bottom: 2vw;
+    right: 3vw;
+    display: block;
+    background-color: transparent;
+    border: 0;
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        width: 0.4vw;
+        height: 0.4vw;
+        background-color: #282828;
+        border-radius: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    b {
+        display: block;
+        width: 0.4vw;
+        height: 0.4vw;
+        background-color: #282828;
+        border-radius: 100%;
+        margin: 0.4vw 0;
+        padding: 0;
+    }
+}

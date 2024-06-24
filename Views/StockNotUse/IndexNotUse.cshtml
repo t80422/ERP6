@@ -1,0 +1,2731 @@
+﻿@model ERP6.ViewModels.Stock.StockIndexViewModel
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new {UserAc = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">STO進銷系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>進銷系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Pur")">C204_採購單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "In")">C205_領料入庫資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C206_庫存異動單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock20")">C207_產品促銷單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bou")">C208_報價單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out")">C209_出貨單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out30")">C210_寄賣客戶庫存檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C211_產品期初資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C212_盤點單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C213_加工產品資料檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C203_產品基本資料檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-first"><span>首筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-prev"><span>前筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-next"><span>次筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-last"><span>末筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-add"><span>新增</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-edit"><span>修改</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-del"><span>刪除</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-export"><span>匯出檔案</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-material"><span>相關資料</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-change"><span>編號變更</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">產品編號</div>
+                                    <div class="f-3 ta-left">品名規格</div>
+                                </div>
+                                <div class="data-list">
+                                    <!-- example start -->
+                                    @foreach (var item in Model.stockList)
+                                    {
+                                        <div class="data-item">
+                                            <div class="f-1 ta-left">@item.PartNo</div>
+                                            <div class="f-3 ta-left">@item.Spec</div>
+                                        </div>
+                                    }
+                                    <!-- example end -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2">
+                            @using (Html.BeginForm("Index", "Stock", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(x => x.IsSearch)
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="img-upload">
+                                                            <div class="upload">
+                                                                <input type="file" onchange="readURL(this);">
+                                                                <img id="previewImg" src="image/imgfile.png">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input mg-b20">
+                                                            <label for="">產品編號*</label>
+                                                            @Html.TextBoxFor(x => x.PartNo, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input">
+                                                            <label for="">商品條碼*</label>
+                                                            @Html.TextBoxFor(x => x.Barcode, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-2">
+                                                        <div class="form-input mg-b20">
+                                                            <label for="">品名規格*</label>
+                                                            @Html.TextBoxFor(x => x.Spec, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="">產品分類*</label>
+                                                            <div class="checkbox-input">
+                                                                @Html.CheckBoxFor(x => x.IsShow, new { @type = "checkbox" })
+                                                                @*<input name="IsShow" id="IsShow" type="checkbox">*@
+                                                                @Html.DropDownListFor(x => x.Type, ViewBag.TypeList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-input col-2">
+                                                            <label for="">入數</label>
+                                                            @Html.TextBoxFor(x => x.PackQty, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">異動庫存</label>
+                                                            @Html.DropDownListFor(x => x.YnCount, ViewBag.YnCountList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-text">
+                                                            <label for="">庫存數量</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.StQty, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.DropDownListFor(x => x.Unit, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">安全存數</label>
+                                                            @Html.TextBoxFor(x => x.SafeQty, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">倉儲位置</label>
+                                                            @Html.TextBoxFor(x => x.Location, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    @*<div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">產品屬性</label>
+                                                                <select name="" id="">
+                                                                    <option value="">加工</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>*@
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">單位換算</label>
+                                                            @Html.DropDownListFor(x => x.TUnit1, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-2">
+                                                        <div class="form-input format-switch bd-0">
+                                                            <span>轉換></span>
+                                                            <label for="">產品換算</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.TranPara1, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.DropDownListFor(x => x.UnitPara1, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input format-size bd-0">
+                                                            <label for="">長x寬x高</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.L, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <span>X</span>
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.W, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <span>X</span>
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.H, new { @readonly = "readonly" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">單位換算</label>
+                                                            @Html.DropDownListFor(x => x.TUnit2, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-2">
+                                                        <div class="form-input format-switch bd-0">
+                                                            <span>轉換></span>
+                                                            <label for="">產品換算</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.TranPara2, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.DropDownListFor(x => x.UnitPara2, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-text">
+                                                            <label for="">積材</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.Cuft, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    <p>才</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">單位換算</label>
+                                                            @Html.DropDownListFor(x => x.TUnit3, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-2">
+                                                        <div class="form-input format-switch bd-0">
+                                                            <span>轉換></span>
+                                                            <label for="">產品換算</label>
+                                                            <div class="flex">
+                                                                <div>
+                                                                    @Html.TextBoxFor(x => x.TranPara3, new { @readonly = "readonly" })
+                                                                </div>
+                                                                <div>
+                                                                    @Html.DropDownListFor(x => x.UnitPara3, ViewBag.UnitList as SelectList, "請選擇", htmlAttributes: new { @class = "form-control" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">稅別</label>
+                                                            @Html.DropDownListFor(x => x.TaxType, ViewBag.TaxTypeList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">批發價</label>
+                                                            @Html.TextBoxFor(x => x.Price1, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM1"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價一</label>
+                                                            @Html.TextBoxFor(x => x.SPrice1, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM1"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">門市價</label>
+                                                            @Html.TextBoxFor(x => x.Price2, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM2"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價二</label>
+                                                            @Html.TextBoxFor(x => x.SPrice2, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM2"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">公教價</label>
+                                                            @Html.TextBoxFor(x => x.Price3, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM3"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價三</label>
+                                                            @Html.TextBoxFor(x => x.SPrice3, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM3"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">預設一</label>
+                                                            @Html.TextBoxFor(x => x.DefaultPrice1, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM4"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價四</label>
+                                                            @Html.TextBoxFor(x => x.SPrice4, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM4"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">預設二</label>
+                                                            @Html.TextBoxFor(x => x.DefaultPrice2, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM5"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價五</label>
+                                                            @Html.TextBoxFor(x => x.SPrice5, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM5"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">預設三</label>
+                                                            @Html.TextBoxFor(x => x.DefaultPrice3, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM6"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價六</label>
+                                                            @Html.TextBoxFor(x => x.SPrice6, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM6"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">預設四</label>
+                                                            @Html.TextBoxFor(x => x.DefaultPrice4, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM7"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價七</label>
+                                                            @Html.TextBoxFor(x => x.SPrice7, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM7"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">預設五</label>
+                                                            @Html.TextBoxFor(x => x.DefaultPrice5, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong id="CGPM8"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">建議售價八</label>
+                                                            @Html.TextBoxFor(x => x.SPrice8, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>客戶毛利率</strong></label>
+                                                            <p><strong id="GPM8"></strong></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">進價一</label>
+                                                            @Html.TextBoxFor(x => x.Cost1, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong>0%</strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">最後進貨</label>
+                                                            @Html.TextBoxFor(x => x.LastIn, new { @type = "date", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1"></div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">進價二</label>
+                                                            @Html.TextBoxFor(x => x.Cost2, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong>0%</strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">最後進價</label>
+                                                            @Html.TextBoxFor(x => x.LastCost, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1"></div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">進價三</label>
+                                                            @Html.TextBoxFor(x => x.Cost3, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong>0%</strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input unit-percent">
+                                                            <label for="">最後折扣</label>
+                                                            @Html.TextBoxFor(x => x.LastDiscount, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1"></div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input col-2">
+                                                            <label for="">業務成本</label>
+                                                            @Html.TextBoxFor(x => x.SalesCost, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="form-input col-2 bd-0">
+                                                            <label for="" class="center"><strong>公司毛利率</strong></label>
+                                                            <p><strong>0%</strong></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">最後銷貨</label>
+                                                            @Html.TextBoxFor(x => x.LastOut, new { @type = "date", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">最後異動者</label>
+                                                            @Html.TextBoxFor(x => x.LastModiuser, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">最後異動日</label>
+                                                            @Html.TextBoxFor(x => x.LastModidate, new { @type = "date", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button class="btn-clean search">清除條件</button>
+                                            <button class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 編號變更 -->
+        @*<div id="demo2" class="popup-wrap">
+                <div class="popup-main">
+                    <div class="p-form">
+                        <h2>請輸入新的廠商編號</h2>
+                        <form action="##">
+                            <div class="input">
+                                <input type="text">
+                            </div>
+                            <div class="p-btn pad-0">
+                                <button class="btn-cancel small">取消</button>
+                                <button class="btn-submit small">確定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>*@
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button class="btn-cancel small check">取消</button>
+                    <button class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            let partNo = $("#PartNo").val();
+
+            if (partNo) {
+                //找出此筆資料
+                $('.data-item').each(function (i, v) {
+                    if ($(v).children('.f-1').text() == partNo) {
+                        $(this).addClass('active');
+
+                        return;
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                if (el) {
+
+                    el.scrollIntoView(true);
+                }
+            }
+        });
+
+        //新增資料
+        $(function () {
+            $('.tool-btn-add').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Add", "Stock")";
+                });
+            });
+        });
+
+        //刪除資料
+        $('.tool-btn-del').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    var partNo = $('#PartNo').val()
+
+                    if (partNo != '') {
+                        $.ajax({
+                            url: "@Url.Action("Delete", "Stock")",
+                            type: 'POST',
+                            data: { partNo: partNo },
+                            success: function (data) {
+                                if (data) {
+                                    alert("刪除成功!");
+
+                                    window.location.href = "@Url.Action("Index", "Stock")";
+                                }
+                                else {
+                                    alert("刪除失敗!");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        alert("找不到刪除資料!");
+                    }
+                });
+        });
+
+        //修改資料
+        $('.tool-btn-edit').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let editPartNo = $("#PartNo").val();
+
+                    if (editPartNo == '') {
+                        alert("找不到編輯資料!");
+                    }
+                    else {
+                        window.location.href = "@Url.Action("Edit", "Stock")/?PartNo=" + editPartNo;
+                    }
+                });
+        });
+
+        //首筆資料
+        $(function () {
+            $('.tool-btn-first').on('click', function () {
+                //先清空錨點
+                let firstDataItem = $('.data-item.active');
+
+                if (firstDataItem.length != 0) {
+                    firstDataItem.removeClass('active');
+                }
+
+                $('.data-item').each(function (i, v) {
+                    if (i === 0) {
+                        let firstItem = $(v).children('.f-1').text();
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxStock", "Ajaxs")",
+                            data: { 'partNo': firstItem },
+                            success: function (data) {
+                                if (data != null) {
+                                    //塞資料
+                                    $("#PartNo").val(data.partNo);
+                                    $("#Spec").val(data.spec);
+                                    $("#Barcode").val(data.barcode);
+                                    $("#PartNo").val(data.partNo);
+                                    $("#Type").val(data.type);
+                                    $("#PackQty").val(data.packQty);
+                                    $("#YnCount").val(data.ynCount);
+                                    $("#StQty").val(data.stQty);
+                                    $("#Unit").val(data.unit);
+                                    $("#SafeQty").val(data.safeQty);
+                                    $("#Location").val(data.location);
+                                    $("#IsShow").prop("checked", data.isShow);
+
+                                    $("#TUnit1").val(data.tUnit1);
+                                    $("#TranPara1").val(data.tranPara1);
+                                    $("#UnitPara1").val(data.unitPara1)
+
+                                    $("#L").val(data.l);
+                                    $("#W").val(data.w);
+                                    $("#H").val(data.h)
+
+                                    $("#TUnit2").val(data.tUnit2);
+                                    $("#TranPara2").val(data.tranPara2);
+                                    $("#UnitPara2").val(data.unitPara2)
+
+                                    $("#Cuft").val(data.cuft)
+                                    $("#TUnit3").val(data.tUnit3);
+                                    $("#TranPara3").val(data.tranPara3);
+                                    $("#UnitPara3").val(data.unitPara3)
+
+                                    $("#TaxType").val(data.taxType)
+                                    $("#Price1").val(data.price1);
+                                    $("#SPrice1").val(data.sPrice1);
+
+                                    $("#Price2").val(data.price2)
+                                    $("#SPrice2").val(data.sPrice2)
+
+                                    $("#Price3").val(data.price3)
+                                    $("#SPrice3").val(data.sPrice3)
+
+                                    $("#Price4").val(data.price4)
+                                    $("#SPrice4").val(data.sPrice4)
+
+                                    $("#Price5").val(data.price5)
+                                    $("#SPrice5").val(data.sPrice5)
+
+                                    $("#Price6").val(data.price6)
+                                    $("#SPrice6").val(data.sPrice6)
+
+                                    $("#Price7").val(data.price7)
+                                    $("#SPrice7").val(data.sPrice7)
+
+                                    $("#Price8").val(data.price8)
+                                    $("#SPrice8").val(data.sPrice8)
+
+                                    $("#Cost1").val(data.cost1)
+                                    $("#LastIn").val(data.lastIn)
+
+                                    $("#Cost2").val(data.cost2)
+                                    $("#LastCost").val(data.lastCost)
+
+                                    $("#Cost3").val(data.cost3)
+                                    $("#LastDiscount").val(data.lastDiscount)
+
+                                    $("#SalesCost").val(data.salesCost)
+                                    $("#LastOut").val(data.lastOut)
+
+                                    $("#LastModiuser").val(data.lastModiuser)
+                                    $("#LastModidate").val(data.lastModidate)
+
+                                    $("#DefaultPrice1").val(data.defaultPrice1)
+                                    $("#DefaultPrice2").val(data.defaultPrice2)
+                                    $("#DefaultPrice3").val(data.defaultPrice3)
+                                    $("#DefaultPrice4").val(data.defaultPrice4)
+                                    $("#DefaultPrice5").val(data.defaultPrice5)
+
+                                    //公司毛利率
+                                    let CGPM1 = ((data.price1) - (data.compCost)) / data.price1 * 100;
+                                    if (CGPM1) {
+                                        CGPM1 = Math.round((CGPM1 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM1 = 0;
+                                    }
+
+                                    let CGPM2 = ((data.price2) - (data.compCost)) / data.price2 * 100;
+                                    if (CGPM2) {
+                                        CGPM2 = Math.round((CGPM2 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM2 = 0;
+                                    }
+
+                                    let CGPM3 = ((data.price3) - (data.compCost)) / data.price3 * 100;
+                                    if (CGPM3) {
+                                        CGPM3 = Math.round((CGPM3 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM3 = 0;
+                                    }
+
+                                    let CGPM4 = 0;
+                                    let CGPM5 = 0;
+                                    let CGPM6 = 0;
+                                    let CGPM7 = 0;
+                                    let CGPM8 = 0;
+
+                                    if (data.compCost || data.compCost == 0) {
+
+                                        CGPM4 = ((data.defaultPrice1) - (data.compCost)) / data.defaultPrice1 * 100;
+
+                                        if (CGPM4 < 0) {
+                                            CGPM4 = 0
+                                        }
+                                        else if (CGPM4) {
+                                            CGPM4 = Math.round((CGPM4 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM4 = 0;
+                                        }
+
+                                        CGPM5 = ((data.defaultPrice2) - (data.compCost)) / data.defaultPrice2 * 100;
+
+                                        if (CGPM5 < 0) {
+                                            CGPM5 = 0
+                                        }
+                                        else if (CGPM5) {
+                                            CGPM5 = Math.round((CGPM5 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM5 = 0;
+                                        }
+
+                                        CGPM6 = ((data.defaultPrice3) - (data.compCost)) / data.defaultPrice3 * 100;
+
+                                        if (CGPM6 < 0) {
+                                            CGPM6 = 0
+                                        }
+                                        else if (CGPM6) {
+                                            CGPM6 = Math.round((CGPM6 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM6 = 0;
+                                        }
+
+                                        CGPM7 = ((data.defaultPrice4) - (data.compCost)) / data.defaultPrice4 * 100;
+
+                                        if (CGPM7 < 0) {
+                                            CGPM7 = 0
+                                        }
+                                        else if (CGPM7) {
+                                            CGPM7 = Math.round((CGPM7 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM7 = 0;
+                                        }
+
+                                        CGPM8 = ((data.defaultPrice5) - (data.compCost)) / data.defaultPrice5 * 100;
+
+                                        if (CGPM8 < 0) {
+                                            CGPM8 = 0
+                                        }
+                                        else if (CGPM8) {
+                                            CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                        }
+                                        if (CGPM8) {
+                                            CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM8 = 0;
+                                        }
+                                    }
+
+                                    //客戶毛利率
+                                    let GPM1 = ((data.sPrice1) - (data.price1)) / data.sPrice1 * 100;
+                                    if (GPM1) {
+                                        GPM1 = Math.round((GPM1 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM1 = 0;
+                                    }
+
+                                    let GPM2 = ((data.sPrice2) - (data.price2)) / data.sPrice2 * 100;
+                                    if (GPM2) {
+                                        GPM2 = Math.round((GPM2 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM2 = 0;
+                                    }
+
+                                    let GPM3 = ((data.sPrice3) - (data.price3)) / data.sPrice3 * 100;
+                                    if (GPM3) {
+                                        GPM3 = Math.round((GPM3 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM3 = 0;
+                                    }
+
+                                    let GPM4 = ((data.sPrice4) - (data.defaultPrice1)) / data.sPrice4 * 100;
+                                    if (GPM4) {
+                                        GPM4 = Math.round((GPM4 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM4 = 0;
+                                    }
+
+                                    let GPM5 = ((data.sPrice5) - (data.defaultPrice2)) / data.sPrice5 * 100;
+                                    if (GPM5) {
+                                        GPM5 = Math.round((GPM5 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM5 = 0;
+                                    }
+
+                                    let GPM6 = ((data.sPrice6) - (data.defaultPrice3)) / data.sPrice6 * 100;
+                                    if (GPM6) {
+                                        GPM6 = Math.round((GPM6 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM6 = 0;
+                                    }
+
+                                    let GPM7 = ((data.sPrice7) - (data.defaultPrice4)) / data.sPrice7 * 100;
+                                    if (GPM7) {
+                                        GPM7 = Math.round((GPM7 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM7 = 0;
+                                    }
+
+                                    let GPM8 = ((data.sPrice8) - (data.defaultPrice5)) / data.sPrice8 * 100;
+                                    if (GPM8) {
+                                        GPM8 = Math.round((GPM8 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM8 = 0;
+                                    }
+
+                                    //公司毛利率
+                                    $("#CGPM1").empty();
+                                    $("#CGPM2").empty();
+                                    $("#CGPM3").empty();
+                                    $("#CGPM4").empty();
+                                    $("#CGPM5").empty();
+                                    $("#CGPM6").empty();
+                                    $("#CGPM7").empty();
+                                    $("#CGPM8").empty();
+                                    $("#CGPM1").append(CGPM1 + "%");
+                                    $("#CGPM2").append(CGPM2 + "%");
+                                    $("#CGPM3").append(CGPM3 + "%");
+                                    $("#CGPM4").append(CGPM4 + "%");
+                                    $("#CGPM5").append(CGPM5 + "%");
+                                    $("#CGPM6").append(CGPM6 + "%");
+                                    $("#CGPM7").append(CGPM7 + "%");
+                                    $("#CGPM8").append(CGPM8 + "%");
+
+                                    //客戶毛利率
+                                    $("#GPM1").empty();
+                                    $("#GPM2").empty();
+                                    $("#GPM3").empty();
+                                    $("#GPM4").empty();
+                                    $("#GPM5").empty();
+                                    $("#GPM6").empty();
+                                    $("#GPM7").empty();
+                                    $("#GPM8").empty();
+                                    $("#GPM1").append(GPM1 + "%");
+                                    $("#GPM2").append(GPM2 + "%");
+                                    $("#GPM3").append(GPM3 + "%");
+                                    $("#GPM4").append(GPM4 + "%");
+                                    $("#GPM5").append(GPM5 + "%");
+                                    $("#GPM6").append(GPM6 + "%");
+                                    $("#GPM7").append(GPM7 + "%");
+                                    $("#GPM8").append(GPM8 + "%");
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //末筆資料
+        $(function () {
+            $('.tool-btn-last').on('click', function () {
+                //先清空錨點
+                let lastDataItem = $('.data-item.active');
+
+                if (lastDataItem.length != 0 ) {
+                    lastDataItem.removeClass('active');
+                }
+
+                //找出資料總比數
+                let dataItem = $('.data-item');
+                let length = dataItem.length;
+
+                //找出最後一筆資料
+                dataItem.each(function (i, v) {
+                    if (i === (length - 1)) {
+                        let lastItem = $(v).children('.f-1').text();
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxStock", "Ajaxs")",
+                            data: { 'partNo': lastItem },
+                            success: function (data) {
+                                if (data != null) {
+                                    //塞資料
+                                    $("#PartNo").val(data.partNo);
+                                    $("#Spec").val(data.spec);
+                                    $("#Barcode").val(data.barcode);
+                                    $("#PartNo").val(data.partNo);
+                                    $("#Type").val(data.type);
+                                    $("#PackQty").val(data.packQty);
+                                    $("#YnCount").val(data.ynCount);
+                                    $("#StQty").val(data.stQty);
+                                    $("#Unit").val(data.unit);
+                                    $("#SafeQty").val(data.safeQty);
+                                    $("#Location").val(data.location);
+                                    $("#IsShow").prop("checked", data.isShow);
+
+                                    $("#TUnit1").val(data.tUnit1);
+                                    $("#TranPara1").val(data.tranPara1);
+                                    $("#UnitPara1").val(data.unitPara1)
+
+                                    $("#L").val(data.l);
+                                    $("#W").val(data.w);
+                                    $("#H").val(data.h)
+
+                                    $("#TUnit2").val(data.tUnit2);
+                                    $("#TranPara2").val(data.tranPara2);
+                                    $("#UnitPara2").val(data.unitPara2)
+
+                                    $("#Cuft").val(data.cuft)
+                                    $("#TUnit3").val(data.tUnit3);
+                                    $("#TranPara3").val(data.tranPara3);
+                                    $("#UnitPara3").val(data.unitPara3)
+
+                                    $("#TaxType").val(data.taxType)
+                                    $("#Price1").val(data.price1);
+                                    $("#SPrice1").val(data.sPrice1);
+
+                                    $("#Price2").val(data.price2)
+                                    $("#SPrice2").val(data.sPrice2)
+
+                                    $("#Price3").val(data.price3)
+                                    $("#SPrice3").val(data.sPrice3)
+
+                                    $("#Price4").val(data.price4)
+                                    $("#SPrice4").val(data.sPrice4)
+
+                                    $("#Price5").val(data.price5)
+                                    $("#SPrice5").val(data.sPrice5)
+
+                                    $("#Price6").val(data.price6)
+                                    $("#SPrice6").val(data.sPrice6)
+
+                                    $("#Price7").val(data.price7)
+                                    $("#SPrice7").val(data.sPrice7)
+
+                                    $("#Price8").val(data.price8)
+                                    $("#SPrice8").val(data.sPrice8)
+
+                                    $("#Cost1").val(data.cost1)
+                                    $("#LastIn").val(data.lastIn)
+
+                                    $("#Cost2").val(data.cost2)
+                                    $("#LastCost").val(data.lastCost)
+
+                                    $("#Cost3").val(data.cost3)
+                                    $("#LastDiscount").val(data.lastDiscount)
+
+                                    $("#SalesCost").val(data.salesCost)
+                                    $("#LastOut").val(data.lastOut)
+
+                                    $("#LastModiuser").val(data.lastModiuser)
+                                    $("#LastModidate").val(data.lastModidate)
+
+                                    $("#DefaultPrice1").val(data.defaultPrice1)
+                                    $("#DefaultPrice2").val(data.defaultPrice2)
+                                    $("#DefaultPrice3").val(data.defaultPrice3)
+                                    $("#DefaultPrice4").val(data.defaultPrice4)
+                                    $("#DefaultPrice5").val(data.defaultPrice5)
+
+                                    //公司毛利率
+                                    let CGPM1 = ((data.price1) - (data.compCost)) / data.price1 * 100;
+                                    if (CGPM1) {
+                                        CGPM1 = Math.round((CGPM1 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM1 = 0;
+                                    }
+
+                                    let CGPM2 = ((data.price2) - (data.compCost)) / data.price2 * 100;
+                                    if (CGPM2) {
+                                        CGPM2 = Math.round((CGPM2 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM2 = 0;
+                                    }
+
+                                    let CGPM3 = ((data.price3) - (data.compCost)) / data.price3 * 100;
+                                    if (CGPM3) {
+                                        CGPM3 = Math.round((CGPM3 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM3 = 0;
+                                    }
+
+                                    let CGPM4 = 0;
+                                    let CGPM5 = 0;
+                                    let CGPM6 = 0;
+                                    let CGPM7 = 0;
+                                    let CGPM8 = 0;
+
+                                    if (data.compCost || data.compCost == 0) {
+
+                                        CGPM4 = ((data.defaultPrice1) - (data.compCost)) / data.defaultPrice1 * 100;
+
+                                        if (CGPM4 < 0) {
+                                            CGPM4 = 0
+                                        }
+                                        else if (CGPM4) {
+                                            CGPM4 = Math.round((CGPM4 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM4 = 0;
+                                        }
+
+                                        CGPM5 = ((data.defaultPrice2) - (data.compCost)) / data.defaultPrice2 * 100;
+
+                                        if (CGPM5 < 0) {
+                                            CGPM5 = 0
+                                        }
+                                        else if (CGPM5) {
+                                            CGPM5 = Math.round((CGPM5 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM5 = 0;
+                                        }
+
+                                        CGPM6 = ((data.defaultPrice3) - (data.compCost)) / data.defaultPrice3 * 100;
+
+                                        if (CGPM6 < 0) {
+                                            CGPM6 = 0
+                                        }
+                                        else if (CGPM6) {
+                                            CGPM6 = Math.round((CGPM6 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM6 = 0;
+                                        }
+
+                                        CGPM7 = ((data.defaultPrice4) - (data.compCost)) / data.defaultPrice4 * 100;
+
+                                        if (CGPM7 < 0) {
+                                            CGPM7 = 0
+                                        }
+                                        else if (CGPM7) {
+                                            CGPM7 = Math.round((CGPM7 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM7 = 0;
+                                        }
+
+                                        CGPM8 = ((data.defaultPrice5) - (data.compCost)) / data.defaultPrice5 * 100;
+
+                                        if (CGPM8 < 0) {
+                                            CGPM8 = 0
+                                        }
+                                        else if (CGPM8) {
+                                            CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                        }
+                                        if (CGPM8) {
+                                            CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                        }
+                                        else {
+                                            CGPM8 = 0;
+                                        }
+                                    }
+
+                                    //客戶毛利率
+                                    let GPM1 = ((data.sPrice1) - (data.price1)) / data.sPrice1 * 100;
+                                    if (GPM1) {
+                                        GPM1 = Math.round((GPM1 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM1 = 0;
+                                    }
+
+                                    let GPM2 = ((data.sPrice2) - (data.price2)) / data.sPrice2 * 100;
+                                    if (GPM2) {
+                                        GPM2 = Math.round((GPM2 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM2 = 0;
+                                    }
+
+                                    let GPM3 = ((data.sPrice3) - (data.price3)) / data.sPrice3 * 100;
+                                    if (GPM3) {
+                                        GPM3 = Math.round((GPM3 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM3 = 0;
+                                    }
+
+                                    let GPM4 = ((data.sPrice4) - (data.defaultPrice1)) / data.sPrice4 * 100;
+                                    if (GPM4) {
+                                        GPM4 = Math.round((GPM4 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM4 = 0;
+                                    }
+
+                                    let GPM5 = ((data.sPrice5) - (data.defaultPrice2)) / data.sPrice5 * 100;
+                                    if (GPM5) {
+                                        GPM5 = Math.round((GPM5 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM5 = 0;
+                                    }
+
+                                    let GPM6 = ((data.sPrice6) - (data.defaultPrice3)) / data.sPrice6 * 100;
+                                    if (GPM6) {
+                                        GPM6 = Math.round((GPM6 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM6 = 0;
+                                    }
+
+                                    let GPM7 = ((data.sPrice7) - (data.defaultPrice4)) / data.sPrice7 * 100;
+                                    if (GPM7) {
+                                        GPM7 = Math.round((GPM7 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM7 = 0;
+                                    }
+
+                                    let GPM8 = ((data.sPrice8) - (data.defaultPrice5)) / data.sPrice8 * 100;
+                                    if (GPM8) {
+                                        GPM8 = Math.round((GPM8 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        GPM8 = 0;
+                                    }
+
+                                    //公司毛利率
+                                    $("#CGPM1").empty();
+                                    $("#CGPM2").empty();
+                                    $("#CGPM3").empty();
+                                    $("#CGPM4").empty();
+                                    $("#CGPM5").empty();
+                                    $("#CGPM6").empty();
+                                    $("#CGPM7").empty();
+                                    $("#CGPM8").empty();
+                                    $("#CGPM1").append(CGPM1 + "%");
+                                    $("#CGPM2").append(CGPM2 + "%");
+                                    $("#CGPM3").append(CGPM3 + "%");
+                                    $("#CGPM4").append(CGPM4 + "%");
+                                    $("#CGPM5").append(CGPM5 + "%");
+                                    $("#CGPM6").append(CGPM6 + "%");
+                                    $("#CGPM7").append(CGPM7 + "%");
+                                    $("#CGPM8").append(CGPM8 + "%");
+
+                                    //客戶毛利率
+                                    $("#GPM1").empty();
+                                    $("#GPM2").empty();
+                                    $("#GPM3").empty();
+                                    $("#GPM4").empty();
+                                    $("#GPM5").empty();
+                                    $("#GPM6").empty();
+                                    $("#GPM7").empty();
+                                    $("#GPM8").empty();
+                                    $("#GPM1").append(GPM1 + "%");
+                                    $("#GPM2").append(GPM2 + "%");
+                                    $("#GPM3").append(GPM3 + "%");
+                                    $("#GPM4").append(GPM4 + "%");
+                                    $("#GPM5").append(GPM5 + "%");
+                                    $("#GPM6").append(GPM6 + "%");
+                                    $("#GPM7").append(GPM7 + "%");
+                                    $("#GPM8").append(GPM8 + "%");
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+
+                        let el = document.querySelector('.data-item.active');
+
+                        el.scrollIntoView(true);
+                    }
+                });
+            });
+        });
+
+        //下一筆資料
+        $(function () {
+            $(".tool-btn-next").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出下一個錨點
+                var nextClass = $('.data-item.active').next();
+                var nextClassValue = $('.data-item.active').next().children('.f-1').text();
+
+                if (nextClass.length == 0) {
+                    alert("已沒有下一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                nextClass.addClass('active');
+                nextClass.prev().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxStock", "Ajaxs")",
+                    data: { 'partNo': nextClassValue },
+                    success: function (data) {
+                        if (data != null) {
+                            //塞資料
+                            $("#PartNo").val(data.partNo);
+                            $("#Spec").val(data.spec);
+                            $("#Barcode").val(data.barcode);
+                            $("#PartNo").val(data.partNo);
+                            $("#Type").val(data.type);
+                            $("#PackQty").val(data.packQty);
+                            $("#YnCount").val(data.ynCount);
+                            $("#StQty").val(data.stQty);
+                            $("#Unit").val(data.unit);
+                            $("#SafeQty").val(data.safeQty);
+                            $("#Location").val(data.location);
+                            $("#IsShow").prop("checked", data.isShow);
+
+                            $("#TUnit1").val(data.tUnit1);
+                            $("#TranPara1").val(data.tranPara1);
+                            $("#UnitPara1").val(data.unitPara1)
+
+                            $("#L").val(data.l);
+                            $("#W").val(data.w);
+                            $("#H").val(data.h)
+
+                            $("#TUnit2").val(data.tUnit2);
+                            $("#TranPara2").val(data.tranPara2);
+                            $("#UnitPara2").val(data.unitPara2)
+
+                            $("#Cuft").val(data.cuft)
+                            $("#TUnit3").val(data.tUnit3);
+                            $("#TranPara3").val(data.tranPara3);
+                            $("#UnitPara3").val(data.unitPara3)
+
+                            $("#TaxType").val(data.taxType)
+                            $("#Price1").val(data.price1);
+                            $("#SPrice1").val(data.sPrice1);
+
+                            $("#Price2").val(data.price2)
+                            $("#SPrice2").val(data.sPrice2)
+
+                            $("#Price3").val(data.price3)
+                            $("#SPrice3").val(data.sPrice3)
+
+                            $("#Price4").val(data.price4)
+                            $("#SPrice4").val(data.sPrice4)
+
+                            $("#Price5").val(data.price5)
+                            $("#SPrice5").val(data.sPrice5)
+
+                            $("#Price6").val(data.price6)
+                            $("#SPrice6").val(data.sPrice6)
+
+                            $("#Price7").val(data.price7)
+                            $("#SPrice7").val(data.sPrice7)
+
+                            $("#Price8").val(data.price8)
+                            $("#SPrice8").val(data.sPrice8)
+
+                            $("#Cost1").val(data.cost1)
+                            $("#LastIn").val(data.lastIn)
+
+                            $("#Cost2").val(data.cost2)
+                            $("#LastCost").val(data.lastCost)
+
+                            $("#Cost3").val(data.cost3)
+                            $("#LastDiscount").val(data.lastDiscount)
+
+                            $("#SalesCost").val(data.salesCost)
+                            $("#LastOut").val(data.lastOut)
+
+                            $("#LastModiuser").val(data.lastModiuser)
+                            $("#LastModidate").val(data.lastModidate)
+
+                            $("#DefaultPrice1").val(data.defaultPrice1)
+                            $("#DefaultPrice2").val(data.defaultPrice2)
+                            $("#DefaultPrice3").val(data.defaultPrice3)
+                            $("#DefaultPrice4").val(data.defaultPrice4)
+                            $("#DefaultPrice5").val(data.defaultPrice5)
+
+                            //公司毛利率
+                            let CGPM1 = ((data.price1) - (data.compCost)) / data.price1 * 100;
+                            if (CGPM1) {
+                                CGPM1 = Math.round((CGPM1 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM1 = 0;
+                            }
+
+                            let CGPM2 = ((data.price2) - (data.compCost)) / data.price2 * 100;
+                            if (CGPM2) {
+                                CGPM2 = Math.round((CGPM2 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM2 = 0;
+                            }
+
+                            let CGPM3 = ((data.price3) - (data.compCost)) / data.price3 * 100;
+                            if (CGPM3) {
+                                CGPM3 = Math.round((CGPM3 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM3 = 0;
+                            }
+
+                            let CGPM4 = 0;
+                            let CGPM5 = 0;
+                            let CGPM6 = 0;
+                            let CGPM7 = 0;
+                            let CGPM8 = 0;
+
+                            if (data.compCost || data.compCost == 0) {
+
+                                CGPM4 = ((data.defaultPrice1) - (data.compCost)) / data.defaultPrice1 * 100;
+
+                                if (CGPM4 < 0) {
+                                    CGPM4 = 0
+                                }
+                                else if (CGPM4) {
+                                    CGPM4 = Math.round((CGPM4 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM4 = 0;
+                                }
+
+                                CGPM5 = ((data.defaultPrice2) - (data.compCost)) / data.defaultPrice2 * 100;
+
+                                if (CGPM5 < 0) {
+                                    CGPM5 = 0
+                                }
+                                else if (CGPM5) {
+                                    CGPM5 = Math.round((CGPM5 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM5 = 0;
+                                }
+
+                                CGPM6 = ((data.defaultPrice3) - (data.compCost)) / data.defaultPrice3 * 100;
+
+                                if (CGPM6 < 0) {
+                                    CGPM6 = 0
+                                }
+                                else if (CGPM6) {
+                                    CGPM6 = Math.round((CGPM6 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM6 = 0;
+                                }
+
+                                CGPM7 = ((data.defaultPrice4) - (data.compCost)) / data.defaultPrice4 * 100;
+
+                                if (CGPM7 < 0) {
+                                    CGPM7 = 0
+                                }
+                                else if (CGPM7) {
+                                    CGPM7 = Math.round((CGPM7 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM7 = 0;
+                                }
+
+                                CGPM8 = ((data.defaultPrice5) - (data.compCost)) / data.defaultPrice5 * 100;
+
+                                if (CGPM8 < 0) {
+                                    CGPM8 = 0
+                                }
+                                else if (CGPM8) {
+                                    CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                }
+                                if (CGPM8) {
+                                    CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM8 = 0;
+                                }
+                            }
+
+                            //客戶毛利率
+                            let GPM1 = ((data.sPrice1) - (data.price1)) / data.sPrice1 * 100;
+                            if (GPM1) {
+                                GPM1 = Math.round((GPM1 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM1 = 0;
+                            }
+
+                            let GPM2 = ((data.sPrice2) - (data.price2)) / data.sPrice2 * 100;
+                            if (GPM2) {
+                                GPM2 = Math.round((GPM2 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM2 = 0;
+                            }
+
+                            let GPM3 = ((data.sPrice3) - (data.price3)) / data.sPrice3 * 100;
+                            if (GPM3) {
+                                GPM3 = Math.round((GPM3 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM3 = 0;
+                            }
+
+                            let GPM4 = ((data.sPrice4) - (data.defaultPrice1)) / data.sPrice4 * 100;
+                            if (GPM4) {
+                                GPM4 = Math.round((GPM4 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM4 = 0;
+                            }
+
+                            let GPM5 = ((data.sPrice5) - (data.defaultPrice2)) / data.sPrice5 * 100;
+                            if (GPM5) {
+                                GPM5 = Math.round((GPM5 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM5 = 0;
+                            }
+
+                            let GPM6 = ((data.sPrice6) - (data.defaultPrice3)) / data.sPrice6 * 100;
+                            if (GPM6) {
+                                GPM6 = Math.round((GPM6 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM6 = 0;
+                            }
+
+                            let GPM7 = ((data.sPrice7) - (data.defaultPrice4)) / data.sPrice7 * 100;
+                            if (GPM7) {
+                                GPM7 = Math.round((GPM7 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM7 = 0;
+                            }
+
+                            let GPM8 = ((data.sPrice8) - (data.defaultPrice5)) / data.sPrice8 * 100;
+                            if (GPM8) {
+                                GPM8 = Math.round((GPM8 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM8 = 0;
+                            }
+
+                            //公司毛利率
+                            $("#CGPM1").empty();
+                            $("#CGPM2").empty();
+                            $("#CGPM3").empty();
+                            $("#CGPM4").empty();
+                            $("#CGPM5").empty();
+                            $("#CGPM6").empty();
+                            $("#CGPM7").empty();
+                            $("#CGPM8").empty();
+                            $("#CGPM1").append(CGPM1 + "%");
+                            $("#CGPM2").append(CGPM2 + "%");
+                            $("#CGPM3").append(CGPM3 + "%");
+                            $("#CGPM4").append(CGPM4 + "%");
+                            $("#CGPM5").append(CGPM5 + "%");
+                            $("#CGPM6").append(CGPM6 + "%");
+                            $("#CGPM7").append(CGPM7 + "%");
+                            $("#CGPM8").append(CGPM8 + "%");
+
+                            //客戶毛利率
+                            $("#GPM1").empty();
+                            $("#GPM2").empty();
+                            $("#GPM3").empty();
+                            $("#GPM4").empty();
+                            $("#GPM5").empty();
+                            $("#GPM6").empty();
+                            $("#GPM7").empty();
+                            $("#GPM8").empty();
+                            $("#GPM1").append(GPM1 + "%");
+                            $("#GPM2").append(GPM2 + "%");
+                            $("#GPM3").append(GPM3 + "%");
+                            $("#GPM4").append(GPM4 + "%");
+                            $("#GPM5").append(GPM5 + "%");
+                            $("#GPM6").append(GPM6 + "%");
+                            $("#GPM7").append(GPM7 + "%");
+                            $("#GPM8").append(GPM8 + "%");
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //上一筆資料
+        $(function () {
+            $(".tool-btn-prev").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出上一個錨點
+                var prevClass = $('.data-item.active').prev();
+                var prevClassValue = $('.data-item.active').prev().children('.f-1').text();
+
+                if (prevClass.length == 0) {
+                    alert("已沒有上一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                prevClass.addClass('active');
+                prevClass.next().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxStock", "Ajaxs")",
+                    data: { 'partNo': prevClassValue },
+                    success: function (data) {
+                        if (data != null) {
+                            //塞資料
+                            $("#PartNo").val(data.partNo);
+                            $("#Spec").val(data.spec);
+                            $("#Barcode").val(data.barcode);
+                            $("#PartNo").val(data.partNo);
+                            $("#Type").val(data.type);
+                            $("#PackQty").val(data.packQty);
+                            $("#YnCount").val(data.ynCount);
+                            $("#StQty").val(data.stQty);
+                            $("#Unit").val(data.unit);
+                            $("#SafeQty").val(data.safeQty);
+                            $("#Location").val(data.location);
+                            $("#IsShow").prop("checked", data.isShow);
+
+                            $("#TUnit1").val(data.tUnit1);
+                            $("#TranPara1").val(data.tranPara1);
+                            $("#UnitPara1").val(data.unitPara1)
+
+                            $("#L").val(data.l);
+                            $("#W").val(data.w);
+                            $("#H").val(data.h)
+
+                            $("#TUnit2").val(data.tUnit2);
+                            $("#TranPara2").val(data.tranPara2);
+                            $("#UnitPara2").val(data.unitPara2)
+
+                            $("#Cuft").val(data.cuft)
+                            $("#TUnit3").val(data.tUnit3);
+                            $("#TranPara3").val(data.tranPara3);
+                            $("#UnitPara3").val(data.unitPara3)
+
+                            $("#TaxType").val(data.taxType)
+                            $("#Price1").val(data.price1);
+                            $("#SPrice1").val(data.sPrice1);
+
+                            $("#Price2").val(data.price2)
+                            $("#SPrice2").val(data.sPrice2)
+
+                            $("#Price3").val(data.price3)
+                            $("#SPrice3").val(data.sPrice3)
+
+                            $("#Price4").val(data.price4)
+                            $("#SPrice4").val(data.sPrice4)
+
+                            $("#Price5").val(data.price5)
+                            $("#SPrice5").val(data.sPrice5)
+
+                            $("#Price6").val(data.price6)
+                            $("#SPrice6").val(data.sPrice6)
+
+                            $("#Price7").val(data.price7)
+                            $("#SPrice7").val(data.sPrice7)
+
+                            $("#Price8").val(data.price8)
+                            $("#SPrice8").val(data.sPrice8)
+
+                            $("#Cost1").val(data.cost1)
+                            $("#LastIn").val(data.lastIn)
+
+                            $("#Cost2").val(data.cost2)
+                            $("#LastCost").val(data.lastCost)
+
+                            $("#Cost3").val(data.cost3)
+                            $("#LastDiscount").val(data.lastDiscount)
+
+                            $("#SalesCost").val(data.salesCost)
+                            $("#LastOut").val(data.lastOut)
+
+                            $("#LastModiuser").val(data.lastModiuser)
+                            $("#LastModidate").val(data.lastModidate)
+
+                            $("#DefaultPrice1").val(data.defaultPrice1)
+                            $("#DefaultPrice2").val(data.defaultPrice2)
+                            $("#DefaultPrice3").val(data.defaultPrice3)
+                            $("#DefaultPrice4").val(data.defaultPrice4)
+                            $("#DefaultPrice5").val(data.defaultPrice5)
+
+                            //公司毛利率
+                            let CGPM1 = ((data.price1) - (data.compCost)) / data.price1 * 100;
+                            if (CGPM1) {
+                                CGPM1 = Math.round((CGPM1 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM1 = 0;
+                            }
+
+                            let CGPM2 = ((data.price2) - (data.compCost)) / data.price2 * 100;
+                            if (CGPM2) {
+                                CGPM2 = Math.round((CGPM2 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM2 = 0;
+                            }
+
+                            let CGPM3 = ((data.price3) - (data.compCost)) / data.price3 * 100;
+                            if (CGPM3) {
+                                CGPM3 = Math.round((CGPM3 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                CGPM3 = 0;
+                            }
+
+                            let CGPM4 = 0;
+                            let CGPM5 = 0;
+                            let CGPM6 = 0;
+                            let CGPM7 = 0;
+                            let CGPM8 = 0;
+
+                            if (data.compCost || data.compCost == 0) {
+
+                                CGPM4 = ((data.defaultPrice1) - (data.compCost)) / data.defaultPrice1 * 100;
+
+                                if (CGPM4 < 0) {
+                                    CGPM4 = 0
+                                }
+                                else if (CGPM4) {
+                                    CGPM4 = Math.round((CGPM4 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM4 = 0;
+                                }
+
+                                CGPM5 = ((data.defaultPrice2) - (data.compCost)) / data.defaultPrice2 * 100;
+
+                                if (CGPM5 < 0) {
+                                    CGPM5 = 0
+                                }
+                                else if (CGPM5) {
+                                    CGPM5 = Math.round((CGPM5 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM5 = 0;
+                                }
+
+                                CGPM6 = ((data.defaultPrice3) - (data.compCost)) / data.defaultPrice3 * 100;
+
+                                if (CGPM6 < 0) {
+                                    CGPM6 = 0
+                                }
+                                else if (CGPM6) {
+                                    CGPM6 = Math.round((CGPM6 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM6 = 0;
+                                }
+
+                                CGPM7 = ((data.defaultPrice4) - (data.compCost)) / data.defaultPrice4 * 100;
+
+                                if (CGPM7 < 0) {
+                                    CGPM7 = 0
+                                }
+                                else if (CGPM7) {
+                                    CGPM7 = Math.round((CGPM7 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM7 = 0;
+                                }
+
+                                CGPM8 = ((data.defaultPrice5) - (data.compCost)) / data.defaultPrice5 * 100;
+
+                                if (CGPM8 < 0) {
+                                    CGPM8 = 0
+                                }
+                                else if (CGPM8) {
+                                    CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                }
+                                if (CGPM8) {
+                                    CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM8 = 0;
+                                }
+                            }
+
+                            //客戶毛利率
+                            let GPM1 = ((data.sPrice1) - (data.price1)) / data.sPrice1 * 100;
+                            if (GPM1) {
+                                GPM1 = Math.round((GPM1 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM1 = 0;
+                            }
+
+                            let GPM2 = ((data.sPrice2) - (data.price2)) / data.sPrice2 * 100;
+                            if (GPM2) {
+                                GPM2 = Math.round((GPM2 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM2 = 0;
+                            }
+
+                            let GPM3 = ((data.sPrice3) - (data.price3)) / data.sPrice3 * 100;
+                            if (GPM3) {
+                                GPM3 = Math.round((GPM3 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM3 = 0;
+                            }
+
+                            let GPM4 = ((data.sPrice4) - (data.defaultPrice1)) / data.sPrice4 * 100;
+                            if (GPM4) {
+                                GPM4 = Math.round((GPM4 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM4 = 0;
+                            }
+
+                            let GPM5 = ((data.sPrice5) - (data.defaultPrice2)) / data.sPrice5 * 100;
+                            if (GPM5) {
+                                GPM5 = Math.round((GPM5 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM5 = 0;
+                            }
+
+                            let GPM6 = ((data.sPrice6) - (data.defaultPrice3)) / data.sPrice6 * 100;
+                            if (GPM6) {
+                                GPM6 = Math.round((GPM6 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM6 = 0;
+                            }
+
+                            let GPM7 = ((data.sPrice7) - (data.defaultPrice4)) / data.sPrice7 * 100;
+                            if (GPM7) {
+                                GPM7 = Math.round((GPM7 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM7 = 0;
+                            }
+
+                            let GPM8 = ((data.sPrice8) - (data.defaultPrice5)) / data.sPrice8 * 100;
+                            if (GPM8) {
+                                GPM8 = Math.round((GPM8 + Number.EPSILON) * 100) / 100
+                            }
+                            else {
+                                GPM8 = 0;
+                            }
+
+                            //公司毛利率
+                            $("#CGPM1").empty();
+                            $("#CGPM2").empty();
+                            $("#CGPM3").empty();
+                            $("#CGPM4").empty();
+                            $("#CGPM5").empty();
+                            $("#CGPM6").empty();
+                            $("#CGPM7").empty();
+                            $("#CGPM8").empty();
+                            $("#CGPM1").append(CGPM1 + "%");
+                            $("#CGPM2").append(CGPM2 + "%");
+                            $("#CGPM3").append(CGPM3 + "%");
+                            $("#CGPM4").append(CGPM4 + "%");
+                            $("#CGPM5").append(CGPM5 + "%");
+                            $("#CGPM6").append(CGPM6 + "%");
+                            $("#CGPM7").append(CGPM7 + "%");
+                            $("#CGPM8").append(CGPM8 + "%");
+
+                            //客戶毛利率
+                            $("#GPM1").empty();
+                            $("#GPM2").empty();
+                            $("#GPM3").empty();
+                            $("#GPM4").empty();
+                            $("#GPM5").empty();
+                            $("#GPM6").empty();
+                            $("#GPM7").empty();
+                            $("#GPM8").empty();
+                            $("#GPM1").append(GPM1 + "%");
+                            $("#GPM2").append(GPM2 + "%");
+                            $("#GPM3").append(GPM3 + "%");
+                            $("#GPM4").append(GPM4 + "%");
+                            $("#GPM5").append(GPM5 + "%");
+                            $("#GPM6").append(GPM6 + "%");
+                            $("#GPM7").append(GPM7 + "%");
+                            $("#GPM8").append(GPM8 + "%");
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //找出客戶資料
+        $(function () {
+            $('.data-item').each(function (i, v) {
+                $(this).on('click', function () {
+
+                    $('.data-item').each(function (i, v) {
+                       $(this).removeClass('active');
+                    });
+
+                    let coNo = $(this).children('.f-1').text();
+                    $(this).addClass('active');
+
+                    $.ajax({
+                        type: 'Post',
+                        url: "@Url.Action("AjaxStock", "Ajaxs")",
+                        data: { 'partNo': coNo },
+                        success: function (data) {
+                            if (data != null) {
+                                //塞資料
+                                $("#PartNo").val(data.partNo);
+                                $("#Spec").val(data.spec);
+                                $("#Barcode").val(data.barcode);
+                                $("#PartNo").val(data.partNo);
+                                $("#Type").val(data.type);
+                                $("#PackQty").val(data.packQty);
+                                $("#YnCount").val(data.ynCount);
+                                $("#StQty").val(data.stQty);
+                                $("#Unit").val(data.unit);
+                                $("#SafeQty").val(data.safeQty);
+                                $("#Location").val(data.location);
+                                $("#IsShow").prop("checked", data.isShow);
+
+                                $("#TUnit1").val(data.tUnit1);
+                                $("#TranPara1").val(data.tranPara1);
+                                $("#UnitPara1").val(data.unitPara1)
+
+                                $("#L").val(data.l);
+                                $("#W").val(data.w);
+                                $("#H").val(data.h)
+
+                                $("#TUnit2").val(data.tUnit2);
+                                $("#TranPara2").val(data.tranPara2);
+                                $("#UnitPara2").val(data.unitPara2)
+
+                                $("#Cuft").val(data.cuft)
+                                $("#TUnit3").val(data.tUnit3);
+                                $("#TranPara3").val(data.tranPara3);
+                                $("#UnitPara3").val(data.unitPara3)
+
+                                $("#TaxType").val(data.taxType)
+                                $("#Price1").val(data.price1);
+                                $("#SPrice1").val(data.sPrice1);
+
+                                $("#Price2").val(data.price2)
+                                $("#SPrice2").val(data.sPrice2)
+
+                                $("#Price3").val(data.price3)
+                                $("#SPrice3").val(data.sPrice3)
+
+                                $("#Price4").val(data.price4)
+                                $("#SPrice4").val(data.sPrice4)
+
+                                $("#Price5").val(data.price5)
+                                $("#SPrice5").val(data.sPrice5)
+
+                                $("#Price6").val(data.price6)
+                                $("#SPrice6").val(data.sPrice6)
+
+                                $("#Price7").val(data.price7)
+                                $("#SPrice7").val(data.sPrice7)
+
+                                $("#Price8").val(data.price8)
+                                $("#SPrice8").val(data.sPrice8)
+
+                                $("#Cost1").val(data.cost1)
+                                $("#LastIn").val(data.lastIn)
+
+                                $("#Cost2").val(data.cost2)
+                                $("#LastCost").val(data.lastCost)
+
+                                $("#Cost3").val(data.cost3)
+                                $("#LastDiscount").val(data.lastDiscount)
+
+                                $("#SalesCost").val(data.salesCost)
+                                $("#LastOut").val(data.lastOut)
+
+                                $("#LastModiuser").val(data.lastModiuser)
+                                $("#LastModidate").val(data.lastModidate)
+
+                                $("#DefaultPrice1").val(data.defaultPrice1)
+                                $("#DefaultPrice2").val(data.defaultPrice2)
+                                $("#DefaultPrice3").val(data.defaultPrice3)
+                                $("#DefaultPrice4").val(data.defaultPrice4)
+                                $("#DefaultPrice5").val(data.defaultPrice5)
+
+                                //公司毛利率
+                                let CGPM1 = ((data.price1) - (data.compCost)) / data.price1 * 100;
+                                if (CGPM1) {
+                                    CGPM1 = Math.round((CGPM1 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM1 = 0;
+                                }
+
+                                let CGPM2 = ((data.price2) - (data.compCost)) / data.price2 * 100;
+                                if (CGPM2) {
+                                    CGPM2 = Math.round((CGPM2 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM2 = 0;
+                                }
+
+                                let CGPM3 = ((data.price3) - (data.compCost)) / data.price3 * 100;
+                                if (CGPM3) {
+                                    CGPM3 = Math.round((CGPM3 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    CGPM3 = 0;
+                                }
+
+                                let CGPM4 = 0;
+                                let CGPM5 = 0;
+                                let CGPM6 = 0;
+                                let CGPM7 = 0;
+                                let CGPM8 = 0;
+
+                                if (data.compCost || data.compCost == 0) {
+
+                                    CGPM4 = ((data.defaultPrice1) - (data.compCost)) / data.defaultPrice1 * 100;
+
+                                    if (CGPM4 < 0) {
+                                        CGPM4 = 0
+                                    }
+                                    else if (CGPM4) {
+                                        CGPM4 = Math.round((CGPM4 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM4 = 0;
+                                    }
+
+                                    CGPM5 = ((data.defaultPrice2) - (data.compCost)) / data.defaultPrice2 * 100;
+
+                                    if (CGPM5 < 0) {
+                                        CGPM5 = 0
+                                    }
+                                    else if (CGPM5) {
+                                        CGPM5 = Math.round((CGPM5 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM5 = 0;
+                                    }
+
+                                    CGPM6 = ((data.defaultPrice3) - (data.compCost)) / data.defaultPrice3 * 100;
+
+                                    if (CGPM6 < 0) {
+                                        CGPM6 = 0
+                                    }
+                                    else if (CGPM6) {
+                                        CGPM6 = Math.round((CGPM6 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM6 = 0;
+                                    }
+
+                                    CGPM7 = ((data.defaultPrice4) - (data.compCost)) / data.defaultPrice4 * 100;
+
+                                    if (CGPM7 < 0) {
+                                        CGPM7 = 0
+                                    }
+                                    else if (CGPM7) {
+                                        CGPM7 = Math.round((CGPM7 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM7 = 0;
+                                    }
+
+                                    CGPM8 = ((data.defaultPrice5) - (data.compCost)) / data.defaultPrice5 * 100;
+
+                                    if (CGPM8 < 0) {
+                                        CGPM8 = 0
+                                    }
+                                    else if (CGPM8) {
+                                        CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                    }
+                                    if (CGPM8) {
+                                        CGPM8 = Math.round((CGPM8 + Number.EPSILON) * 100) / 100
+                                    }
+                                    else {
+                                        CGPM8 = 0;
+                                    }
+                                }
+
+                                //客戶毛利率
+                                let GPM1 = ((data.sPrice1) - (data.price1)) / data.sPrice1 * 100;
+                                if (GPM1) {
+                                    GPM1 = Math.round((GPM1 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM1 = 0;
+                                }
+
+                                let GPM2 = ((data.sPrice2) - (data.price2)) / data.sPrice2 * 100;
+                                if (GPM2) {
+                                    GPM2 = Math.round((GPM2 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM2 = 0;
+                                }
+
+                                let GPM3 = ((data.sPrice3) - (data.price3)) / data.sPrice3 * 100;
+                                if (GPM3) {
+                                    GPM3 = Math.round((GPM3 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM3 = 0;
+                                }
+
+                                let GPM4 = ((data.sPrice4) - (data.defaultPrice1)) / data.sPrice4 * 100;
+                                if (GPM4) {
+                                    GPM4 = Math.round((GPM4 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM4 = 0;
+                                }
+
+                                let GPM5 = ((data.sPrice5) - (data.defaultPrice2)) / data.sPrice5 * 100;
+                                if (GPM5) {
+                                    GPM5 = Math.round((GPM5 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM5 = 0;
+                                }
+
+                                let GPM6 = ((data.sPrice6) - (data.defaultPrice3)) / data.sPrice6 * 100;
+                                if (GPM6) {
+                                    GPM6 = Math.round((GPM6 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM6 = 0;
+                                }
+
+                                let GPM7 = ((data.sPrice7) - (data.defaultPrice4)) / data.sPrice7 * 100;
+                                if (GPM7) {
+                                    GPM7 = Math.round((GPM7 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM7 = 0;
+                                }
+
+                                let GPM8 = ((data.sPrice8) - (data.defaultPrice5)) / data.sPrice8 * 100;
+                                if (GPM8) {
+                                    GPM8 = Math.round((GPM8 + Number.EPSILON) * 100) / 100
+                                }
+                                else {
+                                    GPM8 = 0;
+                                }
+
+                                //公司毛利率
+                                $("#CGPM1").empty();
+                                $("#CGPM2").empty();
+                                $("#CGPM3").empty();
+                                $("#CGPM4").empty();
+                                $("#CGPM5").empty();
+                                $("#CGPM6").empty();
+                                $("#CGPM7").empty();
+                                $("#CGPM8").empty();
+                                $("#CGPM1").append(CGPM1 + "%");
+                                $("#CGPM2").append(CGPM2 + "%");
+                                $("#CGPM3").append(CGPM3 + "%");
+                                $("#CGPM4").append(CGPM4 + "%");
+                                $("#CGPM5").append(CGPM5 + "%");
+                                $("#CGPM6").append(CGPM6 + "%");
+                                $("#CGPM7").append(CGPM7 + "%");
+                                $("#CGPM8").append(CGPM8 + "%");
+
+                                //客戶毛利率
+                                $("#GPM1").empty();
+                                $("#GPM2").empty();
+                                $("#GPM3").empty();
+                                $("#GPM4").empty();
+                                $("#GPM5").empty();
+                                $("#GPM6").empty();
+                                $("#GPM7").empty();
+                                $("#GPM8").empty();
+                                $("#GPM1").append(GPM1 + "%");
+                                $("#GPM2").append(GPM2 + "%");
+                                $("#GPM3").append(GPM3 + "%");
+                                $("#GPM4").append(GPM4 + "%");
+                                $("#GPM5").append(GPM5 + "%");
+                                $("#GPM6").append(GPM6 + "%");
+                                $("#GPM7").append(GPM7 + "%");
+                                $("#GPM8").append(GPM8 + "%");
+                            }
+                            else {
+                                alert("發生錯誤!");
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+        //相關資料按鈕
+        $('.tool-btn-material').on('click', function () {
+
+            let partNo = $('#PartNo').val();
+
+            if (partNo == '') {
+                alert("請選擇產品!");
+
+                return;
+            }
+
+            window.location.href = "@Url.Action("Detail","Vendor")/?StockNo=" + partNo;
+        });
+
+        //收尋條件
+        $('.tool-btn-search').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                $('#IsSearch').val(true);
+
+                //清除資料
+                $("#PartNo").val('');
+                $("#Spec").val('');
+                $("#Barcode").val('');
+                $("#PartNo").val('');
+                $("#Type").val('');
+                $("#PackQty").val('');
+                $("#YnCount").val('');
+                $("#StQty").val('');
+                $("#Unit").val('');
+                $("#SafeQty").val('');
+                $("#Location").val('');
+                $("#IsShow").prop("checked", "false");
+
+                $("#TUnit1").val('');
+                $("#TranPara1").val('');
+                $("#UnitPara1").val('')
+
+                $("#L").val('');
+                $("#W").val('');
+                $("#H").val('')
+
+                $("#TUnit2").val('');
+                $("#TranPara2").val('');
+                $("#UnitPara2").val('')
+
+                $("#Cuft").val('')
+                $("#TUnit3").val('');
+                $("#TranPara3").val('');
+                $("#UnitPara3").val('')
+
+                $("#TaxType").val('')
+                $("#Price1").val('');
+                $("#SPrice1").val('');
+
+                $("#Price2").val('')
+                $("#SPrice2").val('')
+
+                $("#Price3").val('')
+                $("#SPrice3").val('')
+
+                $("#Price4").val('')
+                $("#SPrice4").val('')
+
+                $("#Price5").val('')
+                $("#SPrice5").val('')
+
+                $("#Price6").val('')
+                $("#SPrice6").val('')
+
+                $("#Price7").val('')
+                $("#SPrice7").val('')
+
+                $("#Price8").val('')
+                $("#SPrice8").val('')
+
+                $("#Cost1").val('')
+                $("#LastIn").val('')
+
+                $("#Cost2").val('')
+                $("#LastCost").val('')
+
+                $("#Cost3").val('')
+                $("#LastDiscount").val('')
+
+                $("#SalesCost").val('')
+                $("#LastOut").val('')
+
+                $("#LastModiuser").val('')
+                $("#LastModidate").val('')
+
+                $("#DefaultPrice1").val('')
+                $("#DefaultPrice2").val('')
+                $("#DefaultPrice3").val('')
+                $("#DefaultPrice4").val('')
+                $("#DefaultPrice5").val('')
+
+                $("#PartNo").removeAttr('readonly');
+                $("#Spec").removeAttr('readonly');
+                $("#Barcode").removeAttr('readonly');
+                $("#PartNo").removeAttr('readonly');
+                $("#Type").removeAttr('readonly');
+                $("#PackQty").removeAttr('readonly');
+                $("#YnCount").removeAttr('readonly');
+                $("#StQty").removeAttr('readonly');
+                $("#Unit").removeAttr('readonly');
+                $("#SafeQty").removeAttr('readonly');
+                $("#Location").removeAttr('readonly');
+                $("#IsShow").removeAttr('readonly');
+
+                $("#TUnit1").removeAttr('readonly');
+                $("#TranPara1").removeAttr('readonly');
+                $("#UnitPara1").removeAttr('readonly');
+
+                $("#L").removeAttr('readonly');
+                $("#W").removeAttr('readonly');
+                $("#H").removeAttr('readonly');
+
+                $("#TUnit2").removeAttr('readonly');
+                $("#TranPara2").removeAttr('readonly');
+                $("#UnitPara2").removeAttr('readonly');
+
+                $("#Cuft").removeAttr('readonly');
+                $("#TUnit3").removeAttr('readonly');
+                $("#TranPara3").removeAttr('readonly');
+                $("#UnitPara3").removeAttr('readonly');
+
+                $("#TaxType").removeAttr('readonly');
+                $("#Price1").removeAttr('readonly');
+                $("#SPrice1").removeAttr('readonly');
+
+                $("#Price2").removeAttr('readonly');
+                $("#SPrice2").removeAttr('readonly');
+
+                $("#Price3").removeAttr('readonly');
+                $("#SPrice3").removeAttr('readonly');
+
+                $("#Price4").removeAttr('readonly');
+                $("#SPrice4").removeAttr('readonly');
+
+                $("#Price5").removeAttr('readonly');
+                $("#SPrice5").removeAttr('readonly');
+
+                $("#Price6").removeAttr('readonly');
+                $("#SPrice6").removeAttr('readonly');
+
+                $("#Price7").removeAttr('readonly');
+                $("#SPrice7").removeAttr('readonly');
+
+                $("#Price8").removeAttr('readonly');
+                $("#SPrice8").removeAttr('readonly');
+
+                $("#Cost1").removeAttr('readonly');
+                $("#LastIn").removeAttr('readonly');
+
+                $("#Cost2").removeAttr('readonly');
+                $("#LastCost").removeAttr('readonly');
+
+                $("#Cost3").removeAttr('readonly');
+                $("#LastDiscount").removeAttr('readonly');
+
+                $("#SalesCost").removeAttr('readonly');
+                $("#LastOut").removeAttr('readonly');
+
+                $("#LastModiuser").removeAttr('readonly');
+                $("#LastModidate").removeAttr('readonly');
+
+                $("#DefaultPrice1").removeAttr('readonly')
+                $("#DefaultPrice2").removeAttr('readonly')
+                $("#DefaultPrice3").removeAttr('readonly')
+                $("#DefaultPrice4").removeAttr('readonly')
+                $("#DefaultPrice5").removeAttr('readonly')
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                        @*window.location.href = "@Url.Action("Search", "Vendor")";*@
+                });
+        });
+
+        //清除搜尋資料
+        $('.btn-clean.search').on('click', function () {
+
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            //清除資料
+            $("#PartNo").val('');
+            $("#Spec").val('');
+            $("#Barcode").val('');
+            $("#PartNo").val('');
+            $("#Type").val('');
+            $("#PackQty").val('');
+            $("#YnCount").val('');
+            $("#StQty").val('');
+            $("#Unit").val('');
+            $("#SafeQty").val('');
+            $("#Location").val('');
+            $("#IsShow").prop("checked", "false");
+
+            $("#TUnit1").val('');
+            $("#TranPara1").val('');
+            $("#UnitPara1").val('')
+
+            $("#L").val('');
+            $("#W").val('');
+            $("#H").val('')
+
+            $("#TUnit2").val('');
+            $("#TranPara2").val('');
+            $("#UnitPara2").val('')
+
+            $("#Cuft").val('')
+            $("#TUnit3").val('');
+            $("#TranPara3").val('');
+            $("#UnitPara3").val('')
+
+            $("#TaxType").val('')
+            $("#Price1").val('');
+            $("#SPrice1").val('');
+
+            $("#Price2").val('')
+            $("#SPrice2").val('')
+
+            $("#Price3").val('')
+            $("#SPrice3").val('')
+
+            $("#Price4").val('')
+            $("#SPrice4").val('')
+
+            $("#Price5").val('')
+            $("#SPrice5").val('')
+
+            $("#Price6").val('')
+            $("#SPrice6").val('')
+
+            $("#Price7").val('')
+            $("#SPrice7").val('')
+
+            $("#Price8").val('')
+            $("#SPrice8").val('')
+
+            $("#Cost1").val('')
+            $("#LastIn").val('')
+
+            $("#Cost2").val('')
+            $("#LastCost").val('')
+
+            $("#Cost3").val('')
+            $("#LastDiscount").val('')
+
+            $("#SalesCost").val('')
+            $("#LastOut").val('')
+
+            $("#LastModiuser").val('')
+            $("#LastModidate").val('')
+
+            $("#DefaultPrice1").val('')
+            $("#DefaultPrice2").val('')
+            $("#DefaultPrice3").val('')
+            $("#DefaultPrice4").val('')
+            $("#DefaultPrice5").val('')
+
+            //公司毛利率
+            $("#CGPM1").empty();
+            $("#CGPM2").empty();
+            $("#CGPM3").empty();
+            $("#CGPM4").empty();
+            $("#CGPM5").empty();
+            $("#CGPM6").empty();
+            $("#CGPM7").empty();
+            $("#CGPM8").empty();
+            $("#CGPM1").append(0 + "%");
+            $("#CGPM2").append(0 + "%");
+            $("#CGPM3").append(0 + "%");
+            $("#CGPM4").append(0 + "%");
+            $("#CGPM5").append(0 + "%");
+            $("#CGPM6").append(0 + "%");
+            $("#CGPM7").append(0 + "%");
+            $("#CGPM8").append(0 + "%");
+
+            //客戶毛利率
+            $("#GPM1").empty();
+            $("#GPM2").empty();
+            $("#GPM3").empty();
+            $("#GPM4").empty();
+            $("#GPM5").empty();
+            $("#GPM6").empty();
+            $("#GPM7").empty();
+            $("#GPM8").empty();
+            $("#GPM1").append(0 + "%");
+            $("#GPM2").append(0 + "%");
+            $("#GPM3").append(0 + "%");
+            $("#GPM4").append(0 + "%");
+            $("#GPM5").append(0 + "%");
+            $("#GPM6").append(0 + "%");
+            $("#GPM7").append(0 + "%");
+            $("#GPM8").append(0 + "%");
+        });
+
+        //匯出
+        $(".tool-btn-export").on('click', function () {
+            window.location.href = "@Url.Action("Export","Stock")"
+        });
+
+        // tabs
+        $(function () {
+            $(".tabs-item:first").addClass("is-active");
+            $(".tabs-content:first").addClass("is-active");
+            $(".tabs-item").click(function () {
+                $(this).addClass("is-active");
+                $(this).siblings().removeClass("is-active");
+                $(".tabs-content").siblings().removeClass("is-active");
+                $(".tabs-content").eq($(this).index()).addClass("is-active");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

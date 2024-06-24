@@ -1,0 +1,317 @@
+﻿@model ERP6.ViewModels.Sales.OrderEditViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/jquery.keypad.css">
+<style>
+    #inlineKeypad {
+        width: 10em;
+    }
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="~/js/jquery.plugin.min.js"></script>
+<script src="~/js/jquery.keypad.js"></script>
+
+<!-- main -->
+<main class="container-wrap">
+    <div class="layout-wrap full-h">
+        <div class="layout-main">
+            <div class="layout-head">
+                <span>
+                    @ViewBag.FUNNAME
+                </span>
+                <button class="btn-back" onClick="window.location.href='@Url.Action("Order","Sales",new { Area = Model.Area, CustomerId = Model.CustomerId })'"></button>
+            </div>
+
+            @using (Html.BeginForm("OrderEdit", "Sales", FormMethod.Post, new { style = "display: block;height:100%;" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.OutNo)
+                @Html.HiddenFor(x => x.IsCopy)
+                <div class="layout-content">
+                    <div class="order-form-top">
+                        <div class="three">
+                            <div class="filter-input">
+                                <label for="">送貨次序</label>
+                                <div class="input">
+                                    @*<input type="text" name="ORD_ORDER" readonly>*@
+                                </div>
+                            </div>
+                            <div class="filter-input ">
+                                <label for="">客戶編號</label>
+                                <div class="input">
+                                    @Html.TextBoxFor(x => x.CustomerId, new { @readonly = "@readonly" })
+                                    @Html.HiddenFor(x => x.Area)
+                                    @*<input type="text" name="ORD_CLIENT" readonly value="@Model.ORD_CLIENT">
+                                        <input type="hidden" name="ORD_AREA" value="@Model.ORD_AREA">*@
+                                </div>
+                            </div>
+                            <div class="filter-input ">
+                                <label for="">請款日期</label>
+                                <div class="input type-date">
+                                    @Html.TextBoxFor(x => x.OrderTime, new { @readonly = "@readonly", type = "date" })
+                                    @*<input type="date" name="ORD_PTIME" readonly value="@Model.ORD_PTIME">*@
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="two">
+                            <div class="filter-input">
+                                <label for="">業務人員</label>
+                                <div class="input">
+                                    @Html.TextBoxFor(x => x.Business, new { @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="filter-input">
+                                <label for="">司機人員</label>
+                                <div class="input">
+                                    @Html.TextBoxFor(x => x.Driver, new { @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="one">
+                            <div class="filter-input">
+                                <label for="">其他備註</label>
+                                <div class="input">
+                                    @Html.TextBoxFor(x => x.Memo)
+                                    @*<input type="text" name="ORD_PS" value="@Model.ORD_PS">*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-tabs-wrap">
+                        <div class="order-tabs-nav">
+                            <ul>
+                                @foreach (var item in Model.StockTitleList)
+                                {
+                                    <li class="order-tabs-item">@item.Name</li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="order-tabs-main">
+                            @foreach (var titleItem in Model.StockTitleList)
+                            {
+                                <div class="order-tabs-content">
+                                    <div class="title">
+                                        <div class="f-1">促銷</div>
+                                        <div class="f-1">狀態</div>
+                                        <div class="f-5 ta-left">品名</div>
+                                        <div class="f-2">數量</div>
+                                        <div class="f-4 ta-left">備註</div>
+                                    </div>
+                                    @{
+
+                                        var fus = 1;
+
+                                        foreach (var item in Model.StockList.Where(x => x.StockType == titleItem.Name))
+                                        {
+                                            <div class="item">
+                                                <div class="f-1">
+                                                    @{
+                                                        if (item.IsPromotion == true)
+                                                        {
+                                                            <div class="order-input-promot">
+                                                                <input type="checkbox" id="ck1_@fus" name="SALE" value="@item.PartNo" @if (item.IsPromotion == true) { @Html.Raw("checked") ; }>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="f-1">
+                                                    @{
+                                                        if (item.IsSalesStatus == true)
+                                                        {
+                                                            <div class="order-input-stat">
+                                                                <input type="checkbox" id="star1_@fus" name="BOUGHT" disabled value="@item.PartNo" @if (item.IsSalesStatus == true) { @Html.Raw("checked") ; }>
+                                                                <label for="star1_1"></label>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="f-5 ta-left">
+                                                    <p class="order-item-name" data-fuyu-no="@item.PartNo">@item.Spec </p>
+                                                    <input type="hidden" name="SPEC" value="@item.Spec">
+                                                    <input type="hidden" name="PART_NO" value="@item.PartNo">
+                                                </div>
+                                                <div class="f-2">
+                                                    <input type="text" class="order-input-num defaultKeypad" name="PORDNUM" value="@item.PackQty" onfocus="this.select()">
+                                                </div>
+                                                <div class="f-4 ta-left">
+                                                    <input type="text" class="order-input-note" name="PS" placeholder="請輸入備註事項" value="@item.StPs" maxlength="12">
+                                                </div>
+                                            </div>
+                                            fus++;
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="layout-bottom pb">
+                        <button type="button" class="btn-clean" onclick="">清除條件</button>
+                        <button type="button" class="btn-submit" onclick="" data-state="@Model.OrderState">送出</button>
+                        @*<button type="button" class="btn-submit" data-state="@Model.ORD_STATE">送出</button>*@
+                    </div>
+                </div>
+                <button class="btn-submitfuyu"></button>
+            }
+        </div>
+    </div>
+</main>
+
+<!--popup -->
+<div class="popup-info-box">
+    <div class="popup-info-content">
+        <figure>
+            <span style="background-image: url('');"></span><!-- 圖片插入到CSS背景路徑裡 -->
+        </figure>
+        <ul>
+            <li>
+                <span>【編號】</span>
+                <p id="Det01"></p>
+            </li>
+            <li>
+                <span>【品名】</span>
+                <p id="Det02"></p>
+            </li>
+            <li>
+                <span>【規格】</span>
+                <p id="Det03">
+
+                </p>
+            </li>
+            <li>
+                <span>【重量】</span>
+                <p id="Det04"></p>
+            </li>
+            <li>
+                <span>【廠牌】</span>
+                <p id="Det05"></p>
+            </li>
+            <li>
+                <span>【單價】</span>
+                <p id="Det06"></p>
+            </li>
+            <li>
+                <span>【牌價】</span>
+                <p id="Det07"></p>
+            </li>
+            <li>
+                <span>【促銷價】</span>
+                <p id="Det08"></p>
+            </li>
+        </ul>
+    </div>
+    <button class="popup-close"></button>
+</div>
+<div class="popup-check-box">
+    <p>是否確定送出?</p>
+    <div class="btn">
+        <button class="btn-cancel js-popup-cancel" type="button">取消</button>
+        <button class="btn-submit js-popup-confirm" onClick="">確定</button>
+    </div>
+</div>
+<div class="popup-overlay"></div>
+
+<!-- JS -->
+<script>
+
+    // 頁籤
+    $(function () {
+        $(".order-tabs-item:first").addClass("is-active");
+        $(".order-tabs-content:first").addClass("is-active");
+        $(".order-tabs-item").click(function () {
+            $(this).addClass("is-active");
+            $(this).siblings().removeClass("is-active");
+            $(".order-tabs-content").siblings().removeClass("is-active");
+            $(".order-tabs-content").eq($(this).index()).addClass("is-active");
+        });
+    });
+
+    // 明細
+    $(function () {
+        $(".order-item-name").on("click", function (e) {
+            //參考part_no = S600000
+            var sV = $(this).attr("data-fuyu-no");
+            var outNo = $("#OutNo").val();
+               $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AjaxOrderDet", "Ajaxs")",
+                    data: { id: sV, outNo: outNo },
+                    success: function (data) {
+                        if (data != null) {
+
+                            $("#Det01").empty();
+                            $("#Det02").empty();
+                            $("#Det03").empty();
+                            $("#Det04").empty();
+                            $("#Det05").empty();
+                            $("#Det06").empty();
+                            $("#Det07").empty();
+
+                            $("#Det01").append("" + data.partNo)
+                            $("#Det02").append("" +data.spec)
+                            $("#Det03").append("" +data.unit)
+                            $("#Det04").append("" +data.initQty2+"g")
+                            $("#Det05").append("" +data.atti)
+                            $("#Det06").append("$" + data.price1)
+                            $("#Det07").append("$" + data.sPrice1)
+                            $("#Det08").append("$" + data.pPrice1)
+                        }
+                    },
+                   error: function () {
+
+                       alert("發生錯誤!");
+
+                    }
+                });
+
+            $(".popup-info-box").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+        });
+
+        $(".popup-close").on("click", function (e) {
+
+            $(".popup-info-box").removeClass("is-active");
+            $(".popup-overlay").removeClass("is-active");
+
+        });
+    });
+    // 送出
+    $(function () {
+        $(".btn-submit").on("click", function (e) {
+
+                $(".popup-check-box").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+        });
+        $(".js-popup-cancel").on("click", function (e) {
+
+            $(".popup-check-box").removeClass("is-active");
+            $(".popup-overlay").removeClass("is-active");
+
+        });
+        $(".js-popup-confirm").on("click", function (e) {
+
+            $(".btn-submitfuyu").click();
+
+        });
+    });
+</script>
+
+<!-- JS_20221224 -->
+<script>
+    $(function () {
+        $('.defaultKeypad').keypad();
+
+        $('#inlineKeypad').keypad({
+            onClose: function () {
+
+                alert($(this).val());
+
+            }
+        });
+    });
+</script>

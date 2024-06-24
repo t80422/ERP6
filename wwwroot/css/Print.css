@@ -1,0 +1,81 @@
+﻿body {
+    font-family: PMingLiU, "新細明體", serif;
+    margin: 10px;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    padding-bottom:100px;
+}
+
+.header {
+    text-align: center;
+}
+
+    .header h2 {
+        margin: 0;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+.list td {
+    border-bottom: 1px dashed #000;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+.info-left {
+    text-align: left;
+    font-weight: normal;
+}
+
+.info-right {
+    text-align: right;
+    font-weight: normal;
+}
+
+.columnName th {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-top: 10px;
+    background-color:white;
+    page-break-before: always;
+    height:50px;
+}
+
+.subtotal td {
+    font-weight: bold;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+    }
+
+    @page {
+        size: A4;
+        margin: 0 5px auto 5px;
+    }
+}

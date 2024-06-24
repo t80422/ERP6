@@ -1,0 +1,705 @@
+﻿@model ERP6.ViewModels.Out30VMs.IndexViewModel
+@{
+    Layout = "/Views/Shared/STOLayout.cshtml";
+}
+
+<div class="container-inner">
+    <!-- top -->
+    <div class="top-wrap">
+        <!-- top-title -->
+        <div class="top-title">
+            <h2>C210_寄賣客戶庫存檔</h2>
+        </div>
+        <!-- top-toollist -->
+        <div class="top-toollist">
+            <ul>
+                <li>
+                    <button class="tool-btn-first"><span>首筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-prev"><span>前筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-next"><span>次筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-last"><span>末筆</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-add" onclick="window.location.href = '@Url.Action("Add","Out30")'"><span>新增</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-edit" onclick="edit()"><span>修改</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-del" onclick="deleteOut30()"><span>刪除</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-search"><span>查詢</span></button>
+                </li>
+                <li>
+                    <button class="tool-btn-export" onclick="window.open('@Url.Action("Export")', '_blank')"><span>匯出檔案</span></button>
+                </li>
+                @*<li>
+                    <button class="tool-btn-change"><span>重新排序</span></button>
+                </li>*@
+                <li>
+                    <button class="tool-btn-mcheckout" name="btnAccount" id="btnAccount"><span>過帳</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-confirm"><span>確認</span></button>
+                </li>
+                <li style="display:none;">
+                    <button class="tool-btn-cancel"><span>取消</span></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="container-content">
+        <div class="container-column">
+            <!-- 列表 -->
+            <div class="container-col-1">
+                <div class="data-wrap">
+                    <div class="data-title">
+                        <div class="f-1 ta-left">寄賣客戶</div>
+                        <div class="f-1 ta-left">統計月份</div>
+                    </div>
+                    <div class="data-list">
+                        @if (Model.out30List != null && Model.out30List.Count > 0)
+                        {
+                            foreach (var item in Model.out30List)
+                            {
+                                <div class="data-item" data-co-no="@item.CoNo" data-paymonth="@item.Paymonth">
+                                    <div class="f-1 out30 cono ta-left">@item.CoNo</div>
+                                    <div class="f-1 out30 paymonth ta-left">@item.Paymonth</div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="container-col-2 fl-5">
+                <form id="myForm" method="post">
+                    @Html.HiddenFor(x => x.IsSearch)
+                    <div class="inside-wrap">
+                        <div class="inside-overflow">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">寄賣客戶</label>
+                                                <div class="option toCstm">
+                                                    @Html.TextBoxFor(x => x.CoNo, new { @class = "easyui-combobox", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">統計月份</label>
+                                                <div>
+                                                    @Html.TextBoxFor(x => x.Paymonth, new { @readonly = "readonly", type = "month" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">備註</label>
+                                                <input id="Memo" name="Memo" class="easyui-combobox" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table2-wrap pad-t20 pad-b20 pad-r30 pad-l30">
+                                        <div class="table2-title">
+                                            <div class="tabs-item">明細資料</div>
+                                        </div>
+                                        <div class="table2-overflow h-800">
+                                            <div class="table2-main">
+                                                <div class="tabs-content is-active">
+                                                    <div class="table-width w-100pc">
+                                                        <table>
+                                                            <tr class="sticky">
+                                                                <th class="p-9 ta-center">
+                                                                    <span>產品編號</span>
+                                                                </th>
+                                                                <th class="p-18 ta-center">
+                                                                    <span>品名規格</span>
+                                                                </th>
+                                                                <th class="p-9 ta-center">
+                                                                    <span>條碼</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>單位</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>稅別</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>上月存貨</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>本月進貨</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>本月退貨</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>本月存貨</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>銷售數量</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>單價</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>折扣率</span>
+                                                                </th>
+                                                                <th class="p-5 ta-center">
+                                                                    <span>金額</span>
+                                                                </th>
+                                                            </tr>
+                                                            @if (Model.out40List != null && Model.out40List.Count > 0)
+                                                            {
+                                                                foreach (var out40Item in Model.out40List)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.PartNo</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Spec</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Barcode</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Unit</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.TaxType</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.LQty</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.InQty</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.InretQty</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.StQty</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.OutQty</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Price</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Discount</span>
+                                                                        </td>
+                                                                        <td class="ta-center">
+                                                                            <span>@out40Item.Amount</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">免稅合計</label>
+                                                @Html.TextBoxFor(x => x.Total0, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">應稅合計</label>
+                                                @Html.TextBoxFor(x => x.Total1, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">稅別</label>
+                                                @Html.DropDownListFor(x => x.TaxType, ViewBag.TaxTypeList as List<SelectListItem>, "請選擇",new { })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">稅額</label>
+                                                @Html.TextBoxFor(x => x.Tax, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">含稅合計</label>
+                                                @Html.TextBoxFor(x => x.Total2, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="Discount">現金扣%</label>
+
+                                                <div class="flex">
+                                                    <div class="f1-1" style="letter-spacing: normal;">
+                                                        @Html.TextBoxFor(x => x.Discount, new { @class = "w-85pc inb", @readonly = "readonly"}) %
+                                                    </div>
+
+                                                    <div class="f1-1">
+                                                        @Html.TextBoxFor(x => x.CashDis, new { @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">折讓金額</label>
+                                                @Html.TextBoxFor(x => x.SubTot, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-s">
+                                            <div class="form-input">
+                                                <label for="">未收金額</label>
+                                                @Html.TextBoxFor(x => x.NotGet, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-flex f-1">
+                                            <div class="form-input">
+                                                <label for="">輸入人員</label>
+                                                @Html.TextBoxFor(x => x.Userid, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-flex f-a">
+                                            <div class="form-input">
+                                                <label for="">過帳</label>
+                                                @Html.TextBoxFor(x => x.StockPass, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // 找出資料
+        async function FindData(CoNo, Paymonth) {
+            $('.loading-wrap').show();
+            $.ajax({
+                url: "@Url.Action("Search", "Out30")",
+                type: "POST",
+                data: { CoNo: CoNo, Paymonth: Paymonth },
+                async:false,
+                success: function (data) {
+                    $("#CoNo").combobox('setValue', data.coNo);
+                    $("#Paymonth").val(data.paymonth);
+                    $("#Memo").combobox('setText', data.memo);
+                    $("#Total0").val(data.total0);
+                    $("#Total1").val(data.total1);
+                    $("#TaxType").val(data.taxType);
+                    $("#Tax").val(data.tax);
+                    $("#Total2").val(data.total2);
+                    $("#Discount").val(data.discount);
+                    $("#CashDis").val(data.cashDis);
+                    $("#SubTot").val(data.subTot);
+                    $("#NotGet").val(data.notGet);
+                    $("#Userid").val(data.userid);
+                    $("#StockPass").val(data.stockPass);
+
+                    //先把清單資料清空再放入資料
+                    $('.sticky').nextAll('tr').empty();
+                    if (data.out40List != null && data.out40List.length > 0) {
+                        $.each(data.out40List, function (i, v) {
+                            $('.sticky').parent().append('<tr><td class="ta-center">' + v.partNo + '</td>' +
+                                '<td class= "ta-center" ><a href=' + "@Url.Action("Index", "Stock")/?PartNo=" + v.partNo + '>' + v.spec + '</a></td >' +
+                                '<td class= "ta-center" > ' + v.barcode + '</td >' +
+                                '<td class= "ta-center" > ' + v.unit + '</td >' +
+                                '<td class= "ta-center" > ' + v.taxType + '</td >' +
+                                '<td class= "ta-center" > ' + v.lQty + '</td >' +
+                                '<td class= "ta-center" > ' + v.inQty + '</td >' +
+                                '<td class= "ta-center" > ' + v.inretQty + '</td >' +
+                                '<td class= "ta-center" > ' + v.stQty + '</td >' +
+                                '<td class= "ta-center" > ' + v.outQty + '</td >' +
+                                '<td class= "ta-center" > ' + v.price + '</td >' +
+                                '<td class= "ta-center" > ' + v.discount + '</td >' +
+                                '<td class= "ta-center" > ' + v.amount + '</td ></tr > ');
+                        });
+                    }
+                },
+                error: function (err) {
+                    alert('發生錯誤');
+                    console.log(err)
+                }
+            });
+
+            //改變過帳按鈕
+            var $btnAccount = $('[name="btnAccount"]');
+
+            if ($('#StockPass').val() == "Y") {
+                $btnAccount.html('<span>還原</span>').removeClass('tool-btn-mcheckout').addClass('tool-btn-recovery');
+            } else {
+                $btnAccount.html('<span>過帳</span>').removeClass('tool-btn-recovery').addClass('tool-btn-mcheckout');
+            }
+
+            $('.loading-wrap').hide();
+        }
+
+        // 開啟唯讀
+        function OpenReadonly() {
+            $('#myForm input').attr('readonly', true)
+            $('#myForm select').attr('disabled', true)
+            $('#CoNo').combobox('readonly', true);
+
+            /*20240605*/
+            //$('.top-toollist ul li').show();
+            //$('.tool-btn-confirm').parent('li').hide();
+            //$('.tool-btn-cancel').parent('li').hide();
+            ToolsControl(true)
+            /*20240605*/
+        }
+
+        //關閉唯讀
+        function CloseReadonly() {
+            const container = document.querySelector('.form-wrap');
+            clearReadonly(container);
+            $('#CoNo').combobox('readonly', false);
+        }
+
+        // 清空Input
+        function clearInput() {
+            $('#CoNo').combobox('setValue', '');
+            $('#Paymonth').val('');
+            $('#Memo').combobox('setValue', '');
+            $('#Total0').val('');
+            $('#Total1').val('');
+            $('#TaxType').val('');
+            $('#Tax').val('');
+            $('#Total2').val('');
+            $('#Discount').val('');
+            $('#CashDis').val('');
+            $('#SubTot').val('');
+            $('#NotGet').val('');
+            $('#Userid').val('');
+            $('#StockPass').val('');
+            $('.sticky').nextAll('tr').empty();
+        }
+
+        /*20240605*/
+        // 上方控制項控制
+        function ToolsControl(isAll) {
+            if (isAll) {
+                $('.top-toollist ul li').show();
+                $('.tool-btn-confirm').parent('li').hide();
+                $('.tool-btn-cancel').parent('li').hide();
+            }
+            else {
+                $('.top-toollist ul li').hide();
+                $('.tool-btn-confirm').parent('li').show();
+                $('.tool-btn-cancel').parent('li').show();
+            }
+        }
+
+        /*20240605*/
+
+        // 首筆資料
+        $('.tool-btn-first').on('click', function () {
+            OpenReadonly()
+            FindData($('.data-item').first().find('.out30.cono').text(), $('.data-item').first().find('.out30.paymonth').text())
+
+            $('.data-item').removeClass('active');
+            $('.data-item').first().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+
+        // 上筆資料
+        $('.tool-btn-prev').on('click', function () {
+            OpenReadonly()
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').prev() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有上一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.out30.cono').text(), Item.find('.out30.paymonth').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+
+        // 下筆資料
+        $('.tool-btn-next').on('click', function () {
+            OpenReadonly()
+            var Item = $('.data-item.active').length > 0 ? $('.data-item.active').next() : $('.data-item').first();
+
+            if (Item.length <= 0) {
+                alert("已沒有下一筆資料");
+                return;
+            }
+
+            FindData(Item.find('.out30.cono').text(), Item.find('.out30.paymonth').text());
+
+            $('.data-item').removeClass('active');
+            Item.addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+
+        // 末筆資料
+        $('.tool-btn-last').on('click', function () {
+            OpenReadonly()
+            FindData($('.data-item').last().find('.out30.cono').text(), $('.data-item').last().find('.out30.paymonth').text())
+            $('.data-item').removeClass('active');
+            $('.data-item').last().addClass('active');
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        })
+
+        // 點擊資料
+        $('.data-item').on('click', function () {
+            OpenReadonly()
+            FindData($(this).find('.out30.cono').text(), $(this).find('.out30.paymonth').text())
+            $('.data-item').removeClass('active')
+            $(this).addClass('active')
+            document.querySelector('.data-item.active').scrollIntoView(true);
+        });
+
+        /*20240605*/
+        // 新增
+        @*$('.tool-btn-add').on('click', function () {
+            window.location.href = '@Url.Action("Add","Out30")';
+        })*@
+        /*20240605*/
+
+        // 搜尋
+        $('.tool-btn-search').on('click', function () {
+            $('#IsSearch').val(true);
+
+            /*20240605*/
+            //$('.top-toollist ul li').hide();
+            //$('.tool-btn-confirm').parent('li').show();
+            //$('.tool-btn-cancel').parent('li').show();
+            ToolsControl(false)
+            /*20240605*/
+
+            clearInput();
+            CloseReadonly();
+
+            /*20240605*/
+            //$('.tool-btn-confirm').off('click');
+            //$('.tool-btn-cancel').off('click');
+            /*20240605*/
+        })
+
+        // 重新排序
+        $('.tool-btn-change').on('click', function () {
+
+            /*20240605*/
+            //$('.top-toollist ul li').hide();
+            //$('.tool-btn-confirm').parent('li').show();
+            //$('.tool-btn-cancel').parent('li').show();
+            ToolsControl(false)
+            /*20240605*/
+            clearInput();
+
+            $('#Paymonth').removeAttr('readonly')
+
+            $('.tool-btn-confirm').off('click');
+            $('.tool-btn-cancel').off('click');
+
+            /*20240605*/
+            @*// 送出
+            $('.tool-btn-confirm').click(function () {
+                var paymonth = $('#Paymonth').val()
+
+                if (!paymonth) {
+                    alert("請輸入結帳月份")
+                    return false;
+                }
+                $('.btn-cancel.small.check').off('click');
+                $('.btn-submit.small.check').off('click');
+
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $.ajax({
+                        url: '@Url.Action("ReSort","Out30")',
+                        method: 'POST',
+                        async: false,
+                        data: { PayMonth: paymonth },
+                        success: function () {
+                            alert("排序完成");
+                            location.href = "@Url.Action("Index","Out30")";
+                        },
+                        error: function (err) {
+                            alert('發生錯誤');
+                            console.log(err)
+                        }
+                    })
+                });
+            })*@
+            /*20240605*/
+
+            // 取消
+            $('.tool-btn-cancel').on('click', function () {
+
+                clearInput();
+                OpenReadonly();
+            })
+        })
+
+        /*20240605*/
+        // 確認
+        $('.tool-btn-confirm').click(function () {
+            $('#myForm').submit()
+        });
+
+        //取消
+        $('.tool-btn-cancel').click(function () {
+            $('#IsSearch').val(false)
+            clearInput();
+            OpenReadonly()
+        })
+
+        //取得客戶列表
+        $('#CoNo').combobox({
+            url: "@Url.Action("AjaxCustomerForEasyUI", "Ajaxs")",
+            valueField: 'id',
+            textField: 'text'
+        });
+        /*20240605*/
+
+        //過帳
+        $('#btnAccount').on('click', function () {
+            var coNo = $('.data-item.active').data('co-no');
+            var payMonth = $('.data-item.active').data('paymonth');
+            var stockPass = $('#StockPass').val() == "Y" ? null : "Y";
+
+            if (!coNo || !payMonth) {
+                alert("請選擇對象");
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("UpdateStockPass")',
+                type: 'post',
+                data: { coNo, payMonth, stockPass},
+                success: function (response) {
+                    if (response.success) {
+                        FindData(coNo, payMonth);
+                    } else {
+                        alert("更新失敗" + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ':' + xhr.statusText;
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage += ' - ' + xhr.responseJSON.message;
+                    } else if (xhr.responseText) {
+                        errorMessage += ' - ' + xhr.responseText;
+                    }
+                    alert("ajax 錯誤:" + errorMessage);
+                }
+            })
+        })
+
+        //首次加載觸發首筆資料
+        $('.tool-btn-first').click();
+    })
+
+    //刪除
+    function deleteOut30() {
+        var coNo = $('.data-item.active').data('co-no');
+        var payMonth = $('.data-item.active').data('paymonth');
+        var stockPass = $('#StockPass').val();
+
+        if (!coNo || !payMonth) {
+            alert("請選擇對象");
+            return;
+        }
+
+        if (stockPass == "Y") {
+            alert("已過帳不可刪除")
+            return;
+        }
+
+        if (confirm("確定要刪除此筆資料嗎?")) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Out30")',
+                data: {coNo,payMonth},
+                type: 'post',
+                success: function (response) {
+                    if (response.success) {
+                        location.href = '@Url.Action("Index", "Out30")';
+                    } else {
+                        alert("刪除失敗：" + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage += ' - ' + xhr.responseJSON.message;
+                    } else if (xhr.responseText) {
+                        errorMessage += ' - ' + xhr.responseText;
+                    }
+                    alert("ajax 發生錯誤: " + errorMessage);
+                }
+            });
+        }
+    }
+
+    //編輯
+    function edit() {
+        var coNo = $('.data-item.active').data('co-no');
+        var payMonth = $('.data-item.active').data('paymonth');
+        var stockPass = $('#StockPass').val();
+
+        if (!coNo || !payMonth) {
+            alert("請選擇對象");
+            return;
+        }
+
+        if (stockPass == "Y") {
+            alert("已過帳不可修改")
+            return;
+        }
+
+        location.href='@Url.Action("Edit","Out30")' + '?coNo=' + coNo + '&paymonth=' + payMonth;
+    }
+
+    //導到客戶基本資料
+    $('.toCstm').click(function () {
+    var cono = $('input[name="CoNo"]').val()
+    if (cono) {
+        window.open("@Url.Action("Index","Customer")" + "?CoNo=" + cono + "&Back=true&IsSearch=true")
+    }
+})
+</script>

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    @*<script src="js/jquery-2.1.4.min.js"></script>*@
+    <script src="~/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <article id="wrap">
+        <!-- main -->
+        <main class="login-wrap">
+            <div class="login-form">
+                @using (Html.BeginForm("Lg", "Login", FormMethod.Post, new { @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data", onsubmit = "return loginBtn_click();" }))
+                {
+                    <div class="login-title">歡迎登入ERP系統</div>
+                    <!-- <form action=""> -->
+                    <div class="login-input">
+                        <input id="userAC" name="userAC" type="text" placeholder="使用者代碼" value="Mid">
+                    </div>
+                    <div class="login-input">
+                        <input id="userPW" name="userPW" type="password" placeholder="密碼">
+                        <button type="button" id="pwBtn" class="eye-btn"></button>
+                    </div>
+                    <div class="login-remember">
+                        <input type="checkbox" id="ckPW" checked>
+                        <label for="ckPW">記住帳密</label>
+                    </div>
+                    <div class="login-btn">
+                        <button>登入</button>
+                    </div>
+                    <!-- </form> -->
+                }
+            </div>
+            <div class="login-bg"></div>
+        </main>
+    </article>
+    <!-- JS -->
+    <script>
+        $(function () {
+            $("#pwBtn").on("click", function (e) {
+                if (!$(this).hasClass("show")) {
+                    $(this).addClass("show");
+                    $("#userPW").prop("type", "text");
+                }
+                else if ($(this).hasClass("show")) {
+                    $(this).removeClass("show");
+                    $("#userPW").prop("type", "password");
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var strName = localStorage.getItem('keyName');
+            var strPass = localStorage.getItem('keyPass');
+            if (strName) {
+                $('#userAC').val(strName);
+            } if (strPass) {
+                $('#userPW').val(strPass);
+            }
+
+        });
+
+        function loginBtn_click() {
+            var strName = $('#userAC').val();
+            var strPass = $('#userPW').val();
+            localStorage.setItem('keyName', strName);
+            if ($('#ckPW').is(':checked')) {
+                localStorage.setItem('keyPass', strPass);
+            } else {
+                localStorage.removeItem('keyPass');
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,1373 @@
+﻿@model ERP6.ViewModels.Vendor.VendorIndexViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    //Layout = "~/Views/Shared/Layout.cshtml";
+    string UserAc = HttpContextAccessor.HttpContext.Session.GetString("UserAc");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>弘隆食品有限公司</title>
+    <link href="image/favico.ico" rel="shortcut icon">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/easyui.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery.easyui.min.js"></script>
+    <style>
+        .data-item.active {
+            background-color: #F5F9FF;
+        }
+    </style>
+</head>
+<body>
+    <article id="wrap">
+        <!-- header -->
+        <header class="header-wrap">
+            <figure class="logo-wrap"><a href="@Url.Action("Index", "Home",new { UserAC = UserAc})"></a></figure>
+            <div class="nav-wrap">
+                <ul class="nav-list">
+                    <li class="nav-item nav-1 is-active" title="進銷存系統">
+                        <a href="@Url.Action("Index", "Vendor")"></a>
+                    </li>
+                    <li class="nav-item nav-2" title="財務系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-3" title="會計系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-4" title="人事">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-5" title="代號系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-6" title="分析系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-7" title="安全系統">
+                        <a href="###"></a>
+                    </li>
+                    <li class="nav-item nav-8" title="">
+                        <a href="###"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <!-- add system -->
+                @*<div class="header-btn-add">
+                        <a href="">
+                            <i></i><span>新增系統</span>
+                        </a>
+                    </div>*@
+                <!-- user info -->
+                <div class="user-info">
+                    <span>帳號名稱</span>
+                    <h2>@UserAc</h2>
+                </div>
+                <!-- sign out -->
+                <button class="signout-btn" onClick='window.location.href = "@Url.Action("Index", "Login")"'></button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="container-wrap">
+            <!-- aside -->
+            <aside class="aside-wrap">
+                <div class="aside-head">STO進銷系統</div>
+                <div class="aside-list">
+                    <div class="aside-item">
+                        <div class="aside-title is-c201 is-active">
+                            <h2>進銷系統</h2>
+                        </div>
+                        <div class="aside-link" style="display: block;">
+                            <ul>
+                                <li class="is-active">
+                                    <a href="@Url.Action("Index", "Vendor")">C201_廠商基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Customer")">C202_客戶基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock")">C203_產品基本資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Pur")">C204_採購單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "In")">C205_領料入庫資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C206_庫存異動單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Stock20")">C207_產品促銷單建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Bou")">C208_報價單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out")">C209_出貨單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Out30")">C210_寄賣客戶庫存檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C211_產品期初資料檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C212_盤點單資料建檔</a>
+                                </li>
+                                <li>
+                                    <a href="">C213_加工產品資料檔</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- inner -->
+            <div class="container-inner">
+                <!-- top -->
+                <div class="top-wrap">
+                    <!-- top-title -->
+                    <div class="top-title">
+                        <h2>C201_廠商基本資料檔</h2>
+                    </div>
+                    <!-- top-toollist -->
+                    <div class="top-toollist">
+                        <ul>
+                            <li>
+                                <button class="tool-btn-first"><span>首筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-prev"><span>前筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-next"><span>次筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-last"><span>末筆</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-add"><span>新增</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-edit"><span>修改</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-del"><span>刪除</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-search"><span>查詢</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-export"><span>匯出檔案</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-material"><span>相關資料</span></button>
+                            </li>
+                            <li>
+                                <button class="tool-btn-change"><span>編號變更</span></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="container-content">
+                    <div class="container-column">
+                        <div class="container-col-1">
+                            <div class="data-wrap moai">
+                                <div class="data-title">
+                                    <div class="f-1 ta-left">廠商編號</div>
+                                    <div class="f-2 ta-left">廠商簡稱</div>
+                                </div>
+                                <div class="data-list">
+                                    <!-- example start -->
+                                    @foreach (var item in Model.vendorList)
+                                    {
+                                        <div class="data-item">
+                                            <div class="f-1 vendor ta-left">@item.VendorNo</div>
+                                            <div class="f-2 ta-left">@item.Vename</div>
+                                        </div>
+                                    }
+                                    <!-- example end -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-col-2 fl-4">
+                            @using (Html.BeginForm("Index", "Vendor", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(x => x.IsSearch)
+                                <div class="inside-wrap">
+                                    <div class="inside-overflow">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">廠商編號*</label>
+                                                            @Html.TextBoxFor(x => x.VendorNo, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">統一編號*</label>
+                                                            @Html.TextBoxFor(x => x.Uniform, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">廠商簡稱*</label>
+                                                            @Html.TextBoxFor(x => x.Vename, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">公司名稱</label>
+                                                            @Html.TextBoxFor(x => x.Company, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">結帳日期</label>
+                                                            <select name="Dlien" id="Dlien">
+                                                                <option value="">請選擇</option>
+                                                                <option value="15">15</option>
+                                                                <option value="20">20</option>
+                                                                <option value="25">25</option>
+                                                                <option value="月底">月底</option>
+                                                                <option value="21">21</option>
+                                                                <option value="31">31</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">發票抬頭</label>
+                                                            @Html.TextBoxFor(x => x.Invocomp, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">付款方式</label>
+                                                            @Html.TextBoxFor(x => x.Payment, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">電話一*</label>
+                                                            @Html.TextBoxFor(x => x.Tel1, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">負責人*</label>
+                                                            @Html.TextBoxFor(x => x.Boss, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">傳真*</label>
+                                                            @Html.TextBoxFor(x => x.Fax, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">票期天數</label>
+                                                            @Html.TextBoxFor(x => x.ChehkDay, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">電話二*</label>
+                                                            @Html.TextBoxFor(x => x.Tel2, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">聯絡人*</label>
+                                                            @Html.TextBoxFor(x => x.Sales, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">行動電話</label>
+                                                            @Html.TextBoxFor(x => x.Mobile, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">稅別</label>
+                                                            <select name="TaxType" id="TaxType">
+                                                                <option value="">請選擇</option>
+                                                                <option value="0">零稅</option>
+                                                                <option value="1">外加</option>
+                                                                <option value="2">內含</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">Line ID</label>
+                                                            @Html.TextBoxFor(x => x.LineId, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">E-mail</label>
+                                                            @Html.TextBoxFor(x => x.Email, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>*@
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input unit-percent">
+                                                            <label for="">稅率</label>
+                                                            @Html.TextBoxFor(x => x.Taxrate, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">通訊地址*</label>
+                                                            @Html.TextBoxFor(x => x.Invoaddr, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input">
+                                                            <label for="">計價幣別</label>
+                                                            <select name="ntus" id="ntus">
+                                                                <option value="NTD">NTD</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">倉庫地址*</label>
+                                                            @Html.TextBoxFor(x => x.Factaddr, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s">
+                                                        <div class="form-input unit-percent">
+                                                            <label for="">折扣率</label>
+                                                            @Html.TextBoxFor(x => x.Discount, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">營業項目</label>
+                                                            @Html.TextBoxFor(x => x.Product, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-1">
+                                                        <div class="form-input">
+                                                            <label for="">進價類別</label>
+                                                            <select name="PriceType" id="PriceType">
+                                                                <option value="">請選擇</option>
+                                                                <option value="進價一">進價一</option>
+                                                                <option value="進價二">進價二</option>
+                                                                <option value="進價三">進價三</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-flex f-s"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tabs-wrap">
+                                            <div class="tabs-nav">
+                                                <ul>
+                                                    <li class="tabs-item min-size is-active">資料</li>
+                                                    <li class="tabs-item min-size">會計科目</li>
+                                                </ul>
+                                            </div>
+                                            <div class="tabs-main">
+                                                <div class="tabs-content">
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">付款帳號</label>
+                                                                @Html.TextBoxFor(x => x.Payaccount, new { @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-flex f-s">
+                                                            <div class="form-input">
+                                                                <label for="">付款銀行</label>
+                                                                <select name="Paybank" id="Paybank">
+                                                                    <option value="">請選擇</option>
+                                                                    <option value="台灣銀行">台灣銀行</option>
+                                                                    <option value="上海銀行">上海銀行</option>
+                                                                    <option value="板信銀行">板信銀行</option>
+                                                                    <option value="淡水信合社">淡水信合社</option>
+                                                                    <option value="中華郵政">中華郵政</option>
+                                                                    <option value="聯邦銀行">聯邦銀行</option>
+                                                                    <option value="遠東銀行">遠東銀行</option>
+                                                                    <option value="元大銀行">元大銀行</option>
+                                                                    <option value="玉山銀行">玉山銀行</option>
+                                                                    <option value="萬泰銀行">萬泰銀行</option>
+                                                                    <option value="華南銀行">華南銀行</option>
+                                                                    <option value="台新銀行">台新銀行</option>
+                                                                    <option value="大眾銀行">大眾銀行</option>
+                                                                    <option value="日盛銀行">日盛銀行</option>
+                                                                    <option value="安泰銀行">安泰銀行</option>
+                                                                    <option value="中國信託商業銀行">中國信託商業銀行</option>
+                                                                    <option value="永豐銀行">永豐銀行</option>
+                                                                    <option value="第一銀行">第一銀行</option>
+                                                                    <option value="合作金庫">合作金庫</option>
+                                                                    <option value="台灣中小銀行">台灣中小銀行</option>
+                                                                    <option value="台北富邦商業銀行">台北富邦商業銀行</option>
+                                                                    <option value="國泰世華商業銀行">國泰世華商業銀行</option>
+                                                                    <option value="土地銀行">土地銀行</option>
+                                                                    <option value="彰化銀行">彰化銀行</option>
+                                                                    <option value="兆豐商銀">兆豐商銀</option>
+                                                                    <option value="花旗(台灣)銀行">花旗(台灣)銀行</option>
+                                                                    <option value="渣打國際商銀">渣打國際商銀</option>
+                                                                    <option value="台中商銀">台中商銀</option>
+                                                                    <option value="京城商銀">京城商銀</option>
+                                                                    <option value="匯豐(台灣)銀行">匯豐(台灣)銀行</option>
+                                                                    <option value="大台北銀行">大台北銀行</option>
+                                                                    <option value="華泰商業銀行">華泰商業銀行</option>
+                                                                    <option value="台灣新光商銀">台灣新光商銀</option>
+                                                                    <option value="台北五信">台北五信</option>
+                                                                    <option value="台北九信">台北九信</option>
+                                                                    <option value="陽信銀行">陽信銀行</option>
+                                                                    <option value="基隆一信">基隆一信</option>
+                                                                    <option value="基隆二信">基隆二信</option>
+                                                                    <option value="淡水一信">淡水一信</option>
+                                                                    <option value="桃園農會">桃園農會</option>
+                                                                    <option value="大溪農會">大溪農會</option>
+                                                                    <option value="楊梅農會">楊梅農會</option>
+                                                                    <option value="大園農會">大園農會</option>
+                                                                    <option value="樹林農會">樹林農會</option>
+                                                                    <option value="鶯歌農會">鶯歌農會</option>
+                                                                    <option value="三峽農會">三峽農會</option>
+                                                                    <option value="八里農會">八里農會</option>
+                                                                    <option value="農會">農會</option>
+                                                                    <option value="信用合作社">信用合作社</option>
+                                                                    <option value="漁會">漁會</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">電子郵件</label>
+                                                                @Html.TextBoxFor(x => x.Email, new { @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">網址</label>
+                                                                @Html.TextBoxFor(x => x.Www, new { @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">備註</label>
+                                                                @Html.TextBoxFor(x => x.Memo, new { @readonly = "readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tabs-content">
+                                                    <div class="form-row">
+                                                        <div class="form-flex f-1">
+                                                            <div class="form-input">
+                                                                <label for="">進項科目</label>
+                                                                <div class="option">
+                                                                    @Html.DropDownListFor(x => x.Accno1, ViewBag.AccNoList as SelectList, "", htmlAttributes: new { @class = "easyui-combobox" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-bottom">
+                                            <button type="button" class="btn-clean search">清除條件</button>
+                                            <button type="submit" class="btn-submit">確定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- popup -->
+        <!-- 會計科目-進項科目-視窗畫面  -->
+        <!--<div id="demo1" class="popup-wrap w-large h-large">
+            <button class="popup-close"></button>
+            <div class="popup-main">
+                <div class="p-filter-form">
+                    <div class="p-row">
+                        <div class="p-input">
+                            <label for="">會計科目</label>
+                            <div class="p-flex">
+                                <div class="f-1">
+                                    <input type="text" placeholder="起始值">
+                                </div>
+                                <span>-</span>
+                                <div class="f-1">
+                                    <input type="text" placeholder="終止值">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-row">
+                        <div class="p-input">
+                            <label for="">科目名稱</label>
+                            <div class="p-flex">
+                                <div class="f-1">
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-btn">
+                        <button class="btn-submit small">查詢</button>
+                        <button class="btn-clean">清除條件</button>
+                    </div>
+                </div>
+                <div class="p-list">
+                    <div class="p-head">
+                        <div class="f-1">
+                            <h2>會計科目</h2>
+                        </div>
+                        <div class="f-3">
+                            <h2><strong>科目名稱</strong></h2>
+                        </div>
+                    </div>
+                    <div class="p-list-ov">
+                        <div class="p-item">
+                            <div class="f-1">
+                                <span>0</span>
+                            </div>
+                            <div class="f-3">
+                                <span>庫存量=0</span>
+                            </div>
+                        </div>-->
+        <!-- example start -->
+        <!--<div class="p-item">
+            <div class="f-1">
+                <span>000</span>
+            </div>
+            <div class="f-3">
+                <span>費用開銷</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>00000000000000</span>
+            </div>
+            <div class="f-3">
+                <span>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>
+        <div class="p-item">
+            <div class="f-1">
+                <span>0</span>
+            </div>
+            <div class="f-3">
+                <span>庫存量=0</span>
+            </div>
+        </div>-->
+        <!-- example end -->
+        <!--</div>
+                </div>
+                <div class="p-pages">
+                    <button class="btn-prev"></button>
+                    <ul>
+                        <li class="is-active">
+                            <a href="">1</a>
+                        </li>
+                        <li>
+                            <a href="">2</a>
+                        </li>
+                        <li>
+                            <a href="">3</a>
+                        </li>
+                        <li>
+                            <a href="">4</a>
+                        </li>
+                        <li>
+                            <a href="">5</a>
+                        </li>
+                    </ul>
+                    <button class="btn-next"></button>
+                </div>
+            </div>
+        </div>-->
+        <!-- 編號變更 -->
+        <div id="demo2" class="popup-wrap">
+            <div class="popup-main">
+                <div class="p-form">
+                    <h2>請輸入新的廠商編號</h2>
+                    <form action="##">
+                        <div class="input">
+                            <input type="text">
+                        </div>
+                        <div class="p-btn pad-0">
+                            <button class="btn-cancel small">取消</button>
+                            <button class="btn-submit small">確定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- 確認視窗 -->
+        <div class="popup-wrap check">
+            <div class="p-form">
+                <p>是否確定執行?</p>
+                <div class="p-btn pad-0">
+                    <button class="btn-cancel small check">取消</button>
+                    <button class="btn-submit small check">確定</button>
+                </div>
+            </div>
+        </div>
+        <!-- overlay -->
+        <div class="popup-overlay"></div>
+    </article>
+    <!-- JS -->
+    <script src="~/js/script.js"></script>
+    <script>
+
+        //初始資料
+        $(function () {
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            let vendorNo = $("#VendorNo").val();
+
+            if (vendorNo) {
+                //找出此筆資料
+                $('.data-item').each(function (i, v) {
+                    if ($(v).children('.f-1.vendor').text() == vendorNo) {
+                        $(this).addClass('active');
+
+                        return;
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                if (el) {
+
+                    el.scrollIntoView(true);
+                }
+            }
+        });
+
+        //新增資料
+        $(function () {
+            $('.tool-btn-add').on('click', function () {
+                $(".popup-wrap.check").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+
+                //取消
+                $('.btn-cancel.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+                });
+
+                //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    window.location.href = "@Url.Action("Add", "Vendor")";
+                });
+            });
+        });
+
+        //刪除資料
+        $('.tool-btn-del').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    var vendorNo = $('#VendorNo').val()
+
+                    if (vendorNo != '') {
+                        $.ajax({
+                            url: "@Url.Action("Delete", "Vendor")",
+                            type: 'POST',
+                            data: { vendorNo: vendorNo },
+                            success: function (data) {
+                                if (data) {
+                                    alert("刪除成功!");
+
+                                    window.location.href = "@Url.Action("Index", "Vendor")";
+                                }
+                                else {
+                                    alert("刪除失敗!");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        alert("找不到刪除資料!");
+                    }
+                });
+        });
+
+        //修改資料
+        $('.tool-btn-edit').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+                $('.btn-submit.small.check').on('click', function () {
+
+                    $(".popup-wrap.check").removeClass("is-active");
+                    $(".popup-overlay").removeClass("is-active");
+
+                    let editVendorNo = $("#VendorNo").val();
+
+                    if (editVendorNo == '') {
+                        alert("找不到編輯資料!");
+                    }
+                    else {
+                        window.location.href = "@Url.Action("Edit", "Vendor")/?vendorNo=" + editVendorNo;
+                    }
+                });
+        });
+
+        //首筆資料
+        $(function () {
+            $('.tool-btn-first').on('click', function () {
+                //先清空錨點
+                let firstDataItem = $('.data-item.active');
+
+                if (firstDataItem.length != 0) {
+                    firstDataItem.removeClass('active');
+                }
+
+                $('.data-item').each(function (i, v) {
+                    if (i === 0) {
+                        let firstItem = $(v).children('.f-1.vendor').text();
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxVender", "Ajaxs")",
+                            data: { 'vendorNo': firstItem },
+                            success: function (data) {
+                                if (data != null) {
+                                    //塞資料
+                                    $("#VendorNo").val(data.vendorNo);
+                                    $("#Uniform").val(data.uniform);
+                                    $("#Vename").val(data.vename);
+                                    $("#Company").val(data.company);
+                                    $("#Dlien").val(data.dlien);
+                                    $("#Invocomp").val(data.invocomp);
+                                    $("#Payment").val(data.payment);
+
+                                    $("#Tel1").val(data.tel1);
+                                    $("#Boss").val(data.boss);
+                                    $("#Fax").val(data.fax);
+                                    $("#ChehkDay").val(data.chehkDay);
+                                    $("#Tel2").val(data.tel2);
+                                    $("#Sales").val(data.sales);
+                                    $("#Mobile").val(data.mobile);
+
+                                    $("#TaxType").val(data.taxType);
+                                    $("#Email").val(data.email);
+                                    $("#Taxrate").val(data.taxrate);
+                                    $("#Invoaddr").val(data.invoaddr);
+                                    $("#Ntus").val(data.ntus);
+                                    $("#Factaddr").val(data.factaddr);
+                                    $("#Discount").val(data.discount);
+
+                                    $("#Product").val(data.product);
+                                    $("#PriceType").val(data.priceType);
+                                    $("#Payaccount").val(data.payaccount);
+                                    $("#Paybank").val(data.paybank);
+                                    $("#Www").val(data.www);
+                                    $("#Memo").val(data.memo);
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //末筆資料
+        $(function () {
+            $('.tool-btn-last').on('click', function () {
+                //先清空錨點
+                let lastDataItem = $('.data-item.active');
+
+                if (lastDataItem.length != 0 ) {
+                    lastDataItem.removeClass('active');
+                }
+
+                //找出資料總比數
+                let dataItem = $('.data-item');
+                let length = dataItem.length;
+
+                //找出最後一筆資料
+                dataItem.each(function (i, v) {
+                    if (i === (length - 1)) {
+                        let lastItem = $(v).children('.f-1.vendor').text();
+                        $(v).addClass('active');
+
+                        $.ajax({
+                            type: 'Post',
+                            url: "@Url.Action("AjaxVender", "Ajaxs")",
+                            data: { 'vendorNo': lastItem },
+                            success: function (data) {
+                                if (data != null) {
+                                    //塞資料
+                                    $("#VendorNo").val(data.vendorNo);
+                                    $("#Uniform").val(data.uniform);
+                                    $("#Vename").val(data.vename);
+                                    $("#Company").val(data.company);
+                                    $("#Dlien").val(data.dlien);
+                                    $("#Invocomp").val(data.invocomp);
+                                    $("#Payment").val(data.payment);
+
+                                    $("#Tel1").val(data.tel1);
+                                    $("#Boss").val(data.boss);
+                                    $("#Fax").val(data.fax);
+                                    $("#ChehkDay").val(data.chehkDay);
+                                    $("#Tel2").val(data.tel2);
+                                    $("#Sales").val(data.sales);
+                                    $("#Mobile").val(data.mobile);
+
+                                    $("#TaxType").val(data.taxType);
+                                    $("#Email").val(data.email);
+                                    $("#Taxrate").val(data.taxrate);
+                                    $("#Invoaddr").val(data.invoaddr);
+                                    $("#Ntus").val(data.ntus);
+                                    $("#Factaddr").val(data.factaddr);
+                                    $("#Discount").val(data.discount);
+
+                                    $("#Product").val(data.product);
+                                    $("#PriceType").val(data.priceType);
+                                    $("#Payaccount").val(data.payaccount);
+                                    $("#Paybank").val(data.paybank);
+                                    $("#Www").val(data.www);
+                                    $("#Memo").val(data.memo);
+                                }
+                                else {
+                                    alert("發生錯誤!");
+                                }
+                            }
+                        });
+
+                        let el = document.querySelector('.data-item.active');
+
+                        el.scrollIntoView(true);
+                    }
+                });
+            });
+        });
+
+        //下一筆資料
+        $(function () {
+            $(".tool-btn-next").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出下一個錨點
+                var nextClass = $('.data-item.active').next();
+                var nextClassValue = $('.data-item.active').next().children('.f-1.vendor').text();
+
+                if (nextClass.length == 0) {
+                    alert("已沒有下一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                nextClass.addClass('active');
+                nextClass.prev().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxVender", "Ajaxs")",
+                    data: { 'vendorNo': nextClassValue },
+                    success: function (data) {
+                        if (data != null) {
+                            //塞資料
+                            $("#VendorNo").val(data.vendorNo);
+                            $("#Uniform").val(data.uniform);
+                            $("#Vename").val(data.vename);
+                            $("#Company").val(data.company);
+                            $("#Dlien").val(data.dlien);
+                            $("#Invocomp").val(data.invocomp);
+                            $("#Payment").val(data.payment);
+
+                            $("#Tel1").val(data.tel1);
+                            $("#Boss").val(data.boss);
+                            $("#Fax").val(data.fax);
+                            $("#ChehkDay").val(data.chehkDay);
+                            $("#Tel2").val(data.tel2);
+                            $("#Sales").val(data.sales);
+                            $("#Mobile").val(data.mobile);
+
+                            $("#TaxType").val(data.taxType);
+                            $("#Email").val(data.email);
+                            $("#Taxrate").val(data.taxrate);
+                            $("#Invoaddr").val(data.invoaddr);
+                            $("#Ntus").val(data.ntus);
+                            $("#Factaddr").val(data.factaddr);
+                            $("#Discount").val(data.discount);
+
+                            $("#Product").val(data.product);
+                            $("#PriceType").val(data.priceType);
+                            $("#Payaccount").val(data.payaccount);
+                            $("#Paybank").val(data.paybank);
+                            $("#Www").val(data.www);
+                            $("#Memo").val(data.memo);
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //上一筆資料
+        $(function () {
+            $(".tool-btn-prev").on('click', function () {
+
+                if ($('.data-item.active').length == 0) {
+                    alert("請選擇起始資料");
+
+                    return;
+                }
+
+                //找出上一個錨點
+                var prevClass = $('.data-item.active').prev();
+                var prevClassValue = $('.data-item.active').prev().children('.f-1.vendor').text();
+
+                if (prevClass.length == 0) {
+                    alert("已沒有上一筆資料")
+
+                    return;
+                }
+
+                //刪除舊錨點，新增新錨點
+                prevClass.addClass('active');
+                prevClass.next().removeClass('active');
+
+                $.ajax({
+                    type: 'Post',
+                    url: "@Url.Action("AjaxVender", "Ajaxs")",
+                    data: { 'vendorNo': prevClassValue },
+                    success: function (data) {
+                        if (data != null) {
+                            //塞資料
+                            $("#VendorNo").val(data.vendorNo);
+                            $("#Uniform").val(data.uniform);
+                            $("#Vename").val(data.vename);
+                            $("#Company").val(data.company);
+                            $("#Dlien").val(data.dlien);
+                            $("#Invocomp").val(data.invocomp);
+                            $("#Payment").val(data.payment);
+
+                            $("#Tel1").val(data.tel1);
+                            $("#Boss").val(data.boss);
+                            $("#Fax").val(data.fax);
+                            $("#ChehkDay").val(data.chehkDay);
+                            $("#Tel2").val(data.tel2);
+                            $("#Sales").val(data.sales);
+                            $("#Mobile").val(data.mobile);
+
+                            $("#TaxType").val(data.taxType);
+                            $("#Email").val(data.email);
+                            $("#Taxrate").val(data.taxrate);
+                            $("#Invoaddr").val(data.invoaddr);
+                            $("#Ntus").val(data.ntus);
+                            $("#Factaddr").val(data.factaddr);
+                            $("#Discount").val(data.discount);
+
+                            $("#Product").val(data.product);
+                            $("#PriceType").val(data.priceType);
+                            $("#Payaccount").val(data.payaccount);
+                            $("#Paybank").val(data.paybank);
+                            $("#Www").val(data.www);
+                            $("#Memo").val(data.memo);
+                        }
+                        else {
+                            alert("發生錯誤!");
+                        }
+                    }
+                });
+
+                let el = document.querySelector('.data-item.active');
+
+                el.scrollIntoView(true);
+            });
+        });
+
+        //找出廠商資料
+        $(function () {
+            $('.data-item').each(function (i, v) {
+                $(this).on('click', function () {
+
+                    $('.data-item').each(function (i, v) {
+                       $(this).removeClass('active');
+                    });
+
+                    let vendorNo = $(this).children('.f-1.vendor').text();
+                    $(this).addClass('active');
+
+                    $.ajax({
+                        type: 'Post',
+                        url: "@Url.Action("AjaxVender", "Ajaxs")",
+                        data: { 'vendorNo': vendorNo },
+                        success: function (data) {
+                            if (data != null) {
+                                //塞資料
+                                $("#VendorNo").val(data.vendorNo);
+                                $("#Uniform").val(data.uniform);
+                                $("#Vename").val(data.vename);
+                                $("#Company").val(data.company);
+                                $("#Dlien").val(data.dlien);
+                                $("#Invocomp").val(data.invocomp);
+                                $("#Payment").val(data.payment);
+
+                                $("#Tel1").val(data.tel1);
+                                $("#Boss").val(data.boss);
+                                $("#Fax").val(data.fax);
+                                $("#ChehkDay").val(data.chehkDay);
+                                $("#Tel2").val(data.tel2);
+                                $("#Sales").val(data.sales);
+                                $("#Mobile").val(data.mobile);
+
+                                $("#TaxType").val(data.taxType);
+                                $("#Email").val(data.email);
+                                $("#Taxrate").val(data.taxrate);
+                                $("#Invoaddr").val(data.invoaddr);
+                                $("#Ntus").val(data.ntus);
+                                $("#Factaddr").val(data.factaddr);
+                                $("#Discount").val(data.discount);
+
+                                $("#Product").val(data.product);
+                                $("#PriceType").val(data.priceType);
+                                $("#Payaccount").val(data.payaccount);
+                                $("#Paybank").val(data.paybank);
+                                $("#Www").val(data.www);
+                                $("#Memo").val(data.memo);
+                            }
+                            else {
+                                alert("發生錯誤!");
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+        //相關資料按鈕
+        $('.tool-btn-material').on('click', function () {
+
+            let vendorNo = $('#VendorNo').val();
+
+            if (vendorNo == '') {
+                alert("請選擇廠商!");
+
+                return;
+            }
+
+            window.location.href = "@Url.Action("Detail","Vendor")/?VendorNo=" + vendorNo;
+        });
+
+        //匯出
+        $('.tool-btn-export').on('click', function () {
+
+            window.location.href = "@Url.Action("Export", "Vendor")";
+        });
+
+        //收尋條件
+        $('.tool-btn-search').on('click', function () {
+            $(".popup-wrap.check").addClass("is-active");
+            $(".popup-overlay").addClass("is-active");
+
+            //取消
+            $('.btn-cancel.small.check').on('click', function () {
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+            });
+
+            //確定
+            $('.btn-submit.small.check').on('click', function () {
+                $('#IsSearch').val(true);
+
+                //清除資料
+                $("#VendorNo").val('');
+                $("#Uniform").val('');
+                $("#Vename").val('');
+                $("#Company").val('');
+                $("#Dlien").val('');
+                $("#Invocomp").val('');
+                $("#Payment").val('');
+
+                $("#Tel1").val('');
+                $("#Boss").val('');
+                $("#Fax").val('');
+                $("#ChehkDay").val('');
+                $("#Tel2").val('');
+                $("#Sales").val('');
+                $("#Mobile").val('');
+
+                $("#TaxType").val('');
+                $("#Email").val('');
+                $("#Taxrate").val('');
+                $("#Invoaddr").val('');
+                $("#Ntus").val('');
+                $("#Factaddr").val('');
+                $("#Discount").val('');
+
+                $("#Product").val('');
+                $("#PriceType").val('');
+                $("#Payaccount").val('');
+                $("#Paybank").val('');
+                $("#Www").val('');
+                $("#Memo").val('');
+
+                $("#VendorNo").removeAttr('readonly');
+                $("#Uniform").removeAttr('readonly');
+                $("#Vename").removeAttr('readonly');
+                $("#Company").removeAttr('readonly');
+                $("#Dlien").removeAttr('readonly');
+                $("#Invocomp").removeAttr('readonly');
+                $("#Payment").removeAttr('readonly');
+
+                $("#Tel1").removeAttr('readonly');
+                $("#Boss").removeAttr('readonly');
+                $("#Fax").removeAttr('readonly');
+                $("#ChehkDay").removeAttr('readonly');
+                $("#Tel2").removeAttr('readonly');
+                $("#Sales").removeAttr('readonly');
+                $("#Mobile").removeAttr('readonly');
+
+                $("#TaxType").removeAttr('readonly');
+                $("#Email").removeAttr('readonly');
+                $("#Taxrate").removeAttr('readonly');
+                $("#Invoaddr").removeAttr('readonly');
+                $("#Ntus").removeAttr('readonly');
+                $("#Factaddr").removeAttr('readonly');
+                $("#Discount").removeAttr('readonly');
+
+                $("#Product").removeAttr('readonly');
+                $("#PriceType").removeAttr('readonly');
+                $("#Payaccount").removeAttr('readonly');
+                $("#Paybank").removeAttr('readonly');
+                $("#Www").removeAttr('readonly');
+                $("#Memo").removeAttr('readonly');
+
+                $(".popup-wrap.check").removeClass("is-active");
+                $(".popup-overlay").removeClass("is-active");
+
+                        @*window.location.href = "@Url.Action("Search", "Vendor")";*@
+                });
+        });
+
+        //清除搜尋資料
+        $('.btn-clean.search').on('click', function () {
+
+            //先清除所有資料的綁定狀態
+            $('.data-item').each(function (i, v) {
+                $(this).removeClass('active');
+            });
+
+            //清除資料
+            $("#VendorNo").val('');
+            $("#Uniform").val('');
+            $("#Vename").val('');
+            $("#Company").val('');
+            $("#Dlien").val('');
+            $("#Invocomp").val('');
+            $("#Payment").val('');
+
+            $("#Tel1").val('');
+            $("#Boss").val('');
+            $("#Fax").val('');
+            $("#ChehkDay").val('');
+            $("#Tel2").val('');
+            $("#Sales").val('');
+            $("#Mobile").val('');
+
+            $("#TaxType").val('');
+            $("#Email").val('');
+            $("#Taxrate").val('');
+            $("#Invoaddr").val('');
+            $("#Ntus").val('');
+            $("#Factaddr").val('');
+            $("#Discount").val('');
+
+            $("#Product").val('');
+            $("#PriceType").val('');
+            $("#Payaccount").val('');
+            $("#Paybank").val('');
+            $("#Www").val('');
+            $("#Memo").val('');
+        });
+
+        // tabs
+        $(function () {
+            $(".tabs-item:first").addClass("is-active");
+            $(".tabs-content:first").addClass("is-active");
+            $(".tabs-item").click(function () {
+                $(this).addClass("is-active");
+                $(this).siblings().removeClass("is-active");
+                $(".tabs-content").siblings().removeClass("is-active");
+                $(".tabs-content").eq($(this).index()).addClass("is-active");
+            });
+        });
+
+        // 會計科目-進項科目-視窗畫面 觸發
+        $(function () {
+            $(".btn-opt").on("click", function (e) {
+                $("#demo1").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+            });
+        });
+
+        // 會計科目-進項科目-視窗畫面 觸發
+        $(function () {
+            $(".tool-btn-change").on("click", function (e) {
+                $("#demo2").addClass("is-active");
+                $(".popup-overlay").addClass("is-active");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+

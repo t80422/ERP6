@@ -1,0 +1,523 @@
+﻿@model ERP6.ViewModels.Out30VMs.Out30VM
+
+<div class="container-content">
+    <div class="container-column">
+        <div class="container-col-2">
+            <form id="form" method="post">
+                <div class="inside-wrap">
+                    <div class="inside-overflow">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text=danger" })
+                        <div class="form-wrap">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="Out30_CoNo">寄賣客戶</label>
+                                            @Html.TextBoxFor(x => x.Out30.CoNo, new { @class = "easyui-combobox" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="FromattedPaymont">統計月份</label>
+                                            @Html.TextBoxFor(x => x.FromattedPaymont, new { type = "month" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="Out30_Memo">備註</label>
+                                            @Html.TextBoxFor(x => x.Out30.Memo)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-link">
+                                    <button type="button" id="addItem" class="link-add">
+                                        <i></i><span>清單資料</span>
+                                    </button>
+                                </div>
+
+                                <div class="table2-wrap pad-t20 pad-b20 pad-r30 pad-l30">
+                                    <div class="table2-title">
+                                        <div class="tabs-item">明細資料</div>
+                                    </div>
+
+                                    <div class="table2-overflow h-800">
+                                        <div class="table2-main">
+                                            <div class="tabs-content is-active">
+                                                <div class="table-width w-100pc">
+                                                    <table id="detailsTable">
+                                                        <tr class="sticky">
+                                                            <th class="p-5 ta-center">
+                                                                <span>操作</span>
+                                                            </th>
+
+                                                            <th class="p-9 ta-center">
+                                                                <span>產品編號</span>
+                                                            </th>
+
+                                                            <th class="p-18 ta-center">
+                                                                <span>品名規格</span>
+                                                            </th>
+
+                                                            <th class="p-9 ta-center">
+                                                                <span>條碼</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>單位</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>稅別</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>上月存貨</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>本月進貨</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>本月退貨</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>本月存貨</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>銷售數量</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>單價</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>折扣率</span>
+                                                            </th>
+
+                                                            <th class="p-5 ta-center">
+                                                                <span>金額</span>
+                                                            </th>
+                                                        </tr>
+
+                                                        @if (Model.Out40List != null && Model.Out40List.Count > 0)
+                                                        {
+                                                            @for (int i = 0; i < Model.Out40List.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td class="ta-center">
+                                                                        <span class="delItem">X</span>
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.PartNo, new { @class = "table-inp easyui-combobox" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Stock10.Spec, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.Barcode, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.Unit, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Stock10.TaxType, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.LQty, new { @class = "table-inp" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.InQty, new { @class = "table-inp" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.InretQty, new { @class = "table-inp" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.StQty, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.OutQty, new { @class = "table-inp" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.Price, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.Discount, new { @class = "table-inp" })
+                                                                    </td>
+                                                                    <td class="ta-center">
+                                                                        @Html.TextBoxFor(m => m.Out40List[i].Out40.Amount, new { @class = "table-inp", @readonly = "readonly" })
+                                                                    </td>
+                                                                </tr>
+                                                            }
+
+                                                        }
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="Out30_Total0">免稅合計</label>
+                                            @Html.TextBoxFor(x => x.Out30.Total0, new { @readonly = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">應稅合計</label>
+                                            @Html.TextBoxFor(x => x.Out30.Total1, new { @readonly = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">稅別</label>
+                                            @Html.DropDownListFor(x => x.Out30.TaxType, Model.TaxTypeList, "請選擇", new { @require = "" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">稅額</label>
+                                            @Html.TextBoxFor(x => x.Out30.Tax, new { @readonly = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">含稅合計</label>
+                                            @Html.TextBoxFor(x => x.Out30.Total2, new { @readonly = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">現金扣%</label>
+
+                                            <div class="flex">
+                                                <div class="fl-1">
+                                                    @Html.TextBoxFor(x => x.Out30.Discount, new { @class = "w-85pc inb", @type = "number", @min = 0, @max = "100", @step = "0.01" }) %
+                                                </div>
+
+                                                <div class="fl-1">
+                                                    @Html.TextBoxFor(x => x.Out30.CashDis, new { @readonly = "" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">折讓金額</label>
+                                            @Html.TextBoxFor(x => x.Out30.SubTot,new { @type="number"})
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-s">
+                                        <div class="form-input">
+                                            <label for="">未收金額</label>
+                                            @Html.TextBoxFor(x => x.Out30.NotGet, new { @readonly = "" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-flex f-1">
+                                        <div class="form-input">
+                                            <label for="">輸入人員</label>
+                                            @Html.TextBoxFor(x => x.Out30.Userid, new { @readonly = "" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-flex f-a">
+                                        <div class="form-input">
+                                            <label for="">過帳</label>
+                                            @Html.TextBoxFor(x => x.Out30.StockPass, new { @readonly = "" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        //初始化所有現有的產品清單
+        initProductCombobox('.table-inp.easyui-combobox');
+
+        //客戶資料
+        $('#Out30_CoNo').combobox({
+            url: "@Url.Action("AjaxCustomerForEasyUI", "Ajaxs")",
+            valueField: 'id',
+            textField: 'text'
+        });
+
+        //新增明細列
+        $('#addItem').on('click', function () {
+            var coNo = $('#Out30_CoNo').combobox('getValue');
+            if (!coNo) {
+                alert('請先選擇寄賣客戶');
+                return;
+            }
+
+            var newIndex = $('#detailsTable tr').length-1;
+            var newRow = `<tr>
+                            <td class="ta-center">
+                                <span class="delItem">X</span>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp easyui-combobox" type="text" name="Out40List[${newIndex}].Out40.PartNo" id="PartNo_${newIndex}"/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Stock10.Spec" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.Barcode" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.Unit" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Stock10.TaxType" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.LQty" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.InQty"/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.InretQty"/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.StQty" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.OutQty"/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.Price" readonly/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.Discount"/>
+                            </td>
+                            <td class="ta-center">
+                                <input class="table-inp" type="text" name="Out40List[${newIndex}].Out40.Amount" readonly/>
+                            </td>
+                        </tr>`;
+            $('#detailsTable').append(newRow);
+
+            //初始化新生成的產品編號欄位
+            initProductCombobox('#PartNo_' + newIndex);
+
+            //監聽輸入框變化
+            $('#detailsTable').on('input', 'input[name$="InQty"], input[name$="InretQty"], input[name$="OutQty"], input[name$="Discount"], input[name$="OutQty"]', function () {
+                var row = $(this).closest('tr');
+                calculateCurrentStock(row);
+                calAmount(row);
+                calMoney();
+            });
+        })
+
+        //刪除名細列
+        $(document).on('click', '.delItem', function () {
+            $(this).closest('tr').remove();
+            reindexRows();
+            calMoney();
+        })
+
+        //監聽"稅別"下拉框變化
+        $('#Out30_TaxType').on('change', function () {
+            calMoney();
+        })
+
+        //監聽"現金扣%"
+        $('#Out30_Discount').on('input', function () {
+            var total2 = parseFloat($('#Out30_Total2').val()) || 0;
+            var discount = parseFloat($(this).val()) || 0;
+            var cashDis = total2 * discount / 100;
+
+            $('#Out30_CashDis').val(cashDis.toFixed(2));
+            calNotGet();
+        })
+
+        //監聽"折讓金額",計算"未收金額"
+        $('#Out30_SubTot').on('input', function () {
+            calNotGet();
+        });
+
+        //計算本月存貨
+        function calculateCurrentStock(row) {
+            var lQty = parseFloat(row.find('input[name^="Out40List"][name$=".Out40.LQty"]').val()) || 0;
+            var inQty = parseFloat(row.find('input[name^="Out40List"][name$=".Out40.InQty"]').val()) || 0;
+            var InretQty = parseFloat(row.find('input[name^="Out40List"][name$=".Out40.InretQty"]').val()) || 0;
+            var outQty = parseFloat(row.find('input[name^="Out40List"][name$=".Out40.OutQty"]').val()) || 0;
+            var stQty = lQty + inQty + InretQty - outQty;
+
+            row.find('input[name^="Out40List"][name$=".Out40.StQty"]').val(stQty);
+        }
+
+        //計算金額
+        function calAmount(row) {
+            var outQty = parseFloat(row.find('[name$="OutQty"]').val()) || 0;
+            var discount = parseFloat(row.find('[name$="Discount"]').val()) || 0;
+            var price = parseFloat(row.find('[name$="Price"]').val()) || 0;
+            var amount = outQty * price * ((100 - discount) / 100);
+
+            row.find('input[name$="Amount"]').val(amount.toFixed(2));
+        }
+
+        //初始化產品列表
+        function initProductCombobox(selector) {
+            $(selector).each(function () {
+                var $this = $(this);
+                $this.combobox({
+                    url: '@Url.Action("GetProducts")',
+                    valueField: 'id',
+                    textField: 'text',
+                    onSelect: function (record) {
+                        if (!record.id) return;
+                        var partNo = record.id;
+                        var coNo = $('#Out30_CoNo').combobox('getValue');
+                        var paymonth = $('#FromattedPaymont').val();
+                        var row = $(this).closest('tr');
+
+                        $.ajax({
+                            url: '@Url.Action("GetProductDetails")',
+                            data: { partNo, coNo ,paymonth},
+                            success: function (data) {
+                                if (data) {
+                                    row.find('input[name^="Out40List"][name$=".Stock10.Spec"]').val(data.spec);
+                                    row.find('input[name^="Out40List"][name$=".Out40.Barcode"]').val(data.barcode);
+                                    row.find('input[name^="Out40List"][name$=".Out40.Unit"]').val(data.unit);
+                                    row.find('input[name^="Out40List"][name$=".Stock10.TaxType"]').val(data.taxType);
+                                    row.find('input[name^="Out40List"][name$=".Out40.LQty"]').val(data.lQty);
+                                    row.find('input[name^="Out40List"][name$=".Out40.StQty"]').val(data.stQty);
+                                    row.find('input[name^="Out40List"][name$=".Out40.Price"]').val(data.price);
+                                } else {
+                                    alert('未找到產品詳細信息');
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        }
+
+        //重新排列明細列索引
+        function reindexRows() {
+            $('#detailsTable tr').each(function (index) {
+                if (index === 0) return; // 跳過標題行
+
+                $(this).find('input').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\[\d+\]/, '[' + (index - 1) + ']');
+                        $(this).attr('name', newName);
+                    }
+
+                    var id = $(this).attr('id');
+                    if (id) {
+                        var newId = id.replace(/_\d+__/, '_' + (index - 1) + '__');
+                        $(this).attr('id', newId);
+                    }
+
+                    // 更新 combobox 的 comboname 屬性
+                    var comboname = $(this).attr('comboname');
+                    if (comboname) {
+                        var newComboname = comboname.replace(/\[\d+\]/, '[' + (index - 1) + ']');
+                        $(this).attr('comboname', newComboname);
+                    }
+
+                    // 更新 textboxname 屬性
+                    var textboxname = $(this).attr('textboxname');
+                    if (textboxname) {
+                        var newTextboxname = textboxname.replace(/\[\d+\]/, '[' + (index - 1) + ']');
+                        $(this).attr('textboxname', newTextboxname);
+                    }
+                });
+
+                // 更新隱藏的 input 元素
+                $(this).find('input:hidden').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\[\d+\]/, '[' + (index - 1) + ']');
+                        $(this).attr('name', newName);
+                    }
+                });
+            });
+            initProductCombobox('.table-inp.easyui-combobox');
+        }
+
+        //計算稅額、免稅合計、應稅合計、含稅合計
+        function calMoney() {
+            var totalTaxFree = 0;//免稅總額
+            var totalTax = 0;//應稅總額
+
+            //取得所有商品清單
+            $('#detailsTable tr').each(function () {
+                var productTaxType = $(this).find('input[name$="TaxType"]').val();//商品稅別
+                var amount = parseFloat($(this).find('input[name$="Amount"]').val()) || 0;//商品總價
+
+                //分類計算"免稅"、"應稅"總額
+                if (productTaxType == "免稅") {
+                    totalTaxFree += amount;
+                } else if (productTaxType == "應稅") {
+                    totalTax += amount;
+                };
+            });
+
+            //計算稅額、應稅合計
+            var taxType = $('#Out30_TaxType').val();//稅別
+            var tax = 0;
+
+            if (taxType == "1" || taxType == "2") {
+                tax = totalTax * 0.05;
+
+                if (taxType == "2") {
+                    totalTax -= tax;
+                };
+            };
+
+            //計算含稅合計
+            var totalTaxAmount = 0;
+            totalTaxAmount = totalTaxFree + totalTax + tax;
+
+            //輸出
+            $('#Out30_Total0').val(totalTaxFree.toFixed(2));
+            $('#Out30_Tax').val(tax.toFixed(2));
+            $('#Out30_Total1').val(totalTax.toFixed(2));
+            $('#Out30_Total2').val(totalTaxAmount.toFixed(2));
+
+            //觸發
+            calNotGet();
+        }
+
+        //計算未收金額
+        function calNotGet() {
+            var total2 = parseFloat($('#Out30_Total2').val()) || 0;
+            var cashDis = parseFloat($('#Out30_CashDis').val()) || 0;
+            var subTot = parseFloat($('#Out30_SubTot').val()) || 0;
+            var notGet = total2 - cashDis - subTot;
+
+            $('#Out30_NotGet').val(notGet.toFixed(2));
+        }
+    })
+</script>
